@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Fan Zone | Your Ultimate Formula 1 Hub</title>
+    <meta name="description" content="Explore live F1 driver standings, test your knowledge with our quiz, and discover the 2024 team lineup.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Custom Cursor with Checkered Flag -->
+    <div class="custom-cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+    </div>
+    
+    <!-- Checkered Flag Trail -->
+    <canvas id="flag-trail-canvas"></canvas>
+    
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-content">
+            <div class="f1-car-loader">
+                <div class="car-body"></div>
+                <div class="car-wheel wheel-front"></div>
+                <div class="car-wheel wheel-back"></div>
+            </div>
+            <div class="loader-text">Loading F1 Fan Zone...</div>
+            <div class="loader-progress">
+                <div class="loader-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>F1 <span class="logo-accent">Fan Zone</span></h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#basics" class="nav-link">F1 Basics</a></li>
+                    <li class="nav-item"><a href="#tracker" class="nav-link">Standings</a></li>
+                    <li class="nav-item"><a href="#calendar" class="nav-link">Calendar</a></li>
+                    <li class="nav-item"><a href="#quiz" class="nav-link">Quiz</a></li>
+                    <li class="nav-item"><a href="#showcase" class="nav-link">Teams</a></li>
+                    <li class="nav-item"><a href="#circuits" class="nav-link">Circuits</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Lightweight Particle Background -->
+    <div class="particles-container" id="particles"></div>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h2 class="hero-title" data-text="Welcome to the Fast Lane">Welcome to the Fast Lane</h2>
+            <p class="hero-subtitle">Dive into the world of speed, strategy, and racing excellence</p>
+            <div class="hero-stats">
+                <a href="#basics" class="stat-item stat-link" data-tilt>
+                    <div class="stat-icon">📖</div>
+                    <div class="stat-number">F1</div>
+                    <div class="stat-label">Basics</div>
+                    <div class="stat-description">Learn the Rules</div>
+                </a>
+                <a href="#showcase" class="stat-item stat-link" data-tilt>
+                    <div class="stat-icon">🏎️</div>
+                    <div class="stat-number" data-count="10">0</div>
+                    <div class="stat-label">Teams</div>
+                    <div class="stat-description">Explore Teams</div>
+                </a>
+                <a href="#tracker" class="stat-item stat-link" data-tilt>
+                    <div class="stat-icon">👤</div>
+                    <div class="stat-number" data-count="20">0</div>
+                    <div class="stat-label">Drivers</div>
+                    <div class="stat-description">See Standings</div>
+                </a>
+                <a href="#circuits" class="stat-item stat-link" data-tilt>
+                    <div class="stat-icon">🗺️</div>
+                    <div class="stat-number" data-count="24">0</div>
+                    <div class="stat-label">Circuits</div>
+                    <div class="stat-description">Discover Tracks</div>
+                </a>
+                <a href="#calendar" class="stat-item stat-link" data-tilt>
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-number" data-count="24">0</div>
+                    <div class="stat-label">Races</div>
+                    <div class="stat-description">View Calendar</div>
+                </a>
+                <a href="#quiz" class="stat-item stat-link" data-tilt>
+                    <div class="stat-icon">❓</div>
+                    <div class="stat-number">Quiz</div>
+                    <div class="stat-label">Challenge</div>
+                    <div class="stat-description">Test Knowledge</div>
+                </a>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+                <div class="arrow">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <!-- F1 Basics Section -->
+        <section id="basics" class="section basics-section">
+            <div class="section-header">
+                <h2 class="section-title">🏁 F1 Basics & Rules</h2>
+                <p class="section-subtitle">Everything you need to know to get started with Formula 1</p>
+            </div>
+
+            <div class="basics-grid">
+                <div class="basics-card">
+                    <div class="basics-icon">🏎️</div>
+                    <h3>What is Formula 1?</h3>
+                    <p>Formula 1 is the highest class of international racing for open-wheel single-seater formula racing cars. It's the pinnacle of motorsport featuring the fastest cars and best drivers in the world.</p>
+                </div>
+
+                <div class="basics-card">
+                    <div class="basics-icon">🏆</div>
+                    <h3>Championship System</h3>
+                    <p>Drivers earn points based on finishing position (25 for 1st, 18 for 2nd, 15 for 3rd, etc.). The driver with the most points at season end wins the World Championship.</p>
+                </div>
+
+                <div class="basics-card">
+                    <div class="basics-icon">⏱️</div>
+                    <h3>Race Weekend Format</h3>
+                    <p><strong>Friday:</strong> Practice sessions<br>
+                    <strong>Saturday:</strong> Final practice & Qualifying<br>
+                    <strong>Sunday:</strong> Race day (usually 305km or 2 hours)</p>
+                </div>
+
+                <div class="basics-card">
+                    <div class="basics-icon">🎯</div>
+                    <h3>Qualifying</h3>
+                    <p>Three knockout sessions (Q1, Q2, Q3) determine starting grid positions. Fastest lap in Q3 gets pole position. Bottom 5 eliminated in Q1 and Q2.</p>
+                </div>
+
+                <div class="basics-card">
+                    <div class="basics-icon">🔧</div>
+                    <h3>Pit Stops</h3>
+                    <p>Teams must use at least 2 different tire compounds during the race. Pit stops take ~2-3 seconds for tire changes. Strategy is crucial for winning.</p>
+                </div>
+
+                <div class="basics-card">
+                    <div class="basics-icon">🚩</div>
+                    <h3>Flags & Penalties</h3>
+                    <p><strong>Yellow:</strong> Danger, slow down<br>
+                    <strong>Red:</strong> Session stopped<br>
+                    <strong>Blue:</strong> Let faster car pass<br>
+                    <strong>Checkered:</strong> Race finished</p>
+                </div>
+
+                <div class="basics-card">
+                    <div class="basics-icon">⚡</div>
+                    <h3>DRS (Drag Reduction System)</h3>
+                    <p>Rear wing opens in designated zones when within 1 second of car ahead. Provides ~10-12 km/h speed boost for overtaking opportunities.</p>
+                </div>
+
+                <div class="basics-card">
+                    <div class="basics-icon">🏁</div>
+                    <h3>Points System</h3>
+                    <p>1st: 25pts | 2nd: 18pts | 3rd: 15pts | 4th: 12pts | 5th: 10pts | 6th: 8pts | 7th: 6pts | 8th: 4pts | 9th: 2pts | 10th: 1pt<br>
+                    <strong>Fastest Lap:</strong> +1pt (if in top 10)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tracker" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Championship Standings</h2>
+                <p class="section-subtitle">2025 F1 Season - Updated Driver Lineup</p>
+            </div>
+            
+            <!-- Standings Toggle -->
+            <div class="standings-toggle">
+                <button class="toggle-btn active" data-standings="drivers">
+                    <span class="toggle-icon">👤</span> Drivers
+                </button>
+                <button class="toggle-btn" data-standings="constructors">
+                    <span class="toggle-icon">🏎️</span> Constructors
+                </button>
+            </div>
+
+            <!-- Driver Standings -->
+            <div id="driver-standings" class="standings-view active">
+                <div class="table-container">
+                    <table id="standings-table" class="standings-table">
+                        <thead>
+                            <tr>
+                                <th class="pos-col">Pos</th>
+                                <th class="driver-col">Driver</th>
+                                <th class="nationality-col">Nationality</th>
+                                <th class="team-col">Team</th>
+                                <th class="points-col">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standings-body">
+                            <tr>
+                                <td colspan="5" class="loading-cell">
+                                    <div class="loader"></div>
+                                    <span>Loading standings...</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Constructor Standings -->
+            <div id="constructor-standings" class="standings-view">
+                <div class="table-container">
+                    <table id="constructor-table" class="standings-table">
+                        <thead>
+                            <tr>
+                                <th class="pos-col">Pos</th>
+                                <th class="team-col">Team</th>
+                                <th class="points-col">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody id="constructor-body">
+                            <!-- Constructor standings will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Race Calendar Section -->
+        <section id="calendar" class="section">
+            <div class="section-header">
+                <h2 class="section-title">2025 Race Calendar</h2>
+                <p class="section-subtitle">24 races across 5 continents</p>
+            </div>
+            
+            <div class="calendar-filters">
+                <input type="text" id="calendar-search" class="search-input" placeholder="🔍 Search races...">
+                <select id="calendar-filter" class="filter-select">
+                    <option value="all">All Races</option>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <div id="calendar-grid" class="calendar-grid">
+                <!-- Calendar cards will be inserted here -->
+            </div>
+        </section>
+
+
+        <section id="quiz" class="section quiz-section">
+            <div class="section-header">
+                <h2 class="section-title">F1 Quiz Challenge</h2>
+                <p class="section-subtitle">Test your Formula 1 knowledge</p>
+            </div>
+
+            <!-- Quiz Rules -->
+            <div class="quiz-rules">
+                <h3>📋 Quiz Rules</h3>
+                <div class="rules-grid">
+                    <div class="rule-item">
+                        <span class="rule-icon">❓</span>
+                        <div class="rule-content">
+                            <strong>20 Questions</strong>
+                            <p>Answer 20 randomly selected questions from our database</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">⏱️</span>
+                        <div class="rule-content">
+                            <strong>No Time Limit</strong>
+                            <p>Take your time to think through each answer</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">✅</span>
+                        <div class="rule-content">
+                            <strong>Instant Feedback</strong>
+                            <p>See if you're correct immediately after each answer</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">🏆</span>
+                        <div class="rule-content">
+                            <strong>Score & Rank</strong>
+                            <p>Get your final score and see how you rank on the leaderboard</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Leaderboard -->
+            <div class="quiz-leaderboard">
+                <h3>🏆 Top Scores</h3>
+                <div id="leaderboard-list" class="leaderboard-list">
+                    <!-- Leaderboard will be inserted here -->
+                </div>
+            </div>
+
+            <div id="quiz-container" class="quiz-container">
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <span id="quiz-counter" class="quiz-counter">Question 1 of 20</span>
+                </div>
+                <p id="question" class="quiz-question">Question text will go here.</p>
+                <div id="options" class="options-container">
+                    <!-- Options will be dynamically inserted here -->
+                </div>
+                <div class="quiz-actions">
+                    <button id="next-btn" class="btn btn-primary">Next Question</button>
+                    <button id="restart-quiz" class="btn btn-secondary" style="display: none;">Restart Quiz</button>
+                </div>
+                <p id="result" class="quiz-result"></p>
+            </div>
+
+            <!-- Social Share -->
+            <div id="quiz-share" class="quiz-share" style="display: none;">
+                <h3>Share Your Score!</h3>
+                <div class="share-buttons">
+                    <button class="share-btn twitter-btn" onclick="shareToTwitter()">
+                        <span>🐦</span> Twitter
+                    </button>
+                    <button class="share-btn facebook-btn" onclick="shareToFacebook()">
+                        <span>📘</span> Facebook
+                    </button>
+                    <button class="share-btn copy-btn" onclick="copyScore()">
+                        <span>📋</span> Copy
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section id="showcase" class="section">
+            <div class="section-header">
+                <h2 class="section-title">F1 2025 Team Showcase</h2>
+                <p class="section-subtitle">Explore all teams competing in the championship</p>
+            </div>
+            <div id="team-grid" class="team-grid">
+                <!-- Team cards will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <section id="circuits" class="section">
+            <div class="section-header">
+                <h2 class="section-title">2025 F1 Circuits</h2>
+                <p class="section-subtitle">Explore all 24 race tracks on the calendar</p>
+            </div>
+            
+            <div class="circuits-filters">
+                <input type="text" id="circuit-search" class="search-input" placeholder="🔍 Search circuits...">
+                <select id="circuit-sort" class="filter-select">
+                    <option value="calendar">Calendar Order</option>
+                    <option value="length-desc">Longest First</option>
+                    <option value="length-asc">Shortest First</option>
+                    <option value="name">Alphabetical</option>
+                </select>
+            </div>
+
+            <div id="circuits-grid" class="circuits-grid">
+                <!-- Circuit cards will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 F1 Fan Zone. All rights reserved.</p>
+            <p class="footer-note">Data provided by Ergast API. Not affiliated with Formula 1.</p>
+        </div>
+    </footer>
+
+    <!-- Three.js for 3D effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Vanilla Tilt for 3D card effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    
+    <script src="quiz-data.js"></script>
+    <script src="circuits-data.js"></script>
+    <script src="race-calendar-data.js"></script>
+    <script src="prediction-model.js"></script>
+    <script src="script.js"></script>
+    <script src="3d-effects.js"></script>
+
+    <!-- Team Modal Structure -->
+    <div id="team-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="close-btn" aria-label="Close modal">&times;</button>
+            <div id="modal-body" class="modal-body">
+                <!-- Modal content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Circuit Modal Structure -->
+    <div id="circuit-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content circuit-modal-content">
+            <button class="close-btn" aria-label="Close modal">&times;</button>
+            <div id="circuit-modal-body" class="circuit-modal-body">
+                <!-- Circuit modal content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
