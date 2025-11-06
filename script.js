@@ -15,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Scroll to top when logo is clicked
+    const logoBtn = document.getElementById('logo-btn');
+    if (logoBtn) {
+        logoBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
     // Team Showcase
     const teamGrid = document.getElementById('team-grid');
     const modal = document.getElementById('team-modal');
