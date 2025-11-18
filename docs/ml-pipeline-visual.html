@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Pipeline Visualization - F1 Race Predictor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+            color: #ffffff;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e10600, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 3rem;
+        }
+        
+        .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .phase {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(225, 6, 0, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .phase:hover {
+            transform: translateX(10px);
+            border-color: #e10600;
+            box-shadow: 0 8px 32px rgba(225, 6, 0, 0.3);
+        }
+        
+        .phase-number {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background: linear-gradient(135deg, #e10600, #a00500);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .phase-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+        
+        .phase-description {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 4px solid #e10600;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .step-title {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 2rem;
+            color: #e10600;
+            margin: 1rem 0;
+        }
+        
+        .neural-network {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+        }
+        
+        .layer {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .neuron {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e10600, #ffd700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .layer-label {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .metric {
+            background: rgba(0, 213, 99, 0.1);
+            border: 1px solid #00d563;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d563;
+        }
+        
+        .metric-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 ML Pipeline Visualization</h1>
+        <p class="subtitle">F1 Race Prediction System - Step by Step</p>
+        
+        <div class="pipeline">
+            <!-- Phase 1 -->
+            <div class="phase">
+                <div class="phase-number">1</div>
+                <h2 class="phase-title">📥 Data Collection</h2>
+                <p class="phase-description">
+                    Gather historical F1 race data including driver performance, team statistics, 
+                    circuit characteristics, and race conditions.
+                </p>
+                
+                <div class="code-block">
+const data = dataGenerator.generateHistoricalData(200);
+// 200 races × 20 drivers = 4,000 data points</div>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">Driver Data</div>
+                        Points, recent form, experience
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Team Data</div>
+                        Constructor points, pit efficiency
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Circuit Data</div>
+                        Track type, length, difficulty
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Race Conditions</div>
+                        Weather, tire strategy, grid position
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Phase 2 -->
+            <div class="phase">
+                <div class="phase-number">2</div>
+                <h2 class="phase-title">🔄 Data Preprocessing</h2>
+                <p class="phase-description">
+                    Clean and transform raw data into a format suitable for machine learning.
+                </p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">2.1 Handle Missing Values</div>
+                        Fill nulls with mean/median or remove incomplete records
+                    </div>
+                    <div class="step">
+                        <div class="step-title">2.2 Feature Engineering</div>
+                        Create 8 new features from raw data
+                    </div>
+                    <div class="step">
+                        <div class="step-title">2.3 Normalization</div>
+                        Scale all features to same range using z-score
+                    </div>
+                    <div class="step">
+                        <div class="step-title">2.4 Train/Test Split</div>
+                        80% training, 20% validation
+                    </div>
+                </div>
+                
+                <div class="code-block">
+// Before: driver_points = 437, qualifying = 1
+// After:  driver_points = 1.23, qualifying = -1.45 (normalized)</div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Phase 3 -->
+            <div class="phase">
+                <div class="phase-number">3</div>
+                <h2 class="phase-title">🧠 Neural Network Architecture</h2>
+                <p class="phase-description">
+                    Multi-layer neural network that learns complex patterns in the data.
+                </p>
+                
+                <div class="neural-network">
+                    <div class="layer">
+                        <div class="neuron">8</div>
+                        <div class="layer-label">Input<br>Features</div>
+                    </div>
+                    <div style="font-size: 2rem; color: #e10600;">→</div>
+                    <div class="layer">
+                        <div class="neuron">64</div>
+                        <div class="neuron">64</div>
+                        <div class="neuron">64</div>
+                        <div class="layer-label">Hidden<br>Layer 1</div>
+                    </div>
+                    <div style="font-size: 2rem; color: #e10600;">→</div>
+                    <div class="layer">
+                        <div class="neuron">32</div>
+                        <div class="neuron">32</div>
+                        <div class="layer-label">Hidden<br>Layer 2</div>
+                    </div>
+                    <div style="font-size: 2rem; color: #e10600;">→</div>
+                    <div class="layer">
+                        <div class="neuron">16</div>
+                        <div class="layer-label">Hidden<br>Layer 3</div>
+                    </div>
+                    <div style="font-size: 2rem; color: #e10600;">→</div>
+                    <div class="layer">
+                        <div class="neuron">1</div>
+                        <div class="layer-label">Output<br>Position</div>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+Input (8) → Dense(64, ReLU) → Dense(32, ReLU) → Dense(16, ReLU) → Output(1)</div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Phase 4 -->
+            <div class="phase">
+                <div class="phase-number">4</div>
+                <h2 class="phase-title">🎯 Model Training</h2>
+                <p class="phase-description">
+                    Iteratively adjust network weights to minimize prediction error.
+                </p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">Forward Pass</div>
+                        Input → Hidden Layers → Output<br>
+                        Make prediction
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Calculate Loss</div>
+                        MSE = (prediction - actual)²<br>
+                        Measure error
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Backward Pass</div>
+                        Calculate gradients<br>
+                        Update weights
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Repeat</div>
+                        100 epochs<br>
+                        Loss decreases each time
+                    </div>
+                </div>
+                
+                <div class="code-block">
+Epoch 1:   Loss = 45.2 😢
+Epoch 50:  Loss = 8.3  😐
+Epoch 100: Loss = 2.1  😊</div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Phase 5 -->
+            <div class="phase">
+                <div class="phase-number">5</div>
+                <h2 class="phase-title">📈 Model Evaluation</h2>
+                <p class="phase-description">
+                    Test model performance on unseen data to ensure it generalizes well.
+                </p>
+                
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">2.14</div>
+                        <div class="metric-label">Training Loss</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">2.38</div>
+                        <div class="metric-label">Validation Loss</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">76.5%</div>
+                        <div class="metric-label">Accuracy</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">4,000</div>
+                        <div class="metric-label">Training Samples</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Phase 6 -->
+            <div class="phase">
+                <div class="phase-number">6</div>
+                <h2 class="phase-title">🔮 Making Predictions</h2>
+                <p class="phase-description">
+                    Use trained model to predict race outcomes for new scenarios.
+                </p>
+                
+                <div class="code-block">
+Input: Monaco GP, Wet conditions, Max Verstappen starting P1
+       ↓
+Preprocess & Normalize
+       ↓
+Forward Pass through Neural Network
+       ↓
+Output: Predicted 1st place (95% confidence)</div>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">🥇 1st Place</div>
+                        Max Verstappen<br>
+                        95% confidence
+                    </div>
+                    <div class="step">
+                        <div class="step-title">🥈 2nd Place</div>
+                        Charles Leclerc<br>
+                        88% confidence
+                    </div>
+                    <div class="step">
+                        <div class="step-title">🥉 3rd Place</div>
+                        Lando Norris<br>
+                        82% confidence
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Phase 7 -->
+            <div class="phase">
+                <div class="phase-number">7</div>
+                <h2 class="phase-title">🚀 Deployment</h2>
+                <p class="phase-description">
+                    Save model and serve predictions through the web interface.
+                </p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">Save Model</div>
+                        Store weights & config in localStorage
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Load on Refresh</div>
+                        Restore trained model instantly
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Serve Predictions</div>
+                        Real-time predictions via UI
+                    </div>
+                    <div class="step">
+                        <div class="step-title">Update Model</div>
+                        Retrain with new data anytime
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(225, 6, 0, 0.1); border-radius: 16px;">
+            <h2 style="color: #ffd700; margin-bottom: 1rem;">🏁 Ready to Try It?</h2>
+            <p style="color: #b0b0b0; margin-bottom: 1rem;">
+                Open your F1 Fan Zone, scroll to the AI Race Predictor section, and train your own model!
+            </p>
+            <a href="http://localhost:3000/" style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(135deg, #e10600, #a00500); color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                Open F1 Fan Zone →
+            </a>
+        </div>
+    </div>
+</body>
+</html>

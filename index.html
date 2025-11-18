@@ -6,6 +6,7 @@
     <title>F1 Fan Zone | Your Ultimate Formula 1 Hub</title>
     <meta name="description" content="Explore live F1 driver standings, test your knowledge with our quiz, and discover the 2024 team lineup.">
     <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="professional-enhancements.css"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
@@ -368,6 +369,67 @@
                 <!-- Circuit cards will be dynamically inserted here -->
             </div>
         </section>
+
+        <!-- ML Race Predictor Section -->
+        <section id="predictor" class="section predictor-section">
+            <div class="section-header">
+                <h2 class="section-title">🤖 AI Race Predictor</h2>
+                <p class="section-subtitle">Machine Learning powered race outcome predictions</p>
+            </div>
+
+            <div class="predictor-main">
+                <div class="predictor-card-single">
+                    <div class="predictor-card-header">
+                        <h3>🏁 Predict Race Outcome</h3>
+                        <span class="predictor-badge predictor-badge-ready" id="model-status-badge">
+                            <span id="status-icon">⚡</span>
+                            <span id="status-text">AI Ready</span>
+                        </span>
+                    </div>
+                    
+                    <div class="predictor-card-body">
+                        <p class="predictor-description">
+                            Select a circuit and weather conditions to predict the race outcome. 
+                            Our AI analyzes driver form, team performance, circuit characteristics, and historical data to forecast results.
+                        </p>
+                        
+                        <div class="predictor-controls-grid">
+                            <div class="control-group">
+                                <label for="circuit-select">
+                                    <span class="label-icon">📍</span>
+                                    Select Circuit
+                                </label>
+                                <select id="circuit-select" class="predictor-select">
+                                    <option value="">Choose a circuit...</option>
+                                </select>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="weather-select">
+                                    <span class="label-icon">🌤️</span>
+                                    Weather Conditions
+                                </label>
+                                <select id="weather-select" class="predictor-select">
+                                    <option value="dry">☀️ Dry</option>
+                                    <option value="wet">🌧️ Wet</option>
+                                    <option value="mixed">⛅ Mixed</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary predictor-btn-large" id="predict-btn">
+                            <span class="btn-icon">🔮</span>
+                            Predict Race Outcome
+                        </button>
+                        
+                        <div class="prediction-results" id="prediction-results"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Messages -->
+            <div class="predictor-status" id="predictor-status"></div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -378,19 +440,33 @@
     </footer>
 
     <!-- Three.js for 3D effects -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
     <!-- GSAP for advanced animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lenis for smooth scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
     <!-- Vanilla Tilt for 3D card effects -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     
+    <!-- Data files -->
     <script src="quiz-data.js"></script>
     <script src="circuits-data.js"></script>
     <script src="race-calendar-data.js"></script>
     <script src="prediction-model.js"></script>
+    
+    <!-- Core application scripts -->
     <script src="script.js"></script>
     <script src="3d-effects.js"></script>
+    
+    <!-- New modular system (ES6 modules) -->
+    <script type="module" src="js/app-init.js"></script>
+    
+    <!-- ML Prediction System -->
+    <script type="module" src="js/ml-prediction-ui.js"></script>
+    
+    <!-- Professional Integration - Temporarily disabled for debugging -->
+    <!-- <script type="module" src="js/professional-integration.js"></script> -->
 
     <!-- Team Modal Structure -->
     <div id="team-modal" class="modal">
