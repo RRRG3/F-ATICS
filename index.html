@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Fan Zone | Your Ultimate Formula 1 Hub</title>
-    <meta name="description" content="Explore live F1 driver standings, test your knowledge with our quiz, and discover the 2024 team lineup.">
+    <meta name="description"
+        content="Explore live F1 driver standings, test your knowledge with our quiz, and discover the 2024 team lineup.">
     <link rel="stylesheet" href="style.css">
     <!-- <link rel="stylesheet" href="professional-enhancements.css"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Racing+Sans+One&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- Custom Cursor with Checkered Flag -->
     <div class="custom-cursor">
         <div class="cursor-dot"></div>
         <div class="cursor-outline"></div>
     </div>
-    
+
     <!-- Checkered Flag Trail -->
     <canvas id="flag-trail-canvas"></canvas>
-    
+
     <!-- Page Loader -->
     <div class="page-loader">
         <div class="loader-content">
@@ -56,57 +62,23 @@
     <div class="particles-container" id="particles"></div>
 
     <div class="hero">
-        <div class="hero-content">
-            <h2 class="hero-title" data-text="Welcome to the Fast Lane">Welcome to the Fast Lane</h2>
-            <p class="hero-subtitle">Dive into the world of speed, strategy, and racing excellence</p>
-            <div class="hero-stats">
-                <a href="#basics" class="stat-item stat-link" data-tilt>
-                    <div class="stat-icon">📖</div>
-                    <div class="stat-number">F1</div>
-                    <div class="stat-label">Basics</div>
-                    <div class="stat-description">Learn the Rules</div>
-                </a>
-                <a href="#showcase" class="stat-item stat-link" data-tilt>
-                    <div class="stat-icon">🏎️</div>
-                    <div class="stat-number" data-count="10">0</div>
-                    <div class="stat-label">Teams</div>
-                    <div class="stat-description">Explore Teams</div>
-                </a>
-                <a href="#tracker" class="stat-item stat-link" data-tilt>
-                    <div class="stat-icon">👤</div>
-                    <div class="stat-number" data-count="20">0</div>
-                    <div class="stat-label">Drivers</div>
-                    <div class="stat-description">See Standings</div>
-                </a>
-                <a href="#circuits" class="stat-item stat-link" data-tilt>
-                    <div class="stat-icon">🗺️</div>
-                    <div class="stat-number" data-count="24">0</div>
-                    <div class="stat-label">Circuits</div>
-                    <div class="stat-description">Discover Tracks</div>
-                </a>
-                <a href="#calendar" class="stat-item stat-link" data-tilt>
-                    <div class="stat-icon">📅</div>
-                    <div class="stat-number" data-count="24">0</div>
-                    <div class="stat-label">Races</div>
-                    <div class="stat-description">View Calendar</div>
-                </a>
-                <a href="#quiz" class="stat-item stat-link" data-tilt>
-                    <div class="stat-icon">❓</div>
-                    <div class="stat-number">Quiz</div>
-                    <div class="stat-label">Challenge</div>
-                    <div class="stat-description">Test Knowledge</div>
-                </a>
-            </div>
-            <div class="scroll-indicator">
-                <div class="mouse">
-                    <div class="wheel"></div>
-                </div>
-                <div class="arrow">
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
+        <div class="hero-background-text">
+            <div class="big-text-row">REDEFINING <span class="serif-italic">LIMITS</span>,</div>
+            <div class="big-text-row">FIGHTING FOR <span class="highlight-text">WINS</span>,</div>
+            <div class="big-text-row">BRINGING IT ALL IN</div>
+            <div class="big-text-row">ALL WAYS. DEFINING A</div>
+            <div class="big-text-row"><span class="serif-italic highlight-text">LEGACY</span> IN FORMULA 1</div>
+            <div class="big-text-row">ON AND OFF THE</div>
+            <div class="big-text-row">TRACK.</div>
         </div>
+
+        <div class="hero-image-container">
+            <!-- Placeholder for the slice effect image, using a generated placeholder or existing asset if available -->
+            <!-- For now, we'll use a div that we can style with a background image later -->
+            <div class="hero-slice-image"></div>
+        </div>
+
+
     </div>
 
     <main class="main-content">
@@ -117,59 +89,60 @@
                 <p class="section-subtitle">Everything you need to know to get started with Formula 1</p>
             </div>
 
-            <div class="basics-grid">
-                <div class="basics-card">
-                    <div class="basics-icon">🏎️</div>
-                    <h3>What is Formula 1?</h3>
-                    <p>Formula 1 is the highest class of international racing for open-wheel single-seater formula racing cars. It's the pinnacle of motorsport featuring the fastest cars and best drivers in the world.</p>
+            <div class="bento-grid">
+                <div class="bento-card large">
+                    <div>
+                        <div class="bento-icon">🏎️</div>
+                        <h3 class="bento-title">What is Formula 1?</h3>
+                        <p class="bento-text">Formula 1 is the highest class of international racing for open-wheel
+                            single-seater formula racing cars. It's the pinnacle of motorsport featuring the fastest
+                            cars and best drivers in the world.</p>
+                    </div>
                 </div>
 
-                <div class="basics-card">
-                    <div class="basics-icon">🏆</div>
-                    <h3>Championship System</h3>
-                    <p>Drivers earn points based on finishing position (25 for 1st, 18 for 2nd, 15 for 3rd, etc.). The driver with the most points at season end wins the World Championship.</p>
+                <div class="bento-card">
+                    <div>
+                        <div class="bento-icon">🏆</div>
+                        <h3 class="bento-title">Championship</h3>
+                        <p class="bento-text">Drivers earn points based on finishing position. The driver with the most
+                            points at season end wins the World Championship.</p>
+                    </div>
                 </div>
 
-                <div class="basics-card">
-                    <div class="basics-icon">⏱️</div>
-                    <h3>Race Weekend Format</h3>
-                    <p><strong>Friday:</strong> Practice sessions<br>
-                    <strong>Saturday:</strong> Final practice & Qualifying<br>
-                    <strong>Sunday:</strong> Race day (usually 305km or 2 hours)</p>
+                <div class="bento-card">
+                    <div>
+                        <div class="bento-icon">⏱️</div>
+                        <h3 class="bento-title">Race Weekend</h3>
+                        <p class="bento-text"><strong>Friday:</strong> Practice<br><strong>Saturday:</strong>
+                            Qualifying<br><strong>Sunday:</strong> Race</p>
+                    </div>
                 </div>
 
-                <div class="basics-card">
-                    <div class="basics-icon">🎯</div>
-                    <h3>Qualifying</h3>
-                    <p>Three knockout sessions (Q1, Q2, Q3) determine starting grid positions. Fastest lap in Q3 gets pole position. Bottom 5 eliminated in Q1 and Q2.</p>
+                <div class="bento-card">
+                    <div>
+                        <div class="bento-icon">🎯</div>
+                        <h3 class="bento-title">Qualifying</h3>
+                        <p class="bento-text">Three knockout sessions (Q1, Q2, Q3) determine starting grid positions.
+                            Fastest lap in Q3 gets pole position.</p>
+                    </div>
                 </div>
 
-                <div class="basics-card">
-                    <div class="basics-icon">🔧</div>
-                    <h3>Pit Stops</h3>
-                    <p>Teams must use at least 2 different tire compounds during the race. Pit stops take ~2-3 seconds for tire changes. Strategy is crucial for winning.</p>
+                <div class="bento-card">
+                    <div>
+                        <div class="bento-icon">🔧</div>
+                        <h3 class="bento-title">Pit Stops</h3>
+                        <p class="bento-text">Teams must use at least 2 different tire compounds. Pit stops take ~2-3
+                            seconds. Strategy is crucial.</p>
+                    </div>
                 </div>
 
-                <div class="basics-card">
-                    <div class="basics-icon">🚩</div>
-                    <h3>Flags & Penalties</h3>
-                    <p><strong>Yellow:</strong> Danger, slow down<br>
-                    <strong>Red:</strong> Session stopped<br>
-                    <strong>Blue:</strong> Let faster car pass<br>
-                    <strong>Checkered:</strong> Race finished</p>
-                </div>
-
-                <div class="basics-card">
-                    <div class="basics-icon">⚡</div>
-                    <h3>DRS (Drag Reduction System)</h3>
-                    <p>Rear wing opens in designated zones when within 1 second of car ahead. Provides ~10-12 km/h speed boost for overtaking opportunities.</p>
-                </div>
-
-                <div class="basics-card">
-                    <div class="basics-icon">🏁</div>
-                    <h3>Points System</h3>
-                    <p>1st: 25pts | 2nd: 18pts | 3rd: 15pts | 4th: 12pts | 5th: 10pts | 6th: 8pts | 7th: 6pts | 8th: 4pts | 9th: 2pts | 10th: 1pt<br>
-                    <strong>Fastest Lap:</strong> +1pt (if in top 10)</p>
+                <div class="bento-card">
+                    <div>
+                        <div class="bento-icon">⚡</div>
+                        <h3 class="bento-title">DRS</h3>
+                        <p class="bento-text">Rear wing opens in zones when within 1s of car ahead. Provides speed boost
+                            for overtaking.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -179,7 +152,7 @@
                 <h2 class="section-title">Championship Standings</h2>
                 <p class="section-subtitle">2025 F1 Season - Updated Driver Lineup</p>
             </div>
-            
+
             <!-- Standings Toggle -->
             <div class="standings-toggle">
                 <button class="toggle-btn active" data-standings="drivers">
@@ -240,7 +213,7 @@
                 <h2 class="section-title">2025 Race Calendar</h2>
                 <p class="section-subtitle">24 races across 5 continents</p>
             </div>
-            
+
             <div class="calendar-filters">
                 <input type="text" id="calendar-search" class="search-input" placeholder="🔍 Search races...">
                 <select id="calendar-filter" class="filter-select">
@@ -354,7 +327,7 @@
                 <h2 class="section-title">2025 F1 Circuits</h2>
                 <p class="section-subtitle">Explore all 24 race tracks on the calendar</p>
             </div>
-            
+
             <div class="circuits-filters">
                 <input type="text" id="circuit-search" class="search-input" placeholder="🔍 Search circuits...">
                 <select id="circuit-sort" class="filter-select">
@@ -386,13 +359,14 @@
                             <span id="status-text">AI Ready</span>
                         </span>
                     </div>
-                    
+
                     <div class="predictor-card-body">
                         <p class="predictor-description">
-                            Select a circuit and weather conditions to predict the race outcome. 
-                            Our AI analyzes driver form, team performance, circuit characteristics, and historical data to forecast results.
+                            Select a circuit and weather conditions to predict the race outcome.
+                            Our AI analyzes driver form, team performance, circuit characteristics, and historical data
+                            to forecast results.
                         </p>
-                        
+
                         <div class="predictor-controls-grid">
                             <div class="control-group">
                                 <label for="circuit-select">
@@ -403,7 +377,7 @@
                                     <option value="">Choose a circuit...</option>
                                 </select>
                             </div>
-                            
+
                             <div class="control-group">
                                 <label for="weather-select">
                                     <span class="label-icon">🌤️</span>
@@ -416,12 +390,12 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <button class="btn btn-primary predictor-btn-large" id="predict-btn">
                             <span class="btn-icon">🔮</span>
                             Predict Race Outcome
                         </button>
-                        
+
                         <div class="prediction-results" id="prediction-results"></div>
                     </div>
                 </div>
@@ -448,24 +422,34 @@
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
     <!-- Vanilla Tilt for 3D card effects -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-    
+
     <!-- Data files -->
     <script src="quiz-data.js"></script>
     <script src="circuits-data.js"></script>
     <script src="race-calendar-data.js"></script>
     <script src="prediction-model.js"></script>
-    
+
     <!-- Core application scripts -->
+    <script>
+        // Hide page loader when page is loaded
+        window.addEventListener('load', () => {
+            const loader = document.querySelector('.page-loader');
+            if (loader) {
+                loader.classList.add('hidden');
+                setTimeout(() => loader.style.display = 'none', 500);
+            }
+        });
+    </script>
     <script src="script.js"></script>
     <script src="3d-effects.js"></script>
-    
+
     <!-- New modular system (ES6 modules) -->
     <script type="module" src="js/app-init.js"></script>
-    
+
     <!-- ML Prediction System -->
     <script type="module" src="js/ml-prediction-ui.js"></script>
-    
-    <!-- Professional Integration - Temporarily disabled for debugging -->
+
+    <!-- Professional Integration - Temporarily disabled -->
     <!-- <script type="module" src="js/professional-integration.js"></script> -->
 
     <!-- Team Modal Structure -->
@@ -490,4 +474,5 @@
         </div>
     </div>
 </body>
+
 </html>
