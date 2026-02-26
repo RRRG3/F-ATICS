@@ -277,16 +277,27 @@ body.loaded {
     }
 }
 
-/* ===== HEADER ===== */
+/* ===== HEADER — Parker AI ultra-clean glassmorphism ===== */
 .header {
-    background: linear-gradient(180deg, rgba(13, 13, 13, 0.98) 0%, rgba(26, 26, 26, 0.95) 100%);
-    backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--primary-color);
+    background: rgba(8, 8, 13, 0.85);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border-bottom: 1px solid rgba(225, 6, 0, 0.25);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: var(--shadow-md);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 40px rgba(0,0,0,0.6), 0 0 0 0 rgba(225,6,0,0);
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(225,6,0,0.8) 30%, rgba(255,24,1,0.9) 50%, rgba(225,6,0,0.8) 70%, transparent 100%);
 }
 
 .header-container {
@@ -607,23 +618,38 @@ body.loaded {
     margin-top: 2rem;
 }
 
+/* ===== BENTO CARDS — deep glass, F1 red hover ===== */
 .bento-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(18,18,26,0.9), rgba(12,12,18,0.95));
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
     padding: 2rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(225,6,0,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 .bento-card:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-color: rgba(225, 6, 0, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 60px rgba(225,6,0,0.08);
 }
+
+.bento-card:hover::before { opacity: 1; }
 
 .bento-card.large {
     grid-column: span 2;
@@ -655,33 +681,49 @@ body.loaded {
     line-height: 1.5;
 }
 
-/* Removed shimmer effect for better performance */
-
-.section:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 20px 60px rgba(225, 6, 0, 0.3);
-    border-color: rgba(225, 6, 0, 0.3);
-}
-
+/* ===== SECTION HEADERS — Parker AI editorial style ===== */
 .section-header {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
 }
 
 .section-title {
     font-family: 'Racing Sans One', sans-serif;
-    font-size: 2.25rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
     font-weight: 400;
     color: var(--text-primary);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #E10600, #FF1801);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+.section:hover .section-title::after,
+.section-header:hover .section-title::after {
+    width: 80px;
 }
 
 .section-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-muted);
-    font-weight: 300;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-top: 0.75rem;
 }
 
 /* ===== STANDINGS TABLE ===== */

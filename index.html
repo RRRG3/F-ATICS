@@ -4,19 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Fan Zone | Your Ultimate Formula 1 Hub</title>
+    <title>F-ATICS | Ultimate F1 Fan Zone — 2026 Season</title>
     <meta name="description"
-        content="Explore live F1 driver standings, test your knowledge with our quiz, and discover the 2024 team lineup.">
+        content="The world-class F1 fan hub for 2026. 11 teams, 22 drivers, new Audi & Cadillac entrants, live countdown to the Australian GP, circuits, quiz, standings and more.">
     <link rel="stylesheet" href="style.css">
-    <!-- <link rel="stylesheet" href="professional-enhancements.css"> -->
+    <link rel="stylesheet" href="world-class.css">
+    <link rel="stylesheet" href="premium-design.css">
+    <link rel="stylesheet" href="parker-ai.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Racing+Sans+One&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
+    <!-- Topographic Background Pattern -->
+    <div class="topo-background"></div>
+    <div class="contour-lines"></div>
+    <div class="noise-overlay"></div>
+
     <!-- Custom Cursor with Checkered Flag -->
     <div class="custom-cursor">
         <div class="cursor-dot"></div>
@@ -25,6 +32,28 @@
 
     <!-- Checkered Flag Trail -->
     <canvas id="flag-trail-canvas"></canvas>
+
+    <!-- Fullscreen Navigation -->
+    <div class="fullscreen-nav">
+        <div class="nav-links-mega">
+            <a href="#basics" class="mega-link">F1 <em>Basics</em></a>
+            <a href="#tracker" class="mega-link"><em>Standings</em></a>
+            <a href="#rule-changes" class="mega-link">2026 <em>Changes</em></a>
+            <a href="#calendar" class="mega-link">Race <em>Calendar</em></a>
+            <a href="#quiz" class="mega-link">F1 <em>Quiz</em></a>
+            <a href="#showcase" class="mega-link">Team <em>Showcase</em></a>
+            <a href="#circuits" class="mega-link"><em>Circuits</em></a>
+        </div>
+    </div>
+
+    <!-- Menu Toggle Button -->
+    <button class="menu-toggle" aria-label="Toggle Navigation">
+        <div class="menu-toggle-lines">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
 
     <!-- Page Loader -->
     <div class="page-loader">
@@ -40,45 +69,72 @@
             </div>
         </div>
     </div>
-    <header class="header">
-        <div class="header-container">
-            <div class="logo" id="logo-btn">
-                <h1>F1 <span class="logo-accent">Fan Zone</span></h1>
+    <!-- Floating Pill Navbar — Parker AI style -->
+    <header class="header pk-nav-pill">
+        <div class="pk-nav-inner">
+            <div class="logo pk-logo" id="logo-btn">
+                <span class="pk-logo-f1">F1</span>
+                <span class="pk-logo-name">F-ATICS</span>
             </div>
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="#basics" class="nav-link">F1 Basics</a></li>
-                    <li class="nav-item"><a href="#tracker" class="nav-link">Standings</a></li>
-                    <li class="nav-item"><a href="#calendar" class="nav-link">Calendar</a></li>
-                    <li class="nav-item"><a href="#quiz" class="nav-link">Quiz</a></li>
-                    <li class="nav-item"><a href="#showcase" class="nav-link">Teams</a></li>
-                    <li class="nav-item"><a href="#circuits" class="nav-link">Circuits</a></li>
+            <nav class="nav pk-nav">
+                <ul class="nav-list pk-nav-list">
+                    <li><a href="#basics"      class="nav-link pk-nav-link">Basics</a></li>
+                    <li><a href="#tracker"     class="nav-link pk-nav-link">Standings</a></li>
+                    <li><a href="#rule-changes" class="nav-link pk-nav-link pk-nav-link-new">2026 ✦</a></li>
+                    <li><a href="#calendar"    class="nav-link pk-nav-link">Calendar</a></li>
+                    <li><a href="#quiz"        class="nav-link pk-nav-link">Quiz</a></li>
+                    <li><a href="#showcase"    class="nav-link pk-nav-link">Teams</a></li>
+                    <li><a href="#circuits"    class="nav-link pk-nav-link">Circuits</a></li>
                 </ul>
             </nav>
+            <a href="#tracker" class="pk-cta-btn">View 2026 Grid →</a>
         </div>
     </header>
 
     <!-- Lightweight Particle Background -->
     <div class="particles-container" id="particles"></div>
 
-    <div class="hero">
-        <div class="hero-background-text">
-            <div class="big-text-row">REDEFINING <span class="serif-italic">LIMITS</span>,</div>
-            <div class="big-text-row">FIGHTING FOR <span class="highlight-text">WINS</span>,</div>
-            <div class="big-text-row">BRINGING IT ALL IN</div>
-            <div class="big-text-row">ALL WAYS. DEFINING A</div>
-            <div class="big-text-row"><span class="serif-italic highlight-text">LEGACY</span> IN FORMULA 1</div>
-            <div class="big-text-row">ON AND OFF THE</div>
-            <div class="big-text-row">TRACK.</div>
+    <!-- World-Class Hero Section -->
+    <div class="hero hero-world-class">
+        <!-- Floating Race Indicator / Next Race Countdown -->
+        <div class="floating-race-indicator" id="next-race-indicator">
+            <span class="race-flag">🏁</span>
+            <span class="race-name" id="next-race-name">2026 Season</span>
         </div>
 
-        <div class="hero-image-container">
-            <!-- Placeholder for the slice effect image, using a generated placeholder or existing asset if available -->
-            <!-- For now, we'll use a div that we can style with a background image later -->
-            <div class="hero-slice-image"></div>
+        <!-- Next Race Live Countdown -->
+        <div class="hero-countdown" id="hero-countdown">
+            <div class="countdown-label-hero">NEXT RACE COUNTDOWN</div>
+            <div class="countdown-boxes">
+                <div class="countdown-box"><span id="cd-days">--</span><label>DAYS</label></div>
+                <div class="countdown-box"><span id="cd-hours">--</span><label>HRS</label></div>
+                <div class="countdown-box"><span id="cd-mins">--</span><label>MIN</label></div>
+                <div class="countdown-box"><span id="cd-secs">--</span><label>SEC</label></div>
+            </div>
         </div>
 
+        <!-- Mega Typography Hero — Parker AI editorial style -->
+        <div class="hero-text-container">
+            <div class="hero-mega-text">
+                The way you follow
+            </div>
+            <div class="hero-mega-text" style="font-style:italic; color: var(--pk-red, #E10600); -webkit-text-fill-color: var(--pk-red, #E10600);">
+                F1
+            </div>
+            <div class="hero-mega-text">
+                is about to change.
+            </div>
+            <div class="hero-season-badge">2026 Season — 11 Teams · 22 Drivers · Audi &amp; Cadillac debut</div>
+        </div>
 
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator-world">
+            <div class="scroll-line"></div>
+            <span class="scroll-text">SCROLL</span>
+        </div>
+
+        <!-- Hero Glow Effect -->
+        <div class="hero-glow"></div>
     </div>
 
     <main class="main-content">
@@ -150,7 +206,7 @@
         <section id="tracker" class="section">
             <div class="section-header">
                 <h2 class="section-title">Championship Standings</h2>
-                <p class="section-subtitle">2025 F1 Season - Updated Driver Lineup</p>
+                <p class="section-subtitle">2026 F1 Season — 11 Teams · 22 Drivers · Pre-Season</p>
             </div>
 
             <!-- Standings Toggle -->
@@ -207,11 +263,22 @@
             </div>
         </section>
 
+        <!-- 2026 Rule Changes Section -->
+        <section id="rule-changes" class="section rule-changes-section">
+            <div class="section-header">
+                <h2 class="section-title">🔬 2026 — The New Era</h2>
+                <p class="section-subtitle">Biggest regulation overhaul in a generation. New power units, new teams, new Madrid circuit.</p>
+            </div>
+            <div id="rule-changes-grid" class="rule-changes-grid">
+                <!-- Rule change cards inserted by JS -->
+            </div>
+        </section>
+
         <!-- Race Calendar Section -->
         <section id="calendar" class="section">
             <div class="section-header">
-                <h2 class="section-title">2025 Race Calendar</h2>
-                <p class="section-subtitle">24 races across 5 continents</p>
+                <h2 class="section-title">2026 Race Calendar</h2>
+                <p class="section-subtitle">24 races across 5 continents · Madrid makes its F1 debut!</p>
             </div>
 
             <div class="calendar-filters">
@@ -314,8 +381,8 @@
         </section>
         <section id="showcase" class="section">
             <div class="section-header">
-                <h2 class="section-title">F1 2025 Team Showcase</h2>
-                <p class="section-subtitle">Explore all teams competing in the championship</p>
+                <h2 class="section-title">🏎️ F1 2026 Team Showcase</h2>
+                <p class="section-subtitle">All 11 teams on the 2026 grid — including Audi &amp; Cadillac making their F1 debut!</p>
             </div>
             <div id="team-grid" class="team-grid">
                 <!-- Team cards will be dynamically inserted here -->
@@ -324,8 +391,8 @@
 
         <section id="circuits" class="section">
             <div class="section-header">
-                <h2 class="section-title">2025 F1 Circuits</h2>
-                <p class="section-subtitle">Explore all 24 race tracks on the calendar</p>
+                <h2 class="section-title">2026 F1 Circuits</h2>
+                <p class="section-subtitle">Explore all 24 race tracks — including the brand new Madrid street circuit!</p>
             </div>
 
             <div class="circuits-filters">
@@ -408,8 +475,9 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <p>&copy; 2024 F1 Fan Zone. All rights reserved.</p>
-            <p class="footer-note">Data provided by Ergast API. Not affiliated with Formula 1.</p>
+            <p>&copy; 2026 F-ATICS | F1 Fan Zone. All rights reserved.</p>
+            <p class="footer-note">2026 Season data. Not affiliated with Formula One Management or the FIA.</p>
+            <p class="footer-note">🆕 Welcome Audi Revolut F1 Team &amp; Cadillac F1 — the grid is 11 strong!</p>
         </div>
     </footer>
 
@@ -440,8 +508,12 @@
             }
         });
     </script>
-    <script src="script.js"></script>
-    <script src="3d-effects.js"></script>
+    <script src="js/car-360.js?v=1"></script>
+    <script src="script.js?v=3"></script>
+
+    <script src="3d-effects.js?v=2"></script>
+    <script src="world-class-animations.js?v=2"></script>
+
 
     <!-- New modular system (ES6 modules) -->
     <script type="module" src="js/app-init.js"></script>

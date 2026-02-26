@@ -1,3 +1,21 @@
+// ─── Local SVG placeholder (no network needed) ───────────────────────────────
+// Generates an inline SVG data URI with team color background and short label.
+// Drop-in replacement for via.placeholder.com that works fully offline.
+function makeSVG(text, bg, fg) {
+    bg = bg || '#1a1a2e';
+    fg = fg || '#ffffff';
+    // Shorten long text for the badge
+    const label = text.length > 18 ? text.slice(0, 16) + '…' : text;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="260" viewBox="0 0 400 260">
+        <rect width="400" height="260" fill="${bg}"/>
+        <rect x="0" y="0" width="400" height="4" fill="${fg}" opacity="0.3"/>
+        <rect x="0" y="256" width="400" height="4" fill="${fg}" opacity="0.3"/>
+        <text x="200" y="120" font-family="'Instrument Serif','Georgia',serif" font-size="22" fill="${fg}" text-anchor="middle" dominant-baseline="middle" font-weight="400" opacity="0.9">${label}</text>
+        <text x="200" y="155" font-family="'Inter','Arial',sans-serif" font-size="11" fill="${fg}" text-anchor="middle" dominant-baseline="middle" opacity="0.45" letter-spacing="2">F1 F-ATICS</text>
+    </svg>`;
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🏎️ F1 Fan Zone - Script loaded!');
     console.log('Quiz data loaded:', typeof quizData !== 'undefined' ? quizData.length + ' questions' : 'NOT LOADED');
@@ -30,136 +48,177 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.close-btn');
     const modalOverlay = document.querySelector('.modal-overlay');
 
+    // ========================================
+    // F1 2026 TEAM DATA — 11 Teams on the Grid
+    // NEW: Audi Revolut F1 Team & Cadillac F1!
+    // ========================================
     const teamsData = [
-        { 
-            name: "Mercedes-AMG Petronas", 
-            car: "Mercedes W16", 
-            drivers: "George Russell, Andrea Kimi Antonelli", 
-            principal: "Toto Wolff",
-            color: "#00D2BE",
-            logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/mercedes.png",
-            carImg: "https://www.mercedes-amg-f1.com/content/dam/mercedes-amg-f1/2024/car-launch/W15-side-profile.jpg",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/russell.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/antonelli.jpg",
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/TotoWolff.jpg",
-            fallbackImg: "https://via.placeholder.com/800x400/00D2BE/FFFFFF?text=Mercedes+W16"
-        },
-        { 
-            name: "Oracle Red Bull Racing", 
-            car: "Red Bull RB21", 
-            drivers: "Max Verstappen, Liam Lawson", 
-            principal: "Christian Horner",
-            color: "#0600EF",
-            logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/red%20bull.png",
-            carImg: "https://www.redbull.com/content/dam/redbullcom/images/motorsports/f1/2024/car-launch/RB20-side.jpg",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/verstappen.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/lawson.jpg",
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/ChristianHorner.jpg",
-            fallbackImg: "https://via.placeholder.com/800x400/0600EF/FFFFFF?text=Red+Bull+RB21"
-        },
-        { 
-            name: "Scuderia Ferrari", 
-            car: "Ferrari SF-25", 
-            drivers: "Charles Leclerc, Lewis Hamilton", 
-            principal: "Frédéric Vasseur",
-            color: "#DC0000",
-            logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/ferrari.png",
-            carImg: "https://www.ferrari.com/content/dam/ferrari/motorsport/formula1/2024/car-launch/SF-24-side.jpg",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/leclerc.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/hamilton.jpg",
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/FredericVasseur.jpg",
-            fallbackImg: "https://via.placeholder.com/800x400/DC0000/FFFFFF?text=Ferrari+SF-25"
-        },
-        { 
-            name: "McLaren Formula 1 Team", 
-            car: "McLaren MCL39", 
-            drivers: "Lando Norris, Oscar Piastri", 
+        {
+            name: "McLaren Formula 1 Team",
+            car: "McLaren MCL40",
+            drivers: "Lando Norris, Oscar Piastri",
             principal: "Andrea Stella",
+            engine: "Mercedes",
             color: "#FF8700",
+            isNew: false,
+            sketchfabId: "902384ddbec64d86b608881bf44e366f", // MCL39 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/mclaren.png",
-            carImg: "https://www.mclaren.com/content/dam/mclaren/racing/2024/car-launch/MCL38-side.jpg",
             driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/norris.jpg",
             driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/piastri.jpg",
             principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/AndreaStella.jpg",
-            fallbackImg: "https://via.placeholder.com/800x400/FF8700/FFFFFF?text=McLaren+MCL39"
+            fallbackImg: makeSVG('McLaren MCL40', '#FF8700', '#fff')
         },
-        { 
-            name: "Aston Martin Aramco", 
-            car: "Aston Martin AMR25", 
-            drivers: "Fernando Alonso, Lance Stroll", 
-            principal: "Mike Krack",
+        {
+            name: "Scuderia Ferrari",
+            car: "Ferrari SF-26",
+            drivers: "Charles Leclerc, Lewis Hamilton",
+            principal: "Frédéric Vasseur",
+            engine: "Ferrari",
+            color: "#DC0000",
+            isNew: false,
+            sketchfabId: "f5f6391749814819a60546f57b10b5f9", // SF-25 (2025)
+            logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/ferrari.png",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/leclerc.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/hamilton.jpg",
+            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/FredericVasseur.jpg",
+            fallbackImg: makeSVG('Ferrari SF-26', '#DC0000', '#fff')
+        },
+        {
+            name: "Oracle Red Bull Racing",
+            car: "Red Bull RB22",
+            drivers: "Max Verstappen, Isack Hadjar",
+            principal: "Christian Horner",
+            engine: "Ford / Red Bull Powertrains",
+            color: "#0600EF",
+            isNew: false,
+            sketchfabId: "621f884d9aee4efdaa54309e6b08bdd1", // RB21 (2025)
+            logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/red%20bull.png",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/verstappen.jpg",
+            driver2Img: makeSVG('Isack Hadjar', '#0600EF', '#fff'),
+            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/ChristianHorner.jpg",
+            fallbackImg: makeSVG('Red Bull RB22', '#0600EF', '#fff')
+        },
+        {
+            name: "Mercedes-AMG Petronas",
+            car: "Mercedes W17",
+            drivers: "George Russell, Kimi Antonelli",
+            principal: "Toto Wolff",
+            engine: "Mercedes",
+            color: "#00D2BE",
+            isNew: false,
+            sketchfabId: "0ffecbff3b814d308f30abba8b5fd8e7", // W16 (2025)
+            logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/mercedes.png",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/russell.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/antonelli.jpg",
+            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/TotoWolff.jpg",
+            fallbackImg: makeSVG('Mercedes W17', '#00D2BE', '#fff')
+        },
+        {
+            name: "Aston Martin Aramco",
+            car: "Aston Martin AMR26",
+            drivers: "Fernando Alonso, Lance Stroll",
+            principal: "Andy Cowell",
+            engine: "Honda",
             color: "#006F62",
+            isNew: false,
+            sketchfabId: "6eb43dd1b0f6404e90ff8f0a87162636", // AMR25 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/aston%20martin.png",
-            carImg: "https://www.astonmartinf1.com/content/dam/amf1/2024/car-launch/AMR24-side.jpg",
             driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/alonso.jpg",
             driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/stroll.jpg",
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/MikeKrack.jpg",
-            fallbackImg: "https://via.placeholder.com/800x400/006F62/FFFFFF?text=Aston+Martin+AMR25"
+            principalImg: makeSVG('Andy Cowell', '#006F62', '#fff'),
+            fallbackImg: makeSVG('Aston Martin AMR26', '#006F62', '#fff')
         },
-        { 
-            name: "BWT Alpine F1 Team", 
-            car: "Alpine A525", 
-            drivers: "Pierre Gasly, Jack Doohan", 
+        {
+            name: "Alpine F1 Team",
+            car: "Alpine A526",
+            drivers: "Pierre Gasly, Franco Colapinto",
             principal: "Oliver Oakes",
-            color: "#0090FF",
+            engine: "Mercedes",
+            color: "#FF69B4",
+            isNew: false,
+            sketchfabId: "33c7b240d04f480da57183ccb6fc5ea8", // A525 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/alpine.png",
-            carImg: "https://www.alpinecars.com/content/dam/alpine/f1/2024/car-launch/A524-side.jpg",
             driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/gasly.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/doohan.jpg",
-            principalImg: "https://via.placeholder.com/400x400/0090FF/FFFFFF?text=Oliver+Oakes",
-            fallbackImg: "https://via.placeholder.com/800x400/0090FF/FFFFFF?text=Alpine+A525"
+            driver2Img: makeSVG('Franco Colapinto', '#FF69B4', '#fff'),
+            principalImg: makeSVG('Oliver Oakes', '#FF69B4', '#fff'),
+            fallbackImg: makeSVG('Alpine A526', '#FF69B4', '#fff')
         },
-        { 
-            name: "Williams Racing", 
-            car: "Williams FW47", 
-            drivers: "Alexander Albon, Carlos Sainz", 
+        {
+            name: "Williams Racing",
+            car: "Williams FW48",
+            drivers: "Carlos Sainz, Alex Albon",
             principal: "James Vowles",
+            engine: "Mercedes",
             color: "#005AFF",
+            isNew: false,
+            sketchfabId: "a7b48019a6ce43a7ab93cd01efda9739", // FW47 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/williams.png",
-            carImg: "https://www.williamsf1.com/content/dam/williams/2024/car-launch/FW46-side.jpg",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/albon.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/sainz.jpg",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/sainz.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/albon.jpg",
             principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/JamesVowles.jpg",
-            fallbackImg: "https://via.placeholder.com/800x400/005AFF/FFFFFF?text=Williams+FW47"
+            fallbackImg: makeSVG('Williams FW48', '#005AFF', '#fff')
         },
-        { 
-            name: "Visa Cash App RB", 
-            car: "RB VCARB 02", 
-            drivers: "Yuki Tsunoda, Isack Hadjar", 
+        {
+            name: "Racing Bulls",
+            car: "Racing Bulls VCARB 03",
+            drivers: "Liam Lawson, Arvid Lindblad",
             principal: "Laurent Mekies",
-            color: "#2B4562",
+            engine: "Ford / Red Bull Powertrains",
+            color: "#4E5D9F",
+            isNew: false,
+            sketchfabId: "a5927538612642f697650a2dcf67fdde", // VCARB 02 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/rb.png",
-            carImg: "https://www.visacashapprb.com/content/dam/rb/2024/car-launch/VCARB01-side.jpg",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/tsunoda.jpg",
-            driver2Img: "https://via.placeholder.com/400x400/2B4562/FFFFFF?text=Isack+Hadjar",
-            principalImg: "https://via.placeholder.com/400x400/2B4562/FFFFFF?text=Laurent+Mekies",
-            fallbackImg: "https://via.placeholder.com/800x400/2B4562/FFFFFF?text=RB+VCARB+02"
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/lawson.jpg",
+            driver2Img: makeSVG('Arvid Lindblad', '#4E5D9F', '#fff'),
+            principalImg: makeSVG('Laurent Mekies', '#4E5D9F', '#fff'),
+            fallbackImg: makeSVG('Racing Bulls VCARB 03', '#4E5D9F', '#fff')
         },
-        { 
-            name: "Stake F1 Team Sauber", 
-            car: "Sauber C45", 
-            drivers: "Nico Hülkenberg, Gabriel Bortoleto", 
-            principal: "Mattia Binotto",
-            color: "#00E701",
-            logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/sauber.png",
-            carImg: "https://www.sauber-group.com/content/dam/sauber/2024/car-launch/C44-side.jpg",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/hulkenberg.jpg",
-            driver2Img: "https://via.placeholder.com/400x400/00E701/000000?text=Gabriel+Bortoleto",
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/MattiaBinotto.jpg",
-            fallbackImg: "https://via.placeholder.com/800x400/00E701/000000?text=Sauber+C45"
-        },
-        { 
-            name: "MoneyGram Haas F1 Team", 
-            car: "Haas VF-25", 
-            drivers: "Esteban Ocon, Oliver Bearman", 
+        {
+            name: "MoneyGram Haas F1 Team",
+            car: "Haas VF-26",
+            drivers: "Esteban Ocon, Oliver Bearman",
             principal: "Ayao Komatsu",
-            color: "#FFFFFF",
+            engine: "Ferrari",
+            color: "#B6BABD",
+            isNew: false,
+            sketchfabId: "b211ec88d4884ffbb7c4133054d1bd2d", // VF-25 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/haas.png",
-            carImg: "https://www.haasf1team.com/content/dam/haas/2024/car-launch/VF-24-side.jpg",
             driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/ocon.jpg",
             driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/bearman.jpg",
-            principalImg: "https://via.placeholder.com/400x400/FFFFFF/000000?text=Ayao+Komatsu",
-            fallbackImg: "https://via.placeholder.com/800x400/FFFFFF/000000?text=Haas+VF-25"
+            principalImg: makeSVG('Ayao Komatsu', '#B6BABD', '#111'),
+            fallbackImg: makeSVG('Haas VF-26', '#B6BABD', '#111')
+        },
+        {
+            name: "Audi Revolut F1 Team",
+            car: "Audi R26",
+            drivers: "Nico Hülkenberg, Gabriel Bortoleto",
+            principal: "Jonathan Wheatley",
+            engine: "Audi (Works)",
+            color: "#C0C0C0",
+            isNew: true,
+            newLabel: "NEW TEAM 2026",
+            sketchfabId: "39d08c4788e244de870dd4b9540d8bda", // Sauber C45 (closest — Audi inherits Sauber)
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Audi-Logo_2016.svg/2560px-Audi-Logo_2016.svg.png",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/hulkenberg.jpg",
+            driver2Img: makeSVG('Gabriel Bortoleto', '#C0C0C0', '#111'),
+            principalImg: makeSVG('Jonathan Wheatley', '#C0C0C0', '#111'),
+            fallbackImg: makeSVG('Audi R26', '#C0C0C0', '#111')
+        },
+        {
+            name: "Cadillac F1 Team",
+            car: "Cadillac CA01",
+            drivers: "Sergio Perez, Valtteri Bottas",
+            principal: "Graeme Lowdon",
+            engine: "Ferrari",
+            color: "#CC0033",
+            isNew: true,
+            newLabel: "NEW TEAM 2026",
+            sketchfabId: "05965d76f34048fc94b8189442acbd95", // APX GP F1 Movie car (closest available)
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Cadillac_logo.svg/1280px-Cadillac_logo.svg.png",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/perez.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/bottas.jpg",
+            principalImg: makeSVG('Graeme Lowdon', '#CC0033', '#fff'),
+            fallbackImg: makeSVG('Cadillac CA01', '#CC0033', '#fff')
         }
     ];
 
@@ -167,81 +226,50 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.createElement('div');
         card.classList.add('team-card');
         card.style.animationDelay = `${index * 0.05}s`;
+        const newBadge = team.isNew ? `<div class="team-new-badge">🆕 NEW TEAM 2026</div>` : '';
         card.innerHTML = `
+            ${newBadge}
             <div class="team-logo-badge">
                 <img src="${team.logo}" alt="${team.name} logo" class="team-logo" 
                      onerror="this.style.display='none'">
             </div>
             <div class="car-360-container">
-                <div class="car-360-viewer" data-team="${team.name}">
-                    <img src="${team.fallbackImg}" alt="${team.car}" class="car-image" 
-                         onerror="this.src='${team.fallbackImg}'"
-                         style="border-left: 4px solid ${team.color}">
-                    <div class="rotation-indicator">
-                        <span class="rotate-icon">🔄</span>
-                        <span class="rotate-text">Drag to rotate</span>
-                    </div>
-                </div>
+                ${team.sketchfabId
+                  ? `<iframe
+                        title="${team.car} 3D Model"
+                        class="sketchfab-iframe"
+                        src="https://sketchfab.com/models/${team.sketchfabId}/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0&ui_watermark=0&ui_theme=dark&transparent=0&dnt=1"
+                        allow="autoplay; fullscreen; xr-spatial-tracking"
+                        allowfullscreen
+                        frameborder="0"
+                        loading="lazy"
+                     ></iframe>`
+                  : `<img src="${team.fallbackImg}" alt="${team.car}" class="car-image"
+                         style="width:100%;height:100%;object-fit:contain;display:block;">`
+                }
             </div>
             <div class="team-card-content">
                 <h3>${team.name}</h3>
                 <p class="team-car-name">${team.car}</p>
                 <div class="team-quick-info">
-                    <span class="team-drivers">👥 ${team.drivers.split(',')[0]} & ${team.drivers.split(',')[1]}</span>
+                    <span class="team-drivers">👥 ${team.drivers.split(',')[0]} &amp; ${team.drivers.split(',')[1]}</span>
+                    ${team.engine ? `<span class="team-engine">⚡ ${team.engine}</span>` : ''}
                 </div>
             </div>
         `;
         card.addEventListener('click', () => openModal(team));
         teamGrid.appendChild(card);
         
-        // Add 360 rotation interaction
-        const viewer = card.querySelector('.car-360-viewer');
-        let isDragging = false;
-        let startX = 0;
-        let currentRotation = 0;
-        
-        viewer.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            viewer.style.cursor = 'grabbing';
-            e.stopPropagation();
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            const deltaX = e.clientX - startX;
-            currentRotation += deltaX * 0.5;
-            viewer.style.transform = `perspective(1000px) rotateY(${currentRotation}deg)`;
-            startX = e.clientX;
-        });
-        
-        document.addEventListener('mouseup', () => {
-            if (isDragging) {
-                isDragging = false;
-                viewer.style.cursor = 'grab';
+        // Only use SVG 360 viewer as fallback when no real 3D model available
+        if (!team.sketchfabId) {
+            const viewerContainer = card.querySelector('.car-360-container');
+            if (window.Car360 && viewerContainer) {
+                Car360.init(viewerContainer, team.color, team.car);
             }
-        });
-        
-        // Touch support
-        viewer.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startX = e.touches[0].clientX;
-            e.stopPropagation();
-        });
-        
-        viewer.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const deltaX = e.touches[0].clientX - startX;
-            currentRotation += deltaX * 0.5;
-            viewer.style.transform = `perspective(1000px) rotateY(${currentRotation}deg)`;
-            startX = e.touches[0].clientX;
-            e.preventDefault();
-        });
-        
-        viewer.addEventListener('touchend', () => {
-            isDragging = false;
-        });
+        }
+
     });
+
 
     function openModal(team) {
         const drivers = team.drivers.split(', ');
@@ -263,19 +291,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="modal-image-card">
                     <h3>👤 ${drivers[0]}</h3>
                     <img src="${team.driver1Img}" alt="${drivers[0]}" loading="lazy" 
-                         onerror="this.src='https://via.placeholder.com/400x400/${team.color.replace('#', '')}/FFFFFF?text=${encodeURIComponent(drivers[0])}'">
+                         onerror="this.src=makeSVG('${drivers[0]}','${team.color}','#fff')">
                 </div>
                 
                 <div class="modal-image-card">
                     <h3>👤 ${drivers[1]}</h3>
                     <img src="${team.driver2Img}" alt="${drivers[1]}" loading="lazy" 
-                         onerror="this.src='https://via.placeholder.com/400x400/${team.color.replace('#', '')}/FFFFFF?text=${encodeURIComponent(drivers[1])}'">
+                         onerror="this.src=makeSVG('${drivers[1]}','${team.color}','#fff')">
                 </div>
                 
                 <div class="modal-image-card">
                     <h3>👔 Team Principal</h3>
                     <img src="${team.principalImg}" alt="${team.principal}" loading="lazy" 
-                         onerror="this.src='https://via.placeholder.com/400x400/${team.color.replace('#', '')}/FFFFFF?text=${encodeURIComponent(team.principal)}'">
+                         onerror="this.src=makeSVG('${team.principal}','${team.color}','#fff')">
                     <p class="principal-name">${team.principal}</p>
                 </div>
             </div>
@@ -303,56 +331,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const standingsBody = document.getElementById('standings-body');
 
     // 2025 Driver Lineup with current season points
-    const fallbackStandings = [
-        { position: 1, driver: "Max Verstappen", nationality: "Dutch", team: "Red Bull Racing", points: 437 },
-        { position: 2, driver: "Lando Norris", nationality: "British", team: "McLaren", points: 374 },
-        { position: 3, driver: "Charles Leclerc", nationality: "Monegasque", team: "Ferrari", points: 356 },
-        { position: 4, driver: "Oscar Piastri", nationality: "Australian", team: "McLaren", points: 292 },
-        { position: 5, driver: "Lewis Hamilton", nationality: "British", team: "Ferrari", points: 223 },
-        { position: 6, driver: "George Russell", nationality: "British", team: "Mercedes", points: 245 },
-        { position: 7, driver: "Carlos Sainz", nationality: "Spanish", team: "Williams", points: 290 },
-        { position: 8, driver: "Liam Lawson", nationality: "New Zealand", team: "Red Bull Racing", points: 4 },
-        { position: 9, driver: "Fernando Alonso", nationality: "Spanish", team: "Aston Martin", points: 70 },
-        { position: 10, driver: "Lance Stroll", nationality: "Canadian", team: "Aston Martin", points: 24 },
-        { position: 11, driver: "Pierre Gasly", nationality: "French", team: "Alpine", points: 26 },
-        { position: 12, driver: "Jack Doohan", nationality: "Australian", team: "Alpine", points: 0 },
-        { position: 13, driver: "Yuki Tsunoda", nationality: "Japanese", team: "RB", points: 30 },
-        { position: 14, driver: "Isack Hadjar", nationality: "French", team: "RB", points: 0 },
-        { position: 15, driver: "Nico Hulkenberg", nationality: "German", team: "Sauber", points: 37 },
-        { position: 16, driver: "Gabriel Bortoleto", nationality: "Brazilian", team: "Sauber", points: 0 },
-        { position: 17, driver: "Esteban Ocon", nationality: "French", team: "Haas", points: 23 },
-        { position: 18, driver: "Oliver Bearman", nationality: "British", team: "Haas", points: 7 },
-        { position: 19, driver: "Alexander Albon", nationality: "Thai", team: "Williams", points: 12 },
-        { position: 20, driver: "Andrea Kimi Antonelli", nationality: "Italian", team: "Mercedes", points: 0 }
-    ];
+    // 2026 team color map for standings display
+    const teamColors2026 = {
+        'McLaren': '#FF8700',
+        'Ferrari': '#DC0000',
+        'Red Bull Racing': '#0600EF',
+        'Mercedes': '#00D2BE',
+        'Aston Martin': '#006F62',
+        'Williams': '#005AFF',
+        'Racing Bulls': '#4E5D9F',
+        'Alpine': '#FF69B4',
+        'Haas': '#B6BABD',
+        'Audi': '#C0C0C0',
+        'Cadillac': '#CC0033'
+    };
+
+    // Use 2026 driver standings from the data file
+    const fallbackStandings = typeof driverStandings2026 !== 'undefined' ? driverStandings2026 : [];
 
     function displayStandings(standings) {
         standingsBody.innerHTML = '';
+        const maxPts = Math.max(...standings.map(d => d.points || 0), 1);
         standings.forEach((driver, index) => {
             const row = document.createElement('tr');
             row.style.animationDelay = `${index * 0.03}s`;
+            const teamColor = teamColors2026[driver.team] || '#E10600';
+            const driverFlag = driver.flag || '';
+            const driverNum = driver.number ? `<span class="driver-num" style="color:${teamColor}">#${driver.number}</span>` : '';
             
-            // Add medal emoji for top 3
             let positionDisplay = driver.position;
-            if (driver.position === 1 || driver.position === '1') positionDisplay = '🥇 1';
-            else if (driver.position === 2 || driver.position === '2') positionDisplay = '🥈 2';
-            else if (driver.position === 3 || driver.position === '3') positionDisplay = '🥉 3';
+            if (driver.position === 1) positionDisplay = '🥇 1';
+            else if (driver.position === 2) positionDisplay = '🥈 2';
+            else if (driver.position === 3) positionDisplay = '🥉 3';
+
+            const ptsPct = Math.max((driver.points / maxPts) * 100, 0);
+            const ptsBar = `<div class="pts-bar-wrap"><div class="pts-bar" style="width:${ptsPct}%;background:${teamColor}"></div></div>`;
             
             row.innerHTML = `
                 <td class="pos-col">${positionDisplay}</td>
-                <td class="driver-col">${driver.driver}</td>
+                <td class="driver-col">${driverFlag} ${driverNum} ${driver.driver}</td>
                 <td class="nationality-col">${driver.nationality}</td>
-                <td class="team-col">${driver.team}</td>
-                <td class="points-col">${driver.points}</td>
+                <td class="team-col"><span class="team-dot" style="background:${teamColor}"></span>${driver.team}</td>
+                <td class="points-col">${driver.points} ${ptsBar}</td>
             `;
             standingsBody.appendChild(row);
         });
     }
 
-    // Use fallback data directly for better performance and reliability
-    console.log('Loading driver standings...');
+    console.log('Loading 2026 driver standings...');
     displayStandings(fallbackStandings);
-    console.log('✅ Driver standings loaded!');
+    console.log('✅ 2026 Driver standings loaded!');
 
 
     // Quiz - using external quiz data
@@ -601,10 +629,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 countdownHTML = `
                     <div class="calendar-countdown">
                         <div class="countdown-label">Countdown</div>
-                        <div class="countdown-time">${days} days</div>
+                        <div class="countdown-time">${days} day${days !== 1 ? 's' : ''}</div>
                     </div>
                 `;
             }
+
+            const sprintBadge = race.isSprint ? `<span class="cal-badge cal-badge-sprint">⚡ Sprint</span>` : '';
+            const debutBadge = race.isDebut ? `<span class="cal-badge cal-badge-debut">🆕 Debut</span>` : '';
             
             card.innerHTML = `
                 <div class="calendar-card-header">
@@ -612,6 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="calendar-flag">${race.flag}</span>
                 </div>
                 <h3>${race.name}</h3>
+                <div class="calendar-badges">${sprintBadge}${debutBadge}</div>
                 <div class="calendar-circuit">📍 ${race.circuit}</div>
                 <div class="calendar-date">
                     📅 ${new Date(race.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
@@ -623,6 +655,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     renderCalendar();
+
+    // ============================================================
+    // NEXT RACE LIVE COUNTDOWN
+    // ============================================================
+    function initNextRaceCountdown() {
+        const now = new Date();
+        const nextRace = raceCalendar.find(r => new Date(r.date) > now);
+        if (!nextRace) return;
+
+        const nameEl = document.getElementById('next-race-name');
+        if (nameEl) nameEl.textContent = `Next: ${nextRace.name}`;
+
+        function updateCountdown() {
+            const target = new Date(nextRace.date);
+            const diff = target - new Date();
+            if (diff <= 0) return;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            const fmt = n => String(n).padStart(2, '0');
+            const cdDays = document.getElementById('cd-days');
+            const cdHours = document.getElementById('cd-hours');
+            const cdMins = document.getElementById('cd-mins');
+            const cdSecs = document.getElementById('cd-secs');
+            if (cdDays) cdDays.textContent = d;
+            if (cdHours) cdHours.textContent = fmt(h);
+            if (cdMins) cdMins.textContent = fmt(m);
+            if (cdSecs) cdSecs.textContent = fmt(s);
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+    initNextRaceCountdown();
+
+    // ============================================================
+    // 2026 RULE CHANGES SECTION
+    // ============================================================
+    function initRuleChanges() {
+        const grid = document.getElementById('rule-changes-grid');
+        if (!grid || typeof ruleChanges2026 === 'undefined') return;
+        grid.innerHTML = ruleChanges2026.map(rule => `
+            <div class="rule-card">
+                <div class="rule-icon">${rule.icon}</div>
+                <h3 class="rule-title">${rule.title}</h3>
+                <p class="rule-desc">${rule.description}</p>
+            </div>
+        `).join('');
+    }
+    initRuleChanges();
+
+
     
     calendarSearch.addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
@@ -834,7 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.animationDelay = `${index * 0.03}s`;
         card.innerHTML = `
             <div class="circuit-card-image">
-                <img src="${circuit.layoutImage}" alt="${circuit.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200/1a1a1a/e10600?text=${encodeURIComponent(circuit.name)}'">
+                <img src="${circuit.layoutImage}" alt="${circuit.name}" loading="lazy" onerror="this.src=makeSVG('${circuit.name}','#1a1a1e','#e10600')">
             </div>
             <div class="circuit-card-content">
                 <h3>${circuit.name}</h3>
@@ -912,7 +996,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="circuit-modal-location">📍 ${circuit.location}</div>
             </div>
             
-            <img src="${circuit.layoutImage}" alt="${circuit.name} layout" class="circuit-layout-image" onerror="this.src='https://via.placeholder.com/800x400/1a1a1a/e10600?text=${encodeURIComponent(circuit.name + ' Layout')}'">
+            <img src="${circuit.layoutImage}" alt="${circuit.name} layout" class="circuit-layout-image" onerror="this.src=makeSVG('${circuit.name} Layout','#1a1a1e','#e10600')">
             
             <div class="circuit-modal-stats">
                 <div class="circuit-modal-stat">
