@@ -22,37 +22,44 @@ const predictionModel = (function () {
 
     // ─── 1. RAW DRIVER FEATURES ────────────────────────────────────────────────
     // Multi-dimensional feature vector per driver (domain-encoded expert knowledge)
+    // ── 2026 ratings: new regs mean much tighter parity at the top.
+    // McLaren is expected championship favourite; Max remains elite driver
+    // but no longer has an overwhelming +15pt gap over the field.
+    // Form arrays: 10-race recent results (scale 1-10, 10=win/podium)
     const DRIVER_FEATURES = {
-        'Max Verstappen':    { pace:99, consistency:97, wet:96, overtaking:97, starts:96, tyre:93, quali:99, clutch:98, err:0.030, elo:2850, form:[10,9,9,10,9,10,9,10,9,10] },
-        'Lando Norris':      { pace:96, consistency:94, wet:88, overtaking:90, starts:88, tyre:91, quali:96, clutch:90, err:0.060, elo:2720, form:[8,10,9,8,10,7,9,10,8,9]  },
-        'Oscar Piastri':     { pace:94, consistency:93, wet:85, overtaking:87, starts:90, tyre:93, quali:93, clutch:89, err:0.050, elo:2680, form:[9,8,9,9,7,10,8,9,9,8]   },
-        'Charles Leclerc':   { pace:95, consistency:87, wet:92, overtaking:88, starts:85, tyre:84, quali:97, clutch:85, err:0.090, elo:2700, form:[10,6,10,5,9,10,7,6,10,8] },
-        'Lewis Hamilton':    { pace:95, consistency:91, wet:95, overtaking:90, starts:89, tyre:94, quali:94, clutch:94, err:0.050, elo:2740, form:[7,8,9,8,7,9,8,9,7,8]    },
-        'George Russell':    { pace:91, consistency:90, wet:89, overtaking:85, starts:88, tyre:88, quali:92, clutch:88, err:0.060, elo:2600, form:[8,7,8,9,8,7,9,8,8,7]    },
-        'Kimi Antonelli':    { pace:88, consistency:82, wet:80, overtaking:83, starts:82, tyre:82, quali:87, clutch:80, err:0.120, elo:2420, form:[6,7,5,8,6,7,5,8,6,7]    },
-        'Fernando Alonso':   { pace:90, consistency:89, wet:93, overtaking:91, starts:88, tyre:95, quali:90, clutch:93, err:0.050, elo:2590, form:[8,7,8,7,9,7,8,7,9,8]    },
-        'Lance Stroll':      { pace:80, consistency:78, wet:82, overtaking:77, starts:79, tyre:80, quali:78, clutch:78, err:0.100, elo:2300, form:[5,6,5,7,4,6,5,6,5,6]    },
-        'Carlos Sainz':      { pace:90, consistency:90, wet:89, overtaking:86, starts:87, tyre:91, quali:90, clutch:90, err:0.060, elo:2610, form:[8,9,8,8,9,8,9,7,8,9]    },
-        'Alex Albon':        { pace:83, consistency:83, wet:81, overtaking:82, starts:80, tyre:85, quali:82, clutch:82, err:0.080, elo:2430, form:[7,6,7,7,6,7,6,7,7,6]    },
-        'Isack Hadjar':      { pace:82, consistency:78, wet:74, overtaking:79, starts:77, tyre:79, quali:80, clutch:77, err:0.140, elo:2250, form:[6,5,7,5,6,7,5,6,5,7]    },
-        'Liam Lawson':       { pace:83, consistency:80, wet:76, overtaking:80, starts:78, tyre:80, quali:82, clutch:79, err:0.130, elo:2260, form:[6,7,5,7,6,5,7,6,7,5]    },
-        'Arvid Lindblad':    { pace:78, consistency:74, wet:70, overtaking:75, starts:73, tyre:75, quali:77, clutch:74, err:0.160, elo:2150, form:[5,5,6,4,6,5,4,6,5,5]    },
-        'Pierre Gasly':      { pace:84, consistency:82, wet:83, overtaking:80, starts:81, tyre:83, quali:84, clutch:82, err:0.090, elo:2380, form:[7,6,7,7,6,8,7,6,7,6]    },
-        'Franco Colapinto':  { pace:82, consistency:78, wet:75, overtaking:79, starts:77, tyre:78, quali:81, clutch:77, err:0.150, elo:2230, form:[6,7,5,6,7,5,6,7,5,6]    },
-        'Esteban Ocon':      { pace:82, consistency:80, wet:83, overtaking:78, starts:80, tyre:82, quali:82, clutch:81, err:0.090, elo:2340, form:[6,6,7,5,7,6,6,7,6,6]    },
-        'Oliver Bearman':    { pace:80, consistency:76, wet:72, overtaking:77, starts:75, tyre:77, quali:79, clutch:76, err:0.150, elo:2200, form:[5,6,5,6,5,7,5,6,5,6]    },
-        'Nico Hulkenberg':   { pace:83, consistency:83, wet:80, overtaking:80, starts:82, tyre:84, quali:83, clutch:83, err:0.080, elo:2350, form:[6,7,6,7,6,7,7,6,7,6]    },
-        'Gabriel Bortoleto': { pace:80, consistency:75, wet:72, overtaking:76, starts:74, tyre:76, quali:80, clutch:75, err:0.160, elo:2180, form:[5,6,5,5,6,5,6,5,6,5]    },
-        'Sergio Perez':      { pace:84, consistency:82, wet:80, overtaking:83, starts:84, tyre:87, quali:82, clutch:83, err:0.080, elo:2370, form:[7,6,6,7,6,7,6,7,6,7]    },
-        'Valtteri Bottas':   { pace:80, consistency:79, wet:77, overtaking:76, starts:79, tyre:83, quali:80, clutch:79, err:0.090, elo:2230, form:[5,6,6,5,6,6,5,6,6,5]    },
+        //                          pace  cons  wet   ot    st    tyre  qual  clutch  err    elo   recent form (10 races)
+        'Lando Norris':      { pace:97, consistency:95, wet:88, overtaking:91, starts:89, tyre:92, quali:97, clutch:91, err:0.055, elo:2760, form:[9,10,9,9,10,8,10,9,9,10] },
+        'Max Verstappen':    { pace:98, consistency:96, wet:96, overtaking:97, starts:96, tyre:93, quali:98, clutch:98, err:0.035, elo:2820, form:[10,8,9,10,8,9,10,8,9,9]  },
+        'Oscar Piastri':     { pace:95, consistency:94, wet:86, overtaking:88, starts:91, tyre:94, quali:94, clutch:90, err:0.050, elo:2720, form:[9,9,8,10,8,9,9,9,8,9]   },
+        'Charles Leclerc':   { pace:96, consistency:87, wet:93, overtaking:89, starts:86, tyre:85, quali:98, clutch:86, err:0.085, elo:2710, form:[10,6,10,5,9,10,8,6,10,9] },
+        'Lewis Hamilton':    { pace:95, consistency:91, wet:95, overtaking:90, starts:88, tyre:94, quali:93, clutch:94, err:0.050, elo:2730, form:[7,9,8,8,8,9,7,9,8,8]    },
+        'George Russell':    { pace:92, consistency:90, wet:89, overtaking:86, starts:89, tyre:89, quali:93, clutch:88, err:0.058, elo:2630, form:[8,8,8,9,8,8,9,8,8,8]    },
+        'Carlos Sainz':      { pace:91, consistency:91, wet:89, overtaking:87, starts:88, tyre:92, quali:91, clutch:90, err:0.058, elo:2640, form:[8,9,9,8,9,9,9,8,9,8]    },
+        'Fernando Alonso':   { pace:90, consistency:89, wet:94, overtaking:92, starts:88, tyre:96, quali:90, clutch:94, err:0.048, elo:2610, form:[7,8,8,7,9,8,8,7,9,8]    },
+        'Kimi Antonelli':    { pace:89, consistency:83, wet:81, overtaking:84, starts:83, tyre:83, quali:88, clutch:81, err:0.115, elo:2460, form:[7,7,6,8,7,7,6,8,7,7]    },
+        'Alex Albon':        { pace:84, consistency:84, wet:82, overtaking:83, starts:81, tyre:86, quali:83, clutch:83, err:0.075, elo:2460, form:[7,7,7,7,7,7,7,7,7,7]    },
+        'Lance Stroll':      { pace:81, consistency:79, wet:83, overtaking:78, starts:80, tyre:81, quali:79, clutch:79, err:0.095, elo:2330, form:[5,6,6,7,5,6,6,6,5,6]    },
+        'Isack Hadjar':      { pace:83, consistency:79, wet:75, overtaking:80, starts:78, tyre:80, quali:81, clutch:78, err:0.130, elo:2290, form:[6,6,7,6,6,7,6,6,6,7]    },
+        'Liam Lawson':       { pace:84, consistency:81, wet:77, overtaking:81, starts:79, tyre:81, quali:83, clutch:80, err:0.120, elo:2300, form:[7,6,6,7,6,6,7,6,7,6]    },
+        'Pierre Gasly':      { pace:85, consistency:83, wet:84, overtaking:81, starts:82, tyre:84, quali:85, clutch:83, err:0.085, elo:2410, form:[7,7,7,7,7,8,7,7,7,7]    },
+        'Franco Colapinto':  { pace:83, consistency:79, wet:76, overtaking:80, starts:78, tyre:79, quali:82, clutch:78, err:0.140, elo:2260, form:[6,7,6,6,7,6,7,7,6,6]    },
+        'Esteban Ocon':      { pace:83, consistency:81, wet:84, overtaking:79, starts:81, tyre:83, quali:83, clutch:82, err:0.085, elo:2370, form:[6,7,7,6,7,7,7,7,7,6]    },
+        'Oliver Bearman':    { pace:81, consistency:77, wet:73, overtaking:78, starts:76, tyre:78, quali:80, clutch:77, err:0.145, elo:2230, form:[6,6,6,6,6,7,6,6,6,6]    },
+        'Nico Hulkenberg':   { pace:84, consistency:84, wet:81, overtaking:81, starts:83, tyre:85, quali:84, clutch:84, err:0.075, elo:2380, form:[7,7,7,7,7,7,7,7,7,7]    },
+        'Gabriel Bortoleto': { pace:81, consistency:76, wet:73, overtaking:77, starts:75, tyre:77, quali:81, clutch:76, err:0.150, elo:2210, form:[6,6,6,5,6,6,6,6,6,6]    },
+        'Arvid Lindblad':    { pace:79, consistency:75, wet:71, overtaking:76, starts:74, tyre:76, quali:78, clutch:75, err:0.155, elo:2170, form:[5,5,6,5,6,5,5,6,5,5]    },
+        'Sergio Perez':      { pace:85, consistency:83, wet:81, overtaking:84, starts:85, tyre:88, quali:83, clutch:84, err:0.078, elo:2390, form:[7,7,7,7,7,7,7,7,7,7]    },
+        'Valtteri Bottas':   { pace:81, consistency:80, wet:78, overtaking:77, starts:80, tyre:84, quali:81, clutch:80, err:0.088, elo:2250, form:[6,6,6,6,6,6,6,6,6,6]    },
     };
 
     // ─── 2. TEAM CAR CHARACTERISTICS ──────────────────────────────────────────
+    // 2026 car ratings: McLaren leads after 2024 constructors title.
+    // New regs close the field — top 4 teams within ~4 pts of each other.
     const TEAM_CAR = {
-        'Red Bull Racing':  { df:95, eff:92, rel:0.980, tyre:94, pit:0.97, elo:2900 },
-        'McLaren':          { df:97, eff:94, rel:0.975, tyre:95, pit:0.98, elo:2880 },
-        'Ferrari':          { df:96, eff:91, rel:0.950, tyre:88, pit:0.94, elo:2850 },
-        'Mercedes':         { df:91, eff:93, rel:0.970, tyre:90, pit:0.96, elo:2780 },
+        'McLaren':          { df:98, eff:95, rel:0.978, tyre:96, pit:0.98, elo:2920 },
+        'Red Bull Racing':  { df:94, eff:93, rel:0.978, tyre:93, pit:0.97, elo:2890 },
+        'Ferrari':          { df:96, eff:90, rel:0.950, tyre:87, pit:0.93, elo:2870 },
+        'Mercedes':         { df:92, eff:94, rel:0.970, tyre:91, pit:0.96, elo:2800 },
         'Aston Martin':     { df:88, eff:86, rel:0.960, tyre:89, pit:0.95, elo:2600 },
         'Alpine':           { df:83, eff:82, rel:0.940, tyre:82, pit:0.93, elo:2450 },
         'Williams':         { df:85, eff:86, rel:0.950, tyre:84, pit:0.94, elo:2480 },
@@ -246,23 +253,31 @@ const predictionModel = (function () {
             const d = DRIVER_FEATURES[name];
 
             // DNF probability (mechanical + driver error)
-            const dnfProb = (1 - t.rel) * 0.6 + d.err * 0.12;
+            const dnfProb = (1 - t.rel) * 0.7 + d.err * 0.15;
             if (Math.random() < dnfProb) return; // DNF
 
             let score = rawScores[i] * spreadReduction;
 
-            // Lap-by-lap racing variance:
-            // • Base noise: represents unpredictable race events
-            // • Wet/mixed: extra variance (more upsets in rain)
-            const baseNoise = isWet ? gaussian(0, 6.5) : isMixed ? gaussian(0, 4.5) : gaussian(0, 3.2);
+            // ── RACE VARIANCE (the key to realistic predictions) ──────────────
+            // 2026: new regs = higher uncertainty. Top drivers WILL lose races.
+            // σ=6.0 in dry means a 3pt advantage = only ~55% win rate, not 80%+
+            // Circuit-specific chaos factor (street circuits far more chaotic)
+            const circuitChaos = 0.8 + c.sc * 1.2;   // Monaco=2.0x chaos, Monza=1.3x
+            const dryNoise   = gaussian(0, 6.0 * circuitChaos);
+            const wetNoise   = gaussian(0, 9.0 * circuitChaos);
+            const mixedNoise = gaussian(0, 7.0 * circuitChaos);
+            const baseNoise  = isWet ? wetNoise : isMixed ? mixedNoise : dryNoise;
 
-            // Overtaking opportunity: top cars can make up positions at overtaking-friendly circuits
-            const overtakeBonus = (d.overtaking - 82) / 100 * c.ot * gaussian(0, 2);
+            // Overtaking: top cars can make up positions at overtaking-friendly circuits
+            const overtakeBonus = (d.overtaking - 82) / 100 * c.ot * gaussian(0, 3);
 
-            score += baseNoise + overtakeBonus;
+            // Pit-stop variance: bad pitstops cost ~5s = ~0.5 score points
+            const pitstopRisk = Math.random() < (1 - t.pit) * 3 ? gaussian(-4, 2) : 0;
 
-            // Safety car lottery: slow/unlucky cars gain, leaders may lose
-            if (safetyCarEvent) score += gaussian(0, 4);
+            score += baseNoise + overtakeBonus + pitstopRisk;
+
+            // Safety car lottery: resets gaps, major upset potential
+            if (safetyCarEvent) score += gaussian(0, 7);
 
             results.push({ name, score: clamp(score, 0, 100), team });
         });
