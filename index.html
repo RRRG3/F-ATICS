@@ -410,67 +410,94 @@
             </div>
         </section>
 
-        <!-- ML Race Predictor Section -->
+        <!-- AI Race Predictor Section -->
         <section id="predictor" class="section predictor-section">
             <div class="section-header">
-                <h2 class="section-title">🤖 AI Race Predictor</h2>
-                <p class="section-subtitle">Machine Learning powered race outcome predictions</p>
+                <p class="section-eyebrow">POWERED BY MONTE CARLO SIMULATION</p>
+                <h2 class="section-title">AI Race Predictor</h2>
+                <p class="section-subtitle">5,000 race simulations · 22 drivers · 24 circuits · Weather & tyre modelling</p>
             </div>
 
-            <div class="predictor-main">
-                <div class="predictor-card-single">
-                    <div class="predictor-card-header">
-                        <h3>🏁 Predict Race Outcome</h3>
-                        <span class="predictor-badge predictor-badge-ready" id="model-status-badge">
-                            <span id="status-icon">⚡</span>
-                            <span id="status-text">AI Ready</span>
-                        </span>
-                    </div>
+            <div class="predictor-wrapper">
 
-                    <div class="predictor-card-body">
-                        <p class="predictor-description">
-                            Select a circuit and weather conditions to predict the race outcome.
-                            Our AI analyzes driver form, team performance, circuit characteristics, and historical data
-                            to forecast results.
-                        </p>
-
-                        <div class="predictor-controls-grid">
-                            <div class="control-group">
-                                <label for="circuit-select">
-                                    <span class="label-icon">📍</span>
-                                    Select Circuit
-                                </label>
-                                <select id="circuit-select" class="predictor-select">
-                                    <option value="">Choose a circuit...</option>
-                                </select>
-                            </div>
-
-                            <div class="control-group">
-                                <label for="weather-select">
-                                    <span class="label-icon">🌤️</span>
-                                    Weather Conditions
-                                </label>
-                                <select id="weather-select" class="predictor-select">
-                                    <option value="dry">☀️ Dry</option>
-                                    <option value="wet">🌧️ Wet</option>
-                                    <option value="mixed">⛅ Mixed</option>
-                                </select>
-                            </div>
+                <!-- ── Controls ── -->
+                <div class="predictor-controls-panel">
+                    <div class="control-row">
+                        <div class="control-block">
+                            <label class="control-label" for="circuit-select">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+                                Circuit
+                            </label>
+                            <select id="circuit-select" class="pred-select">
+                                <option value="">Choose a circuit…</option>
+                                <option value="Albert Park, Melbourne">Albert Park, Melbourne</option>
+                                <option value="Shanghai International Circuit">Shanghai International Circuit</option>
+                                <option value="Bahrain International Circuit">Bahrain International Circuit</option>
+                                <option value="Jeddah Corniche Circuit">Jeddah Corniche Circuit</option>
+                                <option value="Miami International Autodrome">Miami International Autodrome</option>
+                                <option value="Circuit de Monaco">Circuit de Monaco</option>
+                                <option value="Circuit de Barcelona-Catalunya">Circuit de Barcelona-Catalunya</option>
+                                <option value="Circuit Gilles Villeneuve">Circuit Gilles Villeneuve</option>
+                                <option value="Red Bull Ring">Red Bull Ring</option>
+                                <option value="Silverstone Circuit">Silverstone Circuit</option>
+                                <option value="Hungaroring">Hungaroring</option>
+                                <option value="Circuit de Spa-Francorchamps">Circuit de Spa-Francorchamps</option>
+                                <option value="Autodromo Nazionale Monza">Autodromo Nazionale Monza</option>
+                                <option value="Marina Bay Street Circuit">Marina Bay Street Circuit</option>
+                                <option value="Suzuka Circuit">Suzuka Circuit</option>
+                                <option value="Lusail International Circuit">Lusail International Circuit</option>
+                                <option value="Circuit of the Americas">Circuit of the Americas</option>
+                                <option value="Autodromo Hermanos Rodriguez">Autodromo Hermanos Rodriguez</option>
+                                <option value="Autodromo Jose Carlos Pace">Autodromo Jose Carlos Pace</option>
+                                <option value="Las Vegas Strip Circuit">Las Vegas Strip Circuit</option>
+                                <option value="Yas Marina Circuit">Yas Marina Circuit</option>
+                                <option value="Imola Circuit">Imola Circuit</option>
+                                <option value="Madrid Street Circuit">Madrid Street Circuit</option>
+                            </select>
                         </div>
 
-                        <button class="btn btn-primary predictor-btn-large" id="predict-btn">
-                            <span class="btn-icon">🔮</span>
-                            Predict Race Outcome
-                        </button>
+                        <div class="control-block">
+                            <label class="control-label" for="weather-select">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+                                Weather
+                            </label>
+                            <select id="weather-select" class="pred-select">
+                                <option value="dry">☀️  Dry</option>
+                                <option value="wet">🌧️  Wet</option>
+                                <option value="mixed">⛅  Mixed</option>
+                            </select>
+                        </div>
 
-                        <div class="prediction-results" id="prediction-results"></div>
+                        <button class="pred-run-btn" id="predict-btn">
+                            <span class="pred-btn-inner">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                Run Simulation
+                            </span>
+                            <span class="pred-btn-shimmer"></span>
+                        </button>
+                    </div>
+
+                    <!-- Circuit meta strip -->
+                    <div class="circuit-meta" id="circuit-meta" style="display:none">
+                        <span class="circuit-meta-item" id="meta-laps">— Laps</span>
+                        <span class="circuit-meta-sep">·</span>
+                        <span class="circuit-meta-item" id="meta-overtake">Overtaking: —</span>
+                        <span class="circuit-meta-sep">·</span>
+                        <span class="circuit-meta-item" id="meta-tyre">Tyre wear: —</span>
+                        <span class="circuit-meta-sep">·</span>
+                        <span class="circuit-meta-item" id="meta-sc">Safety car: —</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- Status Messages -->
-            <div class="predictor-status" id="predictor-status"></div>
+                <!-- ── Status bar ── -->
+                <div class="pred-status-bar" id="predictor-status" style="display:none"></div>
+
+                <!-- ── Results ── -->
+                <div class="pred-results-area" id="prediction-results"></div>
+
+            </div>
         </section>
+
     </main>
 
     <footer class="footer">
@@ -518,8 +545,174 @@
     <!-- New modular system (ES6 modules) -->
     <script type="module" src="js/app-init.js"></script>
 
-    <!-- ML Prediction System -->
-    <script type="module" src="js/ml-prediction-ui.js"></script>
+    <!-- Predictor Controller — uses prediction-model.js global -->
+    <script>
+    (function initPredictor() {
+        const LEVEL = (v) => v >= 75 ? 'High' : v >= 45 ? 'Medium' : 'Low';
+
+        function populate() {
+            const sel = document.getElementById('circuit-select');
+            if (!sel || !window.predictionModel) return;
+            const circuits = predictionModel.getCircuits();
+            circuits.forEach(c => {
+                const o = document.createElement('option');
+                o.value = c.name; o.textContent = c.name;
+                sel.appendChild(o);
+            });
+        }
+
+        function showMeta(circuit) {
+            const metaEl = document.getElementById('circuit-meta');
+            if (!metaEl || !window.predictionModel) return;
+            const circuits = predictionModel.getCircuits();
+            const c = circuits.find(x => x.name === circuit);
+            if (!c) { metaEl.style.display = 'none'; return; }
+            document.getElementById('meta-laps').textContent      = `${c.laps} Laps`;
+            document.getElementById('meta-overtake').textContent  = `Overtaking: ${LEVEL(c.ot * 100)}`;
+            document.getElementById('meta-tyre').textContent      = `Tyre wear: ${LEVEL(c.tw * 100)}`;
+            document.getElementById('meta-sc').textContent        = `Safety car: ${LEVEL(c.sc * 100)}`;
+            metaEl.style.display = 'flex';
+        }
+
+        function setStatus(msg, type) {
+            const el = document.getElementById('predictor-status');
+            if (!el) return;
+            el.textContent = msg;
+            el.className = `pred-status-bar pred-status-${type}`;
+            el.style.display = 'block';
+            if (type === 'success') setTimeout(() => el.style.display = 'none', 4000);
+        }
+
+        function teamColor(teamName) {
+            const map = {
+                'Red Bull Racing': '#0600EF', 'McLaren': '#FF8700', 'Ferrari': '#DC0000',
+                'Mercedes': '#00D2BE', 'Aston Martin': '#006F62', 'Alpine': '#FF69B4',
+                'Williams': '#005AFF', 'Racing Bulls': '#4E5D9F', 'Haas': '#B6BABD',
+                'Audi': '#C0C0C0', 'Cadillac': '#CC0033',
+            };
+            return map[teamName] || '#E10600';
+        }
+
+        function medalFor(pos) {
+            if (pos === 1) return '<span class="pred-medal gold">1</span>';
+            if (pos === 2) return '<span class="pred-medal silver">2</span>';
+            if (pos === 3) return '<span class="pred-medal bronze">3</span>';
+            return `<span class="pred-medal plain">${pos}</span>`;
+        }
+
+        function renderResults(data, circuit, weather) {
+            const container = document.getElementById('prediction-results');
+            if (!container) return;
+
+            const weatherLabel = { dry:'☀️ Dry', wet:'🌧️ Wet', mixed:'⛅ Mixed' }[weather] || weather;
+            const maxWin = data[0].winPct || 1;
+
+            let html = `
+                <div class="pred-result-header">
+                    <div class="pred-result-circuit">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+                        ${circuit}
+                    </div>
+                    <div class="pred-result-weather">${weatherLabel}</div>
+                    <div class="pred-result-sim">5,000 simulations</div>
+                </div>
+                <div class="pred-result-cols">
+                    <span>Driver</span>
+                    <span>Win %</span>
+                    <span>Podium %</span>
+                    <span>Top 10 %</span>
+                    <span>Momentum</span>
+                    <span>Elo</span>
+                </div>
+                <div class="pred-result-list">
+            `;
+
+            data.forEach((d, i) => {
+                const color = teamColor(d.team);
+                const barW = ((d.winPct / maxWin) * 100).toFixed(1);
+                html += `
+                <div class="pred-result-row ${i < 3 ? 'pred-row-podium' : ''}">
+                    <div class="pred-row-pos">${medalFor(d.position)}</div>
+                    <div class="pred-row-driver">
+                        <div class="pred-driver-bar" style="width:${barW}%;background:${color}22;border-left:3px solid ${color}"></div>
+                        <div class="pred-driver-info">
+                            <span class="pred-driver-name">${d.name}</span>
+                            <span class="pred-driver-team" style="color:${color}">${d.team}</span>
+                        </div>
+                    </div>
+                    <div class="pred-stat pred-stat-win">
+                        <span class="pred-stat-val" style="color:${color}">${d.winPct}%</span>
+                        <div class="pred-mini-bar"><div style="width:${d.winPct}%;background:${color}"></div></div>
+                    </div>
+                    <div class="pred-stat">
+                        <span class="pred-stat-val">${d.podiumPct}%</span>
+                        <div class="pred-mini-bar"><div style="width:${d.podiumPct}%;background:#888"></div></div>
+                    </div>
+                    <div class="pred-stat">
+                        <span class="pred-stat-val">${d.top10Pct}%</span>
+                        <div class="pred-mini-bar"><div style="width:${Math.min(d.top10Pct,100)}%;background:#555"></div></div>
+                    </div>
+                    <div class="pred-stat">
+                        <span class="pred-stat-val pred-momentum">${d.momentum >= 60 ? '▲' : d.momentum <= 40 ? '▼' : '●'} ${d.momentum}</span>
+                    </div>
+                    <div class="pred-stat">
+                        <span class="pred-stat-val pred-elo">${d.eloRating}</span>
+                    </div>
+                </div>`;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Animate bars in
+            requestAnimationFrame(() => {
+                container.querySelectorAll('.pred-mini-bar > div, .pred-driver-bar').forEach(el => {
+                    el.style.transition = 'width 0.8s cubic-bezier(0.16,1,0.3,1)';
+                });
+            });
+        }
+
+        function runPrediction() {
+            const circuit = document.getElementById('circuit-select')?.value;
+            const weather = document.getElementById('weather-select')?.value || 'dry';
+            if (!circuit) { setStatus('Please select a circuit first.', 'warn'); return; }
+            if (!window.predictionModel) { setStatus('Model not loaded yet.', 'error'); return; }
+
+            const btn = document.getElementById('predict-btn');
+            if (btn) { btn.classList.add('pred-btn-loading'); btn.disabled = true; }
+
+            setStatus('Running 5,000 race simulations…', 'info');
+
+            // requestAnimationFrame to allow UI update before heavy computation
+            requestAnimationFrame(() => setTimeout(() => {
+                try {
+                    const results = predictionModel.generatePredictions(circuit, weather, 5000);
+                    renderResults(results, circuit, weather);
+                    setStatus(`Simulation complete — ${results.length} drivers ranked.`, 'success');
+                } catch (e) {
+                    setStatus('Simulation error: ' + e.message, 'error');
+                } finally {
+                    if (btn) { btn.classList.remove('pred-btn-loading'); btn.disabled = false; }
+                }
+            }, 80));
+        }
+
+        function boot() {
+            populate();
+            const btn = document.getElementById('predict-btn');
+            if (btn) btn.addEventListener('click', runPrediction);
+
+            const sel = document.getElementById('circuit-select');
+            if (sel) sel.addEventListener('change', () => showMeta(sel.value));
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', boot);
+        } else {
+            boot();
+        }
+    })();
+    </script>
 
     <!-- Professional Integration - Temporarily disabled -->
     <!-- <script type="module" src="js/professional-integration.js"></script> -->
