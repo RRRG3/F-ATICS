@@ -672,30 +672,87 @@
             });
         }
 
-        function runPrediction() {
+        const ML_API = 'http://localhost:8000';
+        let _apiAvailable = null;   // null=unknown, true, false
+
+        async function checkApiHealth() {
+            try {
+                const r = await fetch(`${ML_API}/health`, { signal: AbortSignal.timeout(2000) });
+                const d = await r.json();
+                _apiAvailable = d.model_trained === true;
+                return _apiAvailable;
+            } catch { _apiAvailable = false; return false; }
+        }
+
+        async function runPrediction() {
             const circuit = document.getElementById('circuit-select')?.value;
             const weather = document.getElementById('weather-select')?.value || 'dry';
             if (!circuit) { setStatus('Please select a circuit first.', 'warn'); return; }
-            if (!window.predictionModel) { setStatus('Model not loaded yet.', 'error'); return; }
 
             const btn = document.getElementById('predict-btn');
             if (btn) { btn.classList.add('pred-btn-loading'); btn.disabled = true; }
 
-            setStatus('Running 5,000 race simulations…', 'info');
+            setStatus('Connecting to ML backend (XGBoost + LSTM)…', 'info');
 
-            // requestAnimationFrame to allow UI update before heavy computation
-            requestAnimationFrame(() => setTimeout(() => {
-                try {
+            try {
+                // ── Try ML backend first ──────────────────────────────────────
+                const healthy = _apiAvailable !== false && await checkApiHealth();
+
+                if (healthy) {
+                    setStatus('Running XGBoost + LSTM ensemble prediction…', 'info');
+                    const res = await fetch(`${ML_API}/predict`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ circuit, weather }),
+                        signal: AbortSignal.timeout(15000),
+                    });
+
+                    if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
+                    const data = await res.json();
+
+                    // Map API response to render format
+                    const results = data.results.map(d => ({
+                        name:       d.name,
+                        team:       d.team,
+                        position:   d.position,
+                        winPct:     d.win_pct,
+                        podiumPct:  d.podium_pct,
+                        top10Pct:   d.top10_pct,
+                        momentum:   Math.round(d.lstm_form * 100),
+                        eloRating:  d.quali_pos,   // show quali pos as Elo column
+                        source:     'ml-api',
+                        modelTag:   `XGBoost+LSTM · ${data.prediction_time_ms}ms`,
+                    }));
+
+                    renderResults(results, circuit, weather, data.model_version);
+                    setStatus(`ML prediction complete · ${data.prediction_time_ms.toFixed(0)}ms · ${data.results.length} drivers`, 'success');
+
+                } else {
+                    // ── Fallback: local Monte Carlo model ────────────────────
+                    if (!window.predictionModel) { setStatus('Model not loaded yet.', 'error'); return; }
+                    setStatus('ML backend offline — running local 5,000-race simulation…', 'warn');
+
+                    await new Promise(r => requestAnimationFrame(() => setTimeout(r, 80)));
                     const results = predictionModel.generatePredictions(circuit, weather, 5000);
-                    renderResults(results, circuit, weather);
-                    setStatus(`Simulation complete — ${results.length} drivers ranked.`, 'success');
-                } catch (e) {
-                    setStatus('Simulation error: ' + e.message, 'error');
-                } finally {
-                    if (btn) { btn.classList.remove('pred-btn-loading'); btn.disabled = false; }
+                    renderResults(results.map(d => ({ ...d, source: 'local', modelTag: 'Local Monte Carlo' })), circuit, weather, 'local-mc');
+                    setStatus(`Local simulation complete — ${results.length} drivers ranked.`, 'success');
                 }
-            }, 80));
+            } catch (e) {
+                // API call failed — try local fallback
+                console.warn('[predictor] API error, falling back to local:', e.message);
+                if (window.predictionModel) {
+                    await new Promise(r => requestAnimationFrame(() => setTimeout(r, 80)));
+                    const results = predictionModel.generatePredictions(circuit, weather, 5000);
+                    renderResults(results.map(d => ({ ...d, source: 'local', modelTag: 'Local Monte Carlo' })), circuit, weather, 'local-mc');
+                    setStatus('API unavailable — local simulation used. Start ml_backend/server.py for full ML.', 'warn');
+                } else {
+                    setStatus('Error: ' + e.message, 'error');
+                }
+            } finally {
+                if (btn) { btn.classList.remove('pred-btn-loading'); btn.disabled = false; }
+            }
         }
+
 
         function boot() {
             populate();
