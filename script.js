@@ -234,19 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
                      onerror="this.style.display='none'">
             </div>
             <div class="car-360-container">
-                ${team.sketchfabId
-                  ? `<iframe
-                        title="${team.car} 3D Model"
-                        class="sketchfab-iframe"
-                        src="https://sketchfab.com/models/${team.sketchfabId}/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0&ui_watermark=0&ui_theme=dark&transparent=0&dnt=1"
-                        allow="autoplay; fullscreen; xr-spatial-tracking"
-                        allowfullscreen
-                        frameborder="0"
-                        loading="lazy"
-                     ></iframe>`
-                  : `<img src="${team.fallbackImg}" alt="${team.car}" class="car-image"
-                         style="width:100%;height:100%;object-fit:contain;display:block;">`
-                }
             </div>
             <div class="team-card-content">
                 <h3>${team.name}</h3>
@@ -260,12 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => openModal(team));
         teamGrid.appendChild(card);
         
-        // Only use SVG 360 viewer as fallback when no real 3D model available
-        if (!team.sketchfabId) {
-            const viewerContainer = card.querySelector('.car-360-container');
-            if (window.Car360 && viewerContainer) {
-                Car360.init(viewerContainer, team.color, team.car);
-            }
+        // Initialize dynamic native 3D F1 car viewer
+        const viewerContainer = card.querySelector('.car-360-container');
+        if (window.Car360 && viewerContainer) {
+            Car360.init(viewerContainer, team.color, team.car);
         }
 
     });
@@ -282,10 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             
             <div class="team-modal-grid">
-                <div class="modal-image-card">
-                    <h3>🏎️ Car</h3>
-                    <img src="${team.fallbackImg}" alt="${team.car}" loading="lazy" 
-                         onerror="this.src='${team.fallbackImg}'">
+                <div class="modal-image-card" style="grid-column: 1 / -1; height: 350px;">
+                    <h3>🏎️ Interactive 3D Model</h3>
+                    <div class="modal-car-360" style="width: 100%; height: 300px;"></div>
                 </div>
                 
                 <div class="modal-image-card">
@@ -310,6 +294,12 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
+
+        // Initialize 3D viewer in modal
+        const modalCarContainer = modalBody.querySelector('.modal-car-360');
+        if (window.Car360 && modalCarContainer) {
+            Car360.init(modalCarContainer, team.color, team.car);
+        }
     }
 
     function closeModal() {

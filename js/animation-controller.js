@@ -42,6 +42,9 @@ export class AnimationController {
             touchMultiplier: 2,
             infinite: false,
         });
+        
+        // Expose globally for world-class-animations.js
+        window.lenis = this.lenis;
 
         // Sync with GSAP ScrollTrigger
         this.lenis.on('scroll', this.scrollTrigger.update);

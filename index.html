@@ -7,10 +7,10 @@
     <title>F-ATICS | Ultimate F1 Fan Zone — 2026 Season</title>
     <meta name="description"
         content="The world-class F1 fan hub for 2026. 11 teams, 22 drivers, new Audi & Cadillac entrants, live countdown to the Australian GP, circuits, quiz, standings and more.">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="world-class.css">
-    <link rel="stylesheet" href="premium-design.css">
-    <link rel="stylesheet" href="parker-ai.css">
+    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="world-class.css?v=4">
+    <link rel="stylesheet" href="premium-design.css?v=4">
+    <link rel="stylesheet" href="parker-ai.css?v=4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -69,6 +69,17 @@
             </div>
         </div>
     </div>
+    
+    <!-- Screen Wipe Transition Overlay (Phase 10) -->
+    <div class="page-transition-wipe">
+        <div class="wipe-panel wipe-panel-1"></div>
+        <div class="wipe-panel wipe-panel-2"></div>
+        <div class="wipe-panel wipe-panel-3"></div>
+        <div class="wipe-panel wipe-panel-4"></div>
+        <div class="wipe-panel wipe-panel-5"></div>
+        <div class="wipe-logo">F-ATICS</div>
+    </div>
+
     <!-- Floating Pill Navbar — Parker AI style -->
     <header class="header pk-nav-pill">
         <div class="pk-nav-inner">
@@ -86,6 +97,16 @@
                     <li><a href="#showcase"    class="nav-link pk-nav-link">Teams</a></li>
                     <li><a href="#circuits"    class="nav-link pk-nav-link">Circuits</a></li>
                 </ul>
+                <div class="team-theme-selector">
+                    <button class="theme-btn" id="theme-toggle-btn" aria-label="Choose Your Team">
+                        <span class="theme-color-dot" id="active-theme-dot"></span>
+                        <span class="theme-name" id="active-theme-name">F-ATICS</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <!-- Themes injected by JS -->
+                    </div>
+                </div>
             </nav>
             <a href="#tracker" class="pk-cta-btn">View 2026 Grid →</a>
         </div>
@@ -116,13 +137,13 @@
         <!-- Mega Typography Hero — Parker AI editorial style -->
         <div class="hero-text-container">
             <div class="hero-mega-text">
-                The way you follow
+                <span class="text-reveal">The way you follow</span>
             </div>
-            <div class="hero-mega-text" style="font-style:italic; color: var(--pk-red, #E10600); -webkit-text-fill-color: var(--pk-red, #E10600);">
-                F1
+            <div class="hero-mega-text" style="color: var(--pk-red, #E10600); -webkit-text-fill-color: var(--pk-red, #E10600);">
+                <span class="text-reveal serif-italic">F1</span>
             </div>
             <div class="hero-mega-text">
-                is about to change.
+                <span class="text-reveal">is about to change.</span>
             </div>
             <div class="hero-season-badge">2026 Season — 11 Teams · 22 Drivers · Audi &amp; Cadillac debut</div>
         </div>
@@ -492,9 +513,126 @@
                 <!-- ── Status bar ── -->
                 <div class="pred-status-bar" id="predictor-status" style="display:none"></div>
 
-                <!-- ── Results ── -->
-                <div class="pred-results-area" id="prediction-results"></div>
+                <!-- ── Live Dashboard (Morphs in on run) ── -->
+                <div class="pred-dashboard-grid" id="pred-dashboard" style="display:none">
+                    <!-- 2D Minimap Racing Simulaton -->
+                    <div class="pred-panel pred-live-track">
+                        <div class="pred-panel-header">
+                            <div class="header-left">
+                                <span class="pulse-dot"></span> LIVE RACE SIMULATION
+                            </div>
+                            <span class="pred-lap-counter" id="pred-lap-counter">LAP 0 / 50</span>
+                        </div>
+                        <div class="pred-track-container" id="pred-track-vis">
+                            <!-- Cars injected here dynamically -->
+                        </div>
+                    </div>
+                    
+                    <!-- Chart.js Pace Chart -->
+                    <div class="pred-panel pred-telemetry">
+                        <div class="pred-panel-header">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            PREDICTED DEGRADATION
+                        </div>
+                        <div class="pred-chart-wrapper">
+                            <canvas id="pred-pace-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- ── 3D Podium Reveal ── -->
+                <div class="pred-podium-container" id="pred-podium" style="display:none">
+                    <div class="pred-panel-header center" style="justify-content:center; color: var(--pk-red);">🏆 PREDICTED PODIUM 🏆</div>
+                    <div class="podium-3d-flex">
+                        <div class="podium-spot p2">
+                            <div class="podium-driver" id="podium-d2"></div>
+                            <div class="podium-canvas" id="podium-c2"></div>
+                            <div class="podium-base base-2">P2</div>
+                        </div>
+                        <div class="podium-spot p1">
+                            <div class="podium-driver" id="podium-d1"></div>
+                            <div class="podium-canvas" id="podium-c1"></div>
+                            <div class="podium-base base-1">P1</div>
+                        </div>
+                        <div class="podium-spot p3">
+                            <div class="podium-driver" id="podium-d3"></div>
+                            <div class="podium-canvas" id="podium-c3"></div>
+                            <div class="podium-base base-3">P3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── Results Table (Hidden until simulation completes) ── -->
+                <div class="pred-results-area" id="prediction-results" style="display:none"></div>
+
+            </div>
+        </section>
+
+        <!-- Live Telemetry Section -->
+        <section id="live-telemetry" class="section telemetry-section">
+            <div class="container stagger-reveal">
+                <h2 class="section-title">Live Telemetry</h2>
+                <p class="section-subtitle">Real-time OpenF1 session data and speed traces</p>
+
+                <div class="telemetry-wrapper">
+                    <div class="telemetry-controls">
+                        <div class="form-group tele-session-group">
+                            <label>Session Status:</label>
+                            <span id="tele-session-status" class="tele-status error">Disconnected</span>
+                        </div>
+                        <div class="form-group tele-driver-group">
+                            <label for="tele-driver-select">Select Driver (Speed Trace):</label>
+                            <select id="tele-driver-select" class="theme-select">
+                                <option value="4">Lando Norris (4)</option>
+                                <option value="1">Max Verstappen (1)</option>
+                                <option value="16">Charles Leclerc (16)</option>
+                                <option value="81">Oscar Piastri (81)</option>
+                                <option value="44">Lewis Hamilton (44)</option>
+                            </select>
+                        </div>
+                        <button id="btn-fetch-telemetry" class="btn btn-primary primary-button">
+                            <span class="btn-text">Connect Live Stream</span>
+                            <span class="btn-glow"></span>
+                        </button>
+                    </div>
+
+                    <div class="telemetry-dashboard-grid" id="tele-dashboard" style="display:none">
+                        <!-- Speed Trace Chart -->
+                        <div class="tele-panel tele-chart-panel">
+                            <div class="pred-panel-header">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                LIVE SPEED TRACE (km/h)
+                            </div>
+                            <div class="pred-chart-wrapper">
+                                <canvas id="tele-speed-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Lap Data / Sectors -->
+                        <div class="tele-panel tele-data-panel">
+                            <div class="pred-panel-header">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                LATEST LAP TIMES
+                            </div>
+                            <div class="tele-lap-data" id="tele-lap-data">
+                                <table class="tele-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Lap</th>
+                                            <th>S1</th>
+                                            <th>S2</th>
+                                            <th>S3</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tele-lap-tbody">
+                                        <!-- Injected by live-dashboard.js -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -509,7 +647,7 @@
     </footer>
 
     <!-- Three.js for 3D effects -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
     <!-- GSAP for advanced animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -517,33 +655,43 @@
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
     <!-- Vanilla Tilt for 3D card effects -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Howler.js for immersive soundscape -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
 
     <!-- Data files -->
-    <script src="quiz-data.js"></script>
-    <script src="circuits-data.js"></script>
-    <script src="race-calendar-data.js"></script>
-    <script src="prediction-model.js"></script>
+    <script src="quiz-data.js?v=4"></script>
+    <script src="circuits-data.js?v=4"></script>
+    <script src="race-calendar-data.js?v=4"></script>
+    <script src="prediction-model.js?v=4"></script>
+    
+    <!-- Phase 8: Live Telemetry Modules -->
+    <script type="module" src="js/telemetry-api.js?v=4"></script>
+    <script type="module" src="js/live-dashboard.js?v=4"></script>
 
     <!-- Core application scripts -->
     <script>
-        // Hide page loader when page is loaded
-        window.addEventListener('load', () => {
+        // Hide page loader when page is loaded or after a 3-second fallback
+        function hideLoader() {
             const loader = document.querySelector('.page-loader');
-            if (loader) {
+            if (loader && !loader.classList.contains('hidden')) {
                 loader.classList.add('hidden');
                 setTimeout(() => loader.style.display = 'none', 500);
             }
-        });
+        }
+        window.addEventListener('load', hideLoader);
+        setTimeout(hideLoader, 3000); // Fail-safe to prevent perpetual loading
     </script>
-    <script src="js/car-360.js?v=1"></script>
-    <script src="script.js?v=3"></script>
+    <script src="js/car-360.js?v=4"></script>
+    <script src="script.js?v=4"></script>
 
-    <script src="3d-effects.js?v=2"></script>
-    <script src="world-class-animations.js?v=2"></script>
+    <script src="3d-effects.js?v=4"></script>
+    <script src="world-class-animations.js?v=4"></script>
 
 
     <!-- New modular system (ES6 modules) -->
-    <script type="module" src="js/app-init.js"></script>
+    <script type="module" src="js/app-init.js?v=4"></script>
 
     <!-- Predictor Controller — uses prediction-model.js global -->
     <script>
@@ -684,6 +832,164 @@
             } catch { _apiAvailable = false; return false; }
         }
 
+        let liveSimulationTimeout;
+        let paceChartInstance = null;
+
+        function runVisualSimulation(results, circuit, weather, modelVersion) {
+            const dashboard = document.getElementById('pred-dashboard');
+            const trackVis = document.getElementById('pred-track-vis');
+            const lapCounter = document.getElementById('pred-lap-counter');
+            const podiumCont = document.getElementById('pred-podium');
+            const resultsTbl = document.getElementById('prediction-results');
+            
+            // Setup UI states
+            dashboard.style.display = 'grid';
+            podiumCont.style.display = 'none';
+            resultsTbl.style.display = 'none';
+            podiumCont.classList.remove('active');
+            
+            requestAnimationFrame(() => {
+                dashboard.classList.add('active');
+            });
+
+            // Initialize Chart.js Predicted Pace
+            const ctx = document.getElementById('pred-pace-chart');
+            if (paceChartInstance) paceChartInstance.destroy();
+            
+            const top5 = results.slice(0, 5);
+            const labels = Array.from({length: 20}, (_, i) => `L${i*2}`);
+            
+            paceChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: top5.map(d => ({
+                        label: d.name,
+                        data: Array.from({length: 20}, () => 100 - (Math.random() * 15)),
+                        borderColor: teamColor(d.team),
+                        backgroundColor: teamColor(d.team) + '33',
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: true
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 0 },
+                    plugins: { legend: { position: 'bottom', labels: { color: 'rgba(255,255,255,0.7)', font: { size: 10, family: 'Inter' }, boxWidth: 10, usePointStyle: true } } },
+                    scales: {
+                        y: { display: false, min: 40, max: 110 },
+                        x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.4)', maxTicksLimit: 5, font: {family:'SF Mono'} } }
+                    },
+                    interaction: { mode: 'index', intersect: false }
+                }
+            });
+
+            // Initialize 2D Minimalist Track Simulation
+            trackVis.innerHTML = `<svg class="pred-track-svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path class="pred-track-path" d="M10,50 C10,10 90,10 90,50 C90,90 10,90 10,50" /></svg>`;
+            const dots = top5.map((d, i) => {
+                const el = document.createElement('div');
+                el.className = 'track-car-dot';
+                el.style.color = teamColor(d.team);
+                el.style.backgroundColor = teamColor(d.team);
+                
+                const lbl = document.createElement('div');
+                lbl.className = 'track-car-label';
+                lbl.textContent = d.name.split(' ').pop().substring(0,3).toUpperCase(); // e.g., NOR, VER
+                
+                trackVis.appendChild(el);
+                trackVis.appendChild(lbl);
+                
+                // Ordered positions based on rank
+                return { el, lbl, offset: -0.05 * i, speed: 0.015 + (0.002 * Math.random()), team: d.team };
+            });
+
+            let frame = 0;
+            const animateRace = () => {
+                frame++;
+                const lapsDone = Math.floor(frame / 6);
+                if (lapsDone <= 50) {
+                    lapCounter.textContent = `LAP ${lapsDone} / 50`;
+                }
+
+                dots.forEach(d => {
+                    d.offset += d.speed;
+                    // Move around parametric circle
+                    const angle = d.offset * Math.PI * 2;
+                    const x = 50 + 40 * Math.cos(angle);
+                    const y = 50 + 40 * Math.sin(angle);
+                    
+                    d.el.style.left = `${x}%`;
+                    d.el.style.top = `${y}%`;
+                    d.lbl.style.left = `${x}%`;
+                    d.lbl.style.top = `${y}%`;
+                    
+                    // Live Chart Jitter
+                    if (frame % 15 === 0 && paceChartInstance) {
+                        const targetDs = paceChartInstance.data.datasets.find(ds => ds.borderColor === teamColor(d.team));
+                        if(targetDs) {
+                            targetDs.data.shift();
+                            targetDs.data.push(100 - (Math.random() * 25 + lapsDone * 0.4));
+                        }
+                    }
+                });
+                if(frame % 15 === 0 && paceChartInstance) paceChartInstance.update('none');
+                
+                liveSimulationTimeout = requestAnimationFrame(animateRace);
+            };
+            cancelAnimationFrame(liveSimulationTimeout);
+            animateRace();
+
+            // Finish Phase: Hide Dash -> Show Podium -> Show Table
+            setTimeout(() => {
+                cancelAnimationFrame(liveSimulationTimeout);
+                dashboard.classList.remove('active');
+                
+                setTimeout(() => {
+                    dashboard.style.display = 'none';
+                    
+                    // Render Table HTML
+                    renderResults(results, circuit, weather, modelVersion);
+                    
+                    // Show Podium
+                    podiumCont.style.display = 'block';
+                    requestAnimationFrame(() => {
+                        podiumCont.classList.add('active');
+                        
+                        // Setup 3D Cars for Top 3
+                        const podiumEls = [
+                            { d: 'podium-d1', c: 'podium-c1', data: results[0] },
+                            { d: 'podium-d2', c: 'podium-c2', data: results[1] },
+                            { d: 'podium-d3', c: 'podium-c3', data: results[2] }
+                        ];
+                        
+                        podiumEls.forEach(p => {
+                            if (p.data) {
+                                document.getElementById(p.d).textContent = p.data.name;
+                                document.getElementById(p.d).style.backgroundColor = teamColor(p.data.team) + '33';
+                                document.getElementById(p.d).style.color = '#fff';
+                                document.getElementById(p.d).style.border = `1px solid ${teamColor(p.data.team)}`;
+                                
+                                const container = document.getElementById(p.c);
+                                container.innerHTML = '';
+                                if (window.Car360) {
+                                    window.Car360.init(container, teamColor(p.data.team), p.data.team);
+                                }
+                            }
+                        });
+
+                        // Show Results Table
+                        resultsTbl.style.display = 'block';
+                        
+                        // Scroll slightly to view podium
+                        window.scrollBy({top: 200, behavior: 'smooth'});
+                    });
+                }, 600);
+            }, 5000); // 5 seconds of visual simulation
+        }
+
         async function runPrediction() {
             const circuit = document.getElementById('circuit-select')?.value;
             const weather = document.getElementById('weather-select')?.value || 'dry';
@@ -695,8 +1001,11 @@
             setStatus('Connecting to ML backend (XGBoost + LSTM)…', 'info');
 
             try {
-                // ── Try ML backend first ──────────────────────────────────────
+                // Try ML backend first
                 const healthy = _apiAvailable !== false && await checkApiHealth();
+
+                let resultsData = null;
+                let version = 'local-mc';
 
                 if (healthy) {
                     setStatus('Running XGBoost + LSTM ensemble prediction…', 'info');
@@ -709,9 +1018,9 @@
 
                     if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
                     const data = await res.json();
+                    version = data.model_version;
 
-                    // Map API response to render format
-                    const results = data.results.map(d => ({
+                    resultsData = data.results.map(d => ({
                         name:       d.name,
                         team:       d.team,
                         position:   d.position,
@@ -719,32 +1028,36 @@
                         podiumPct:  d.podium_pct,
                         top10Pct:   d.top10_pct,
                         momentum:   Math.round(d.lstm_form * 100),
-                        eloRating:  d.quali_pos,   // show quali pos as Elo column
+                        eloRating:  d.quali_pos,
                         source:     'ml-api',
                         modelTag:   `XGBoost+LSTM · ${data.prediction_time_ms}ms`,
                     }));
-
-                    renderResults(results, circuit, weather, data.model_version);
-                    setStatus(`ML prediction complete · ${data.prediction_time_ms.toFixed(0)}ms · ${data.results.length} drivers`, 'success');
+                    setStatus(`ML processing complete. Initiating visual simulation…`, 'success');
 
                 } else {
-                    // ── Fallback: local Monte Carlo model ────────────────────
+                    // Fallback to local
                     if (!window.predictionModel) { setStatus('Model not loaded yet.', 'error'); return; }
-                    setStatus('ML backend offline — running local 5,000-race simulation…', 'warn');
-
+                    setStatus('ML backend offline — initializing local 5,000-race Monte Carlo sim…', 'warn');
                     await new Promise(r => requestAnimationFrame(() => setTimeout(r, 80)));
-                    const results = predictionModel.generatePredictions(circuit, weather, 5000);
-                    renderResults(results.map(d => ({ ...d, source: 'local', modelTag: 'Local Monte Carlo' })), circuit, weather, 'local-mc');
-                    setStatus(`Local simulation complete — ${results.length} drivers ranked.`, 'success');
+                    
+                    const localRes = predictionModel.generatePredictions(circuit, weather, 5000);
+                    resultsData = localRes.map(d => ({ ...d, source: 'local', modelTag: 'Local Monte Carlo' }));
+                    setStatus(`Local simulation complete. Rendering Command Center…`, 'success');
                 }
+                
+                // Trigger the orchestrated Command Center visualizer
+                if (resultsData) {
+                    runVisualSimulation(resultsData, circuit, weather, version);
+                }
+
             } catch (e) {
-                // API call failed — try local fallback
                 console.warn('[predictor] API error, falling back to local:', e.message);
                 if (window.predictionModel) {
                     await new Promise(r => requestAnimationFrame(() => setTimeout(r, 80)));
-                    const results = predictionModel.generatePredictions(circuit, weather, 5000);
-                    renderResults(results.map(d => ({ ...d, source: 'local', modelTag: 'Local Monte Carlo' })), circuit, weather, 'local-mc');
-                    setStatus('API unavailable — local simulation used. Start ml_backend/server.py for full ML.', 'warn');
+                    let localRes = predictionModel.generatePredictions(circuit, weather, 5000);
+                    let mapped = localRes.map(d => ({ ...d, source: 'local', modelTag: 'Local Monte Carlo' }));
+                    setStatus('API unavailable — running local simulation.', 'warn');
+                    runVisualSimulation(mapped, circuit, weather, 'local-mc');
                 } else {
                     setStatus('Error: ' + e.message, 'error');
                 }
@@ -795,6 +1108,8 @@
             </div>
         </div>
     </div>
+    
+    <script src="js/theme-engine.js?v=4"></script>
 </body>
 
 </html>

@@ -6,38 +6,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== LENIS SMOOTH SCROLL =====
     let lenis;
-
     function initSmoothScroll() {
         if (typeof Lenis !== 'undefined') {
             lenis = new Lenis({
                 duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
                 direction: 'vertical',
                 gestureDirection: 'vertical',
                 smooth: true,
+                mouseMultiplier: 1,
                 smoothTouch: false,
                 touchMultiplier: 2,
+                infinite: false,
             });
 
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
+            // Connect Lenis scroll event to GSAP ScrollTrigger
+            lenis.on('scroll', ScrollTrigger.update);
 
-            requestAnimationFrame(raf);
+            gsap.ticker.add((time) => {
+                lenis.raf(time * 1000);
+            });
 
-            // Connect Lenis to GSAP ScrollTrigger
-            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                lenis.on('scroll', ScrollTrigger.update);
-                gsap.ticker.add((time) => {
-                    lenis.raf(time * 1000);
-                });
-                gsap.ticker.lagSmoothing(0);
-            }
-
-            console.log('✅ Lenis smooth scroll initialized');
+            gsap.ticker.lagSmoothing(0);
+            
+            // Expose globally for other scripts to jump
+            window.lenis = lenis;
+            console.log('✅ Lenis Smooth Scroll Initialized & Synced with GSAP');
+        } else {
+            console.warn('Lenis library not loaded! ScrollTrigger might fail to sync.');
         }
     }
+
+    initSmoothScroll();
 
     // ===== SPLIT TEXT ANIMATION =====
     function initTextReveal() {
@@ -97,37 +97,56 @@ document.addEventListener('DOMContentLoaded', () => {
             // Title animation
             const title = section.querySelector('.section-title, .section-title-mega');
             if (title) {
-                gsap.from(title, {
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 80%',
-                        end: 'top 50%',
-                        toggleActions: 'play none none reverse',
-                    },
-                    y: 100,
-                    opacity: 0,
-                    duration: 1,
-                    ease: 'power4.out'
-                });
+                gsap.fromTo(title, 
+                    { y: 100, opacity: 0 },
+                    {
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none',
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: 'power4.out',
+                        clearProps: 'all' // Crucial to prevent sticky opacity:0
+                    }
+                );
             }
 
             // Cards stagger animation
             const cards = section.querySelectorAll('.bento-card, .team-card, .circuit-card, .calendar-card');
             if (cards.length > 0) {
-                gsap.from(cards, {
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 70%',
-                        toggleActions: 'play none none reverse',
-                    },
-                    y: 80,
-                    opacity: 0,
-                    duration: 0.8,
-                    stagger: 0.1,
-                    ease: 'power3.out'
-                });
+                gsap.fromTo(cards, 
+                    { y: 80, opacity: 0 },
+                    {
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none',
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        stagger: 0.1,
+                        ease: 'power3.out',
+                        clearProps: 'all' // Crucial
+                    }
+                );
             }
         });
+
+        // Fail-safe to ensure everything is visible after 3 seconds just in case ScrollTrigger totally crashes
+        setTimeout(() => {
+            document.querySelectorAll('.bento-card, .team-card, .circuit-card, .calendar-card, .section-title, .section-title-mega').forEach(el => {
+                if(getComputedStyle(el).opacity === '0') {
+                   el.style.opacity = '1';
+                   el.style.transform = 'none';
+                   el.style.visibility = 'visible';
+                }
+            });
+            ScrollTrigger.refresh();
+        }, 3000);
 
         // Parallax background layers
         gsap.utils.toArray('.parallax-layer').forEach((layer) => {
@@ -323,6 +342,108 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ===== GSAP ZERO-REFRESH PAGE TRANSITIONS (Phase 10) =====
+    function initPageTransitions() {
+        if (typeof gsap === 'undefined') return;
+
+        const wipePanels = document.querySelectorAll('.wipe-panel');
+        const wipeLogo = document.querySelector('.wipe-logo');
+        
+        // Intercept all local anchor links (e.g., #basics, #standings)
+        const localLinks = document.querySelectorAll('a[href^="#"]');
+
+        localLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (!targetElement) return;
+
+                // Create the Wipe Timeline
+                const tl = gsap.timeline();
+
+                // 1. Bring panels up (Staggered wipe IN)
+                tl.to(wipePanels, {
+                    y: '0%',
+                    duration: 0.5,
+                    stagger: 0.1,
+                    ease: 'power4.inOut'
+                })
+                // 2. Fade in logo
+                .to(wipeLogo, {
+                    opacity: 1,
+                    duration: 0.3
+                }, '-=0.2')
+                // 3. The actual "Page Load" swap (Instant scroll & layout recalibration)
+                .add(() => {
+                    try {
+                        if (typeof window.lenis !== 'undefined' && window.lenis) {
+                            // Use lenis built-in jump to keep external scroll triggers in sync
+                            window.lenis.scrollTo(targetElement, { immediate: true });
+                        } else {
+                            // Fallback
+                            targetElement.scrollIntoView({ behavior: 'auto' });
+                        }
+                        
+                        if (targetElement) {
+                            // Force reveal CSS stagger elements
+                            const hiddenElements = targetElement.querySelectorAll('.stagger-reveal, .section-reveal, .image-reveal');
+                            hiddenElements.forEach(el => el.classList.add('revealed'));
+                            
+                            // Kill GSAP scroll triggers for this section so they don't fight us
+                            if (typeof ScrollTrigger !== 'undefined') {
+                                ScrollTrigger.getAll().forEach(st => {
+                                    if (st.trigger && (targetElement.contains(st.trigger) || st.trigger === targetElement)) {
+                                        st.kill();
+                                    }
+                                });
+                            }
+                            
+                            // Absolute brute-force unhide on all typical staggered elements
+                            if (typeof gsap !== 'undefined') {
+                                const animatedEls = targetElement.querySelectorAll('.section-title, .section-subtitle, .bento-card, .driver-standings-card, .team-card, .circuit-card, .calendar-card');
+                                gsap.set(animatedEls, { opacity: 1, y: 0, x: 0, visibility: 'visible', clearProps: 'opacity,transform,visibility' });
+                                
+                                // Also clear children of stagger reveals just in case
+                                const staggerChildren = targetElement.querySelectorAll('.stagger-reveal > *');
+                                gsap.set(staggerChildren, { opacity: 1, y: 0, clearProps: 'opacity,transform' });
+                            }
+                        }
+                        
+                        if (typeof ScrollTrigger !== 'undefined') {
+                            ScrollTrigger.refresh();
+                        }
+                    } catch (err) {
+                        console.error("Transition scroll error:", err);
+                        // Emergency fallback to ensure user isn't stuck
+                        if (targetElement) targetElement.scrollIntoView({ behavior: 'auto' });
+                    }
+                })
+                // 4. Hold the mask for a split second to feel like a real load
+                .to({}, { duration: 0.3 })
+                // 5. Fade out logo
+                .to(wipeLogo, {
+                    opacity: 0,
+                    duration: 0.2
+                })
+                // 6. Push panels up and away (Staggered wipe OUT)
+                .to(wipePanels, {
+                    y: '-100%',
+                    duration: 0.5,
+                    stagger: 0.1,
+                    ease: 'power4.inOut'
+                })
+                // 7. Reset panels back to bottom for the next click
+                .set(wipePanels, {
+                    y: '100%'
+                });
+            });
+        });
+        
+        console.log('✅ GSAP Zero-Refresh Transitions initialized');
+    }
+
     // ===== HERO TEXT ANIMATION =====
     function initHeroAnimation() {
         const heroTexts = document.querySelectorAll('.hero-mega-text .text-reveal');
@@ -374,17 +495,25 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
 
-        // Hide loader after load
-        window.addEventListener('load', () => {
+        // Hide loader after load or immediately if already loaded
+        const hideLoader = () => {
             setTimeout(() => {
                 loader.style.opacity = '0';
                 loader.style.visibility = 'hidden';
+                loader.style.pointerEvents = 'none'; // Ensure it doesn't block clicks
                 document.body.classList.add('loaded');
-
                 // Trigger hero animations
                 initHeroAnimation();
             }, 500);
-        });
+        };
+
+        if (document.readyState === 'complete') {
+            hideLoader();
+        } else {
+            window.addEventListener('load', hideLoader);
+            // Fallback just in case
+            setTimeout(hideLoader, 3000);
+        }
     }
 
     // ===== ENHANCED CURSOR WITH GLOW =====
@@ -478,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function init() {
         addDynamicStyles();
         initPremiumLoader();
-        initSmoothScroll();
+        // initSmoothScroll(); // Removed to prevent double Lenis conflicts
         initScrollProgress();
         init3DCards();
         initMagneticButtons();
@@ -486,6 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initRevealObserver();
         initGlowEffect();
         initEnhancedCursor();
+        initPageTransitions();
 
         // Initialize GSAP animations after a short delay
         setTimeout(() => {

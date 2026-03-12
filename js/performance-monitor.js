@@ -303,9 +303,14 @@ export class MetricsCollector {
         // Track page load time
         if (performance.timing) {
             window.addEventListener('load', () => {
-                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-                this.metrics.loadTime = loadTime;
-                console.log(`📊 Page load time: ${loadTime}ms`);
+                // Ensure loadEventEnd is fully populated before calculating
+                setTimeout(() => {
+                    const loadTime = performance.timing.loadEventEnd > 0 
+                        ? performance.timing.loadEventEnd - performance.timing.navigationStart
+                        : performance.now();
+                    this.metrics.loadTime = loadTime;
+                    // console.log(`📊 Page load time: ${loadTime}ms`);
+                }, 0);
             });
         }
 

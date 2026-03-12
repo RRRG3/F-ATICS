@@ -1,0 +1,3456 @@
+season,round,circuit,driver_id,quali_pos
+2018,1,Albert Park Grand Prix Circuit,hamilton,1
+2018,1,Albert Park Grand Prix Circuit,raikkonen,2
+2018,1,Albert Park Grand Prix Circuit,vettel,3
+2018,1,Albert Park Grand Prix Circuit,max_verstappen,4
+2018,1,Albert Park Grand Prix Circuit,ricciardo,5
+2018,1,Albert Park Grand Prix Circuit,kevin_magnussen,6
+2018,1,Albert Park Grand Prix Circuit,grosjean,7
+2018,1,Albert Park Grand Prix Circuit,hulkenberg,8
+2018,1,Albert Park Grand Prix Circuit,sainz,9
+2018,1,Albert Park Grand Prix Circuit,bottas,10
+2018,1,Albert Park Grand Prix Circuit,alonso,11
+2018,1,Albert Park Grand Prix Circuit,vandoorne,12
+2018,1,Albert Park Grand Prix Circuit,perez,13
+2018,1,Albert Park Grand Prix Circuit,stroll,14
+2018,1,Albert Park Grand Prix Circuit,ocon,15
+2018,1,Albert Park Grand Prix Circuit,brendon_hartley,16
+2018,1,Albert Park Grand Prix Circuit,ericsson,17
+2018,1,Albert Park Grand Prix Circuit,leclerc,18
+2018,1,Albert Park Grand Prix Circuit,sirotkin,19
+2018,1,Albert Park Grand Prix Circuit,gasly,20
+2018,2,Bahrain International Circuit,vettel,1
+2018,2,Bahrain International Circuit,raikkonen,2
+2018,2,Bahrain International Circuit,bottas,3
+2018,2,Bahrain International Circuit,hamilton,4
+2018,2,Bahrain International Circuit,ricciardo,5
+2018,2,Bahrain International Circuit,gasly,6
+2018,2,Bahrain International Circuit,kevin_magnussen,7
+2018,2,Bahrain International Circuit,hulkenberg,8
+2018,2,Bahrain International Circuit,ocon,9
+2018,2,Bahrain International Circuit,sainz,10
+2018,2,Bahrain International Circuit,brendon_hartley,11
+2018,2,Bahrain International Circuit,perez,12
+2018,2,Bahrain International Circuit,alonso,13
+2018,2,Bahrain International Circuit,vandoorne,14
+2018,2,Bahrain International Circuit,max_verstappen,15
+2018,2,Bahrain International Circuit,grosjean,16
+2018,2,Bahrain International Circuit,ericsson,17
+2018,2,Bahrain International Circuit,sirotkin,18
+2018,2,Bahrain International Circuit,leclerc,19
+2018,2,Bahrain International Circuit,stroll,20
+2018,3,Shanghai International Circuit,vettel,1
+2018,3,Shanghai International Circuit,raikkonen,2
+2018,3,Shanghai International Circuit,bottas,3
+2018,3,Shanghai International Circuit,hamilton,4
+2018,3,Shanghai International Circuit,max_verstappen,5
+2018,3,Shanghai International Circuit,ricciardo,6
+2018,3,Shanghai International Circuit,hulkenberg,7
+2018,3,Shanghai International Circuit,perez,8
+2018,3,Shanghai International Circuit,sainz,9
+2018,3,Shanghai International Circuit,grosjean,10
+2018,3,Shanghai International Circuit,kevin_magnussen,11
+2018,3,Shanghai International Circuit,ocon,12
+2018,3,Shanghai International Circuit,alonso,13
+2018,3,Shanghai International Circuit,vandoorne,14
+2018,3,Shanghai International Circuit,brendon_hartley,15
+2018,3,Shanghai International Circuit,sirotkin,16
+2018,3,Shanghai International Circuit,gasly,17
+2018,3,Shanghai International Circuit,stroll,18
+2018,3,Shanghai International Circuit,leclerc,19
+2018,3,Shanghai International Circuit,ericsson,20
+2018,4,Baku City Circuit,vettel,1
+2018,4,Baku City Circuit,hamilton,2
+2018,4,Baku City Circuit,bottas,3
+2018,4,Baku City Circuit,ricciardo,4
+2018,4,Baku City Circuit,max_verstappen,5
+2018,4,Baku City Circuit,raikkonen,6
+2018,4,Baku City Circuit,ocon,7
+2018,4,Baku City Circuit,perez,8
+2018,4,Baku City Circuit,hulkenberg,9
+2018,4,Baku City Circuit,sainz,10
+2018,4,Baku City Circuit,stroll,11
+2018,4,Baku City Circuit,sirotkin,12
+2018,4,Baku City Circuit,alonso,13
+2018,4,Baku City Circuit,leclerc,14
+2018,4,Baku City Circuit,kevin_magnussen,15
+2018,4,Baku City Circuit,vandoorne,16
+2018,4,Baku City Circuit,gasly,17
+2018,4,Baku City Circuit,ericsson,18
+2018,4,Baku City Circuit,brendon_hartley,19
+2018,4,Baku City Circuit,grosjean,20
+2018,5,Circuit de Barcelona-Catalunya,hamilton,1
+2018,5,Circuit de Barcelona-Catalunya,bottas,2
+2018,5,Circuit de Barcelona-Catalunya,vettel,3
+2018,5,Circuit de Barcelona-Catalunya,raikkonen,4
+2018,5,Circuit de Barcelona-Catalunya,max_verstappen,5
+2018,5,Circuit de Barcelona-Catalunya,ricciardo,6
+2018,5,Circuit de Barcelona-Catalunya,kevin_magnussen,7
+2018,5,Circuit de Barcelona-Catalunya,alonso,8
+2018,5,Circuit de Barcelona-Catalunya,sainz,9
+2018,5,Circuit de Barcelona-Catalunya,grosjean,10
+2018,5,Circuit de Barcelona-Catalunya,vandoorne,11
+2018,5,Circuit de Barcelona-Catalunya,gasly,12
+2018,5,Circuit de Barcelona-Catalunya,ocon,13
+2018,5,Circuit de Barcelona-Catalunya,leclerc,14
+2018,5,Circuit de Barcelona-Catalunya,perez,15
+2018,5,Circuit de Barcelona-Catalunya,hulkenberg,16
+2018,5,Circuit de Barcelona-Catalunya,ericsson,17
+2018,5,Circuit de Barcelona-Catalunya,sirotkin,18
+2018,5,Circuit de Barcelona-Catalunya,stroll,19
+2018,5,Circuit de Barcelona-Catalunya,brendon_hartley,20
+2018,6,Circuit de Monaco,ricciardo,1
+2018,6,Circuit de Monaco,vettel,2
+2018,6,Circuit de Monaco,hamilton,3
+2018,6,Circuit de Monaco,raikkonen,4
+2018,6,Circuit de Monaco,bottas,5
+2018,6,Circuit de Monaco,ocon,6
+2018,6,Circuit de Monaco,alonso,7
+2018,6,Circuit de Monaco,sainz,8
+2018,6,Circuit de Monaco,perez,9
+2018,6,Circuit de Monaco,gasly,10
+2018,6,Circuit de Monaco,hulkenberg,11
+2018,6,Circuit de Monaco,vandoorne,12
+2018,6,Circuit de Monaco,sirotkin,13
+2018,6,Circuit de Monaco,leclerc,14
+2018,6,Circuit de Monaco,grosjean,15
+2018,6,Circuit de Monaco,brendon_hartley,16
+2018,6,Circuit de Monaco,ericsson,17
+2018,6,Circuit de Monaco,stroll,18
+2018,6,Circuit de Monaco,kevin_magnussen,19
+2018,6,Circuit de Monaco,max_verstappen,20
+2018,7,Circuit Gilles Villeneuve,vettel,1
+2018,7,Circuit Gilles Villeneuve,bottas,2
+2018,7,Circuit Gilles Villeneuve,max_verstappen,3
+2018,7,Circuit Gilles Villeneuve,hamilton,4
+2018,7,Circuit Gilles Villeneuve,raikkonen,5
+2018,7,Circuit Gilles Villeneuve,ricciardo,6
+2018,7,Circuit Gilles Villeneuve,hulkenberg,7
+2018,7,Circuit Gilles Villeneuve,ocon,8
+2018,7,Circuit Gilles Villeneuve,sainz,9
+2018,7,Circuit Gilles Villeneuve,perez,10
+2018,7,Circuit Gilles Villeneuve,kevin_magnussen,11
+2018,7,Circuit Gilles Villeneuve,brendon_hartley,12
+2018,7,Circuit Gilles Villeneuve,leclerc,13
+2018,7,Circuit Gilles Villeneuve,alonso,14
+2018,7,Circuit Gilles Villeneuve,vandoorne,15
+2018,7,Circuit Gilles Villeneuve,gasly,16
+2018,7,Circuit Gilles Villeneuve,stroll,17
+2018,7,Circuit Gilles Villeneuve,sirotkin,18
+2018,7,Circuit Gilles Villeneuve,ericsson,19
+2018,7,Circuit Gilles Villeneuve,grosjean,20
+2018,8,Circuit Paul Ricard,hamilton,1
+2018,8,Circuit Paul Ricard,bottas,2
+2018,8,Circuit Paul Ricard,vettel,3
+2018,8,Circuit Paul Ricard,max_verstappen,4
+2018,8,Circuit Paul Ricard,ricciardo,5
+2018,8,Circuit Paul Ricard,raikkonen,6
+2018,8,Circuit Paul Ricard,sainz,7
+2018,8,Circuit Paul Ricard,leclerc,8
+2018,8,Circuit Paul Ricard,kevin_magnussen,9
+2018,8,Circuit Paul Ricard,grosjean,10
+2018,8,Circuit Paul Ricard,ocon,11
+2018,8,Circuit Paul Ricard,hulkenberg,12
+2018,8,Circuit Paul Ricard,perez,13
+2018,8,Circuit Paul Ricard,gasly,14
+2018,8,Circuit Paul Ricard,ericsson,15
+2018,8,Circuit Paul Ricard,alonso,16
+2018,8,Circuit Paul Ricard,brendon_hartley,17
+2018,8,Circuit Paul Ricard,vandoorne,18
+2018,8,Circuit Paul Ricard,sirotkin,19
+2018,8,Circuit Paul Ricard,stroll,20
+2018,9,Red Bull Ring,bottas,1
+2018,9,Red Bull Ring,hamilton,2
+2018,9,Red Bull Ring,vettel,3
+2018,9,Red Bull Ring,raikkonen,4
+2018,9,Red Bull Ring,max_verstappen,5
+2018,9,Red Bull Ring,grosjean,6
+2018,9,Red Bull Ring,ricciardo,7
+2018,9,Red Bull Ring,kevin_magnussen,8
+2018,9,Red Bull Ring,sainz,9
+2018,9,Red Bull Ring,hulkenberg,10
+2018,9,Red Bull Ring,ocon,11
+2018,9,Red Bull Ring,gasly,12
+2018,9,Red Bull Ring,leclerc,13
+2018,9,Red Bull Ring,alonso,14
+2018,9,Red Bull Ring,stroll,15
+2018,9,Red Bull Ring,vandoorne,16
+2018,9,Red Bull Ring,perez,17
+2018,9,Red Bull Ring,sirotkin,18
+2018,9,Red Bull Ring,brendon_hartley,19
+2018,9,Red Bull Ring,ericsson,20
+2018,10,Silverstone Circuit,hamilton,1
+2018,10,Silverstone Circuit,vettel,2
+2018,10,Silverstone Circuit,raikkonen,3
+2018,10,Silverstone Circuit,bottas,4
+2018,10,Silverstone Circuit,max_verstappen,5
+2018,10,Silverstone Circuit,ricciardo,6
+2018,10,Silverstone Circuit,kevin_magnussen,7
+2018,10,Silverstone Circuit,grosjean,8
+2018,10,Silverstone Circuit,leclerc,9
+2018,10,Silverstone Circuit,ocon,10
+2018,10,Silverstone Circuit,hulkenberg,11
+2018,10,Silverstone Circuit,perez,12
+2018,10,Silverstone Circuit,alonso,13
+2018,10,Silverstone Circuit,gasly,14
+2018,10,Silverstone Circuit,ericsson,15
+2018,10,Silverstone Circuit,sainz,16
+2018,10,Silverstone Circuit,vandoorne,17
+2018,10,Silverstone Circuit,sirotkin,18
+2018,10,Silverstone Circuit,stroll,19
+2018,10,Silverstone Circuit,brendon_hartley,20
+2018,11,Hockenheimring,vettel,1
+2018,11,Hockenheimring,bottas,2
+2018,11,Hockenheimring,raikkonen,3
+2018,11,Hockenheimring,max_verstappen,4
+2018,11,Hockenheimring,kevin_magnussen,5
+2018,11,Hockenheimring,grosjean,6
+2018,11,Hockenheimring,hulkenberg,7
+2018,11,Hockenheimring,sainz,8
+2018,11,Hockenheimring,leclerc,9
+2018,11,Hockenheimring,perez,10
+2018,11,Hockenheimring,alonso,11
+2018,11,Hockenheimring,sirotkin,12
+2018,11,Hockenheimring,ericsson,13
+2018,11,Hockenheimring,hamilton,14
+2018,11,Hockenheimring,ricciardo,15
+2018,11,Hockenheimring,ocon,16
+2018,11,Hockenheimring,gasly,17
+2018,11,Hockenheimring,brendon_hartley,18
+2018,11,Hockenheimring,stroll,19
+2018,11,Hockenheimring,vandoorne,20
+2018,12,Hungaroring,hamilton,1
+2018,12,Hungaroring,bottas,2
+2018,12,Hungaroring,raikkonen,3
+2018,12,Hungaroring,vettel,4
+2018,12,Hungaroring,sainz,5
+2018,12,Hungaroring,gasly,6
+2018,12,Hungaroring,max_verstappen,7
+2018,12,Hungaroring,brendon_hartley,8
+2018,12,Hungaroring,kevin_magnussen,9
+2018,12,Hungaroring,grosjean,10
+2018,12,Hungaroring,alonso,11
+2018,12,Hungaroring,ricciardo,12
+2018,12,Hungaroring,hulkenberg,13
+2018,12,Hungaroring,ericsson,14
+2018,12,Hungaroring,stroll,15
+2018,12,Hungaroring,vandoorne,16
+2018,12,Hungaroring,leclerc,17
+2018,12,Hungaroring,ocon,18
+2018,12,Hungaroring,perez,19
+2018,12,Hungaroring,sirotkin,20
+2018,13,Circuit de Spa-Francorchamps,hamilton,1
+2018,13,Circuit de Spa-Francorchamps,vettel,2
+2018,13,Circuit de Spa-Francorchamps,ocon,3
+2018,13,Circuit de Spa-Francorchamps,perez,4
+2018,13,Circuit de Spa-Francorchamps,grosjean,5
+2018,13,Circuit de Spa-Francorchamps,raikkonen,6
+2018,13,Circuit de Spa-Francorchamps,max_verstappen,7
+2018,13,Circuit de Spa-Francorchamps,ricciardo,8
+2018,13,Circuit de Spa-Francorchamps,kevin_magnussen,9
+2018,13,Circuit de Spa-Francorchamps,bottas,10
+2018,13,Circuit de Spa-Francorchamps,gasly,11
+2018,13,Circuit de Spa-Francorchamps,brendon_hartley,12
+2018,13,Circuit de Spa-Francorchamps,leclerc,13
+2018,13,Circuit de Spa-Francorchamps,ericsson,14
+2018,13,Circuit de Spa-Francorchamps,hulkenberg,15
+2018,13,Circuit de Spa-Francorchamps,sainz,16
+2018,13,Circuit de Spa-Francorchamps,alonso,17
+2018,13,Circuit de Spa-Francorchamps,sirotkin,18
+2018,13,Circuit de Spa-Francorchamps,stroll,19
+2018,13,Circuit de Spa-Francorchamps,vandoorne,20
+2018,14,Autodromo Nazionale di Monza,raikkonen,1
+2018,14,Autodromo Nazionale di Monza,vettel,2
+2018,14,Autodromo Nazionale di Monza,hamilton,3
+2018,14,Autodromo Nazionale di Monza,bottas,4
+2018,14,Autodromo Nazionale di Monza,max_verstappen,5
+2018,14,Autodromo Nazionale di Monza,grosjean,6
+2018,14,Autodromo Nazionale di Monza,sainz,7
+2018,14,Autodromo Nazionale di Monza,ocon,8
+2018,14,Autodromo Nazionale di Monza,gasly,9
+2018,14,Autodromo Nazionale di Monza,stroll,10
+2018,14,Autodromo Nazionale di Monza,kevin_magnussen,11
+2018,14,Autodromo Nazionale di Monza,sirotkin,12
+2018,14,Autodromo Nazionale di Monza,alonso,13
+2018,14,Autodromo Nazionale di Monza,hulkenberg,14
+2018,14,Autodromo Nazionale di Monza,ricciardo,15
+2018,14,Autodromo Nazionale di Monza,perez,16
+2018,14,Autodromo Nazionale di Monza,leclerc,17
+2018,14,Autodromo Nazionale di Monza,brendon_hartley,18
+2018,14,Autodromo Nazionale di Monza,ericsson,19
+2018,14,Autodromo Nazionale di Monza,vandoorne,20
+2018,15,Marina Bay Street Circuit,hamilton,1
+2018,15,Marina Bay Street Circuit,max_verstappen,2
+2018,15,Marina Bay Street Circuit,vettel,3
+2018,15,Marina Bay Street Circuit,bottas,4
+2018,15,Marina Bay Street Circuit,raikkonen,5
+2018,15,Marina Bay Street Circuit,ricciardo,6
+2018,15,Marina Bay Street Circuit,perez,7
+2018,15,Marina Bay Street Circuit,grosjean,8
+2018,15,Marina Bay Street Circuit,ocon,9
+2018,15,Marina Bay Street Circuit,hulkenberg,10
+2018,15,Marina Bay Street Circuit,alonso,11
+2018,15,Marina Bay Street Circuit,sainz,12
+2018,15,Marina Bay Street Circuit,leclerc,13
+2018,15,Marina Bay Street Circuit,ericsson,14
+2018,15,Marina Bay Street Circuit,gasly,15
+2018,15,Marina Bay Street Circuit,kevin_magnussen,16
+2018,15,Marina Bay Street Circuit,brendon_hartley,17
+2018,15,Marina Bay Street Circuit,vandoorne,18
+2018,15,Marina Bay Street Circuit,sirotkin,19
+2018,15,Marina Bay Street Circuit,stroll,20
+2018,16,Sochi Autodrom,bottas,1
+2018,16,Sochi Autodrom,hamilton,2
+2018,16,Sochi Autodrom,vettel,3
+2018,16,Sochi Autodrom,raikkonen,4
+2018,16,Sochi Autodrom,kevin_magnussen,5
+2018,16,Sochi Autodrom,ocon,6
+2018,16,Sochi Autodrom,leclerc,7
+2018,16,Sochi Autodrom,perez,8
+2018,16,Sochi Autodrom,grosjean,9
+2018,16,Sochi Autodrom,ericsson,10
+2018,16,Sochi Autodrom,max_verstappen,11
+2018,16,Sochi Autodrom,ricciardo,12
+2018,16,Sochi Autodrom,gasly,13
+2018,16,Sochi Autodrom,sainz,14
+2018,16,Sochi Autodrom,hulkenberg,15
+2018,16,Sochi Autodrom,brendon_hartley,16
+2018,16,Sochi Autodrom,alonso,17
+2018,16,Sochi Autodrom,sirotkin,18
+2018,16,Sochi Autodrom,vandoorne,19
+2018,16,Sochi Autodrom,stroll,20
+2018,17,Suzuka Circuit,hamilton,1
+2018,17,Suzuka Circuit,bottas,2
+2018,17,Suzuka Circuit,max_verstappen,3
+2018,17,Suzuka Circuit,raikkonen,4
+2018,17,Suzuka Circuit,grosjean,5
+2018,17,Suzuka Circuit,brendon_hartley,6
+2018,17,Suzuka Circuit,gasly,7
+2018,17,Suzuka Circuit,ocon,8
+2018,17,Suzuka Circuit,vettel,9
+2018,17,Suzuka Circuit,perez,10
+2018,17,Suzuka Circuit,leclerc,11
+2018,17,Suzuka Circuit,kevin_magnussen,12
+2018,17,Suzuka Circuit,sainz,13
+2018,17,Suzuka Circuit,stroll,14
+2018,17,Suzuka Circuit,ricciardo,15
+2018,17,Suzuka Circuit,hulkenberg,16
+2018,17,Suzuka Circuit,sirotkin,17
+2018,17,Suzuka Circuit,alonso,18
+2018,17,Suzuka Circuit,vandoorne,19
+2018,17,Suzuka Circuit,ericsson,20
+2018,18,Circuit of the Americas,hamilton,1
+2018,18,Circuit of the Americas,vettel,2
+2018,18,Circuit of the Americas,raikkonen,3
+2018,18,Circuit of the Americas,bottas,4
+2018,18,Circuit of the Americas,ricciardo,5
+2018,18,Circuit of the Americas,ocon,6
+2018,18,Circuit of the Americas,hulkenberg,7
+2018,18,Circuit of the Americas,grosjean,8
+2018,18,Circuit of the Americas,leclerc,9
+2018,18,Circuit of the Americas,perez,10
+2018,18,Circuit of the Americas,sainz,11
+2018,18,Circuit of the Americas,kevin_magnussen,12
+2018,18,Circuit of the Americas,gasly,13
+2018,18,Circuit of the Americas,brendon_hartley,14
+2018,18,Circuit of the Americas,max_verstappen,15
+2018,18,Circuit of the Americas,alonso,16
+2018,18,Circuit of the Americas,sirotkin,17
+2018,18,Circuit of the Americas,stroll,18
+2018,18,Circuit of the Americas,ericsson,19
+2018,18,Circuit of the Americas,vandoorne,20
+2018,19,Autódromo Hermanos Rodríguez,ricciardo,1
+2018,19,Autódromo Hermanos Rodríguez,max_verstappen,2
+2018,19,Autódromo Hermanos Rodríguez,hamilton,3
+2018,19,Autódromo Hermanos Rodríguez,vettel,4
+2018,19,Autódromo Hermanos Rodríguez,bottas,5
+2018,19,Autódromo Hermanos Rodríguez,raikkonen,6
+2018,19,Autódromo Hermanos Rodríguez,hulkenberg,7
+2018,19,Autódromo Hermanos Rodríguez,sainz,8
+2018,19,Autódromo Hermanos Rodríguez,leclerc,9
+2018,19,Autódromo Hermanos Rodríguez,ericsson,10
+2018,19,Autódromo Hermanos Rodríguez,ocon,11
+2018,19,Autódromo Hermanos Rodríguez,alonso,12
+2018,19,Autódromo Hermanos Rodríguez,perez,13
+2018,19,Autódromo Hermanos Rodríguez,brendon_hartley,14
+2018,19,Autódromo Hermanos Rodríguez,gasly,15
+2018,19,Autódromo Hermanos Rodríguez,grosjean,16
+2018,19,Autódromo Hermanos Rodríguez,vandoorne,17
+2018,19,Autódromo Hermanos Rodríguez,kevin_magnussen,18
+2018,19,Autódromo Hermanos Rodríguez,stroll,19
+2018,19,Autódromo Hermanos Rodríguez,sirotkin,20
+2018,20,Autódromo José Carlos Pace,hamilton,1
+2018,20,Autódromo José Carlos Pace,vettel,2
+2018,20,Autódromo José Carlos Pace,bottas,3
+2018,20,Autódromo José Carlos Pace,raikkonen,4
+2018,20,Autódromo José Carlos Pace,max_verstappen,5
+2018,20,Autódromo José Carlos Pace,ricciardo,6
+2018,20,Autódromo José Carlos Pace,ericsson,7
+2018,20,Autódromo José Carlos Pace,leclerc,8
+2018,20,Autódromo José Carlos Pace,grosjean,9
+2018,20,Autódromo José Carlos Pace,gasly,10
+2018,20,Autódromo José Carlos Pace,kevin_magnussen,11
+2018,20,Autódromo José Carlos Pace,perez,12
+2018,20,Autódromo José Carlos Pace,ocon,13
+2018,20,Autódromo José Carlos Pace,hulkenberg,14
+2018,20,Autódromo José Carlos Pace,sirotkin,15
+2018,20,Autódromo José Carlos Pace,sainz,16
+2018,20,Autódromo José Carlos Pace,brendon_hartley,17
+2018,20,Autódromo José Carlos Pace,alonso,18
+2018,20,Autódromo José Carlos Pace,stroll,19
+2018,20,Autódromo José Carlos Pace,vandoorne,20
+2018,21,Yas Marina Circuit,hamilton,1
+2018,21,Yas Marina Circuit,bottas,2
+2018,21,Yas Marina Circuit,vettel,3
+2018,21,Yas Marina Circuit,raikkonen,4
+2018,21,Yas Marina Circuit,ricciardo,5
+2018,21,Yas Marina Circuit,max_verstappen,6
+2018,21,Yas Marina Circuit,grosjean,7
+2018,21,Yas Marina Circuit,leclerc,8
+2018,21,Yas Marina Circuit,ocon,9
+2018,21,Yas Marina Circuit,hulkenberg,10
+2018,21,Yas Marina Circuit,sainz,11
+2018,21,Yas Marina Circuit,ericsson,12
+2018,21,Yas Marina Circuit,kevin_magnussen,13
+2018,21,Yas Marina Circuit,perez,14
+2018,21,Yas Marina Circuit,alonso,15
+2018,21,Yas Marina Circuit,brendon_hartley,16
+2018,21,Yas Marina Circuit,gasly,17
+2018,21,Yas Marina Circuit,vandoorne,18
+2018,21,Yas Marina Circuit,sirotkin,19
+2018,21,Yas Marina Circuit,stroll,20
+2019,1,Albert Park Grand Prix Circuit,hamilton,1
+2019,1,Albert Park Grand Prix Circuit,bottas,2
+2019,1,Albert Park Grand Prix Circuit,vettel,3
+2019,1,Albert Park Grand Prix Circuit,max_verstappen,4
+2019,1,Albert Park Grand Prix Circuit,leclerc,5
+2019,1,Albert Park Grand Prix Circuit,grosjean,6
+2019,1,Albert Park Grand Prix Circuit,kevin_magnussen,7
+2019,1,Albert Park Grand Prix Circuit,norris,8
+2019,1,Albert Park Grand Prix Circuit,raikkonen,9
+2019,1,Albert Park Grand Prix Circuit,perez,10
+2019,1,Albert Park Grand Prix Circuit,hulkenberg,11
+2019,1,Albert Park Grand Prix Circuit,ricciardo,12
+2019,1,Albert Park Grand Prix Circuit,albon,13
+2019,1,Albert Park Grand Prix Circuit,giovinazzi,14
+2019,1,Albert Park Grand Prix Circuit,kvyat,15
+2019,1,Albert Park Grand Prix Circuit,stroll,16
+2019,1,Albert Park Grand Prix Circuit,gasly,17
+2019,1,Albert Park Grand Prix Circuit,sainz,18
+2019,1,Albert Park Grand Prix Circuit,russell,19
+2019,1,Albert Park Grand Prix Circuit,kubica,20
+2019,2,Bahrain International Circuit,leclerc,1
+2019,2,Bahrain International Circuit,vettel,2
+2019,2,Bahrain International Circuit,hamilton,3
+2019,2,Bahrain International Circuit,bottas,4
+2019,2,Bahrain International Circuit,max_verstappen,5
+2019,2,Bahrain International Circuit,kevin_magnussen,6
+2019,2,Bahrain International Circuit,sainz,7
+2019,2,Bahrain International Circuit,grosjean,8
+2019,2,Bahrain International Circuit,raikkonen,9
+2019,2,Bahrain International Circuit,norris,10
+2019,2,Bahrain International Circuit,ricciardo,11
+2019,2,Bahrain International Circuit,albon,12
+2019,2,Bahrain International Circuit,gasly,13
+2019,2,Bahrain International Circuit,perez,14
+2019,2,Bahrain International Circuit,kvyat,15
+2019,2,Bahrain International Circuit,giovinazzi,16
+2019,2,Bahrain International Circuit,hulkenberg,17
+2019,2,Bahrain International Circuit,stroll,18
+2019,2,Bahrain International Circuit,russell,19
+2019,2,Bahrain International Circuit,kubica,20
+2019,3,Shanghai International Circuit,bottas,1
+2019,3,Shanghai International Circuit,hamilton,2
+2019,3,Shanghai International Circuit,vettel,3
+2019,3,Shanghai International Circuit,leclerc,4
+2019,3,Shanghai International Circuit,max_verstappen,5
+2019,3,Shanghai International Circuit,gasly,6
+2019,3,Shanghai International Circuit,ricciardo,7
+2019,3,Shanghai International Circuit,hulkenberg,8
+2019,3,Shanghai International Circuit,kevin_magnussen,9
+2019,3,Shanghai International Circuit,grosjean,10
+2019,3,Shanghai International Circuit,kvyat,11
+2019,3,Shanghai International Circuit,perez,12
+2019,3,Shanghai International Circuit,raikkonen,13
+2019,3,Shanghai International Circuit,sainz,14
+2019,3,Shanghai International Circuit,norris,15
+2019,3,Shanghai International Circuit,stroll,16
+2019,3,Shanghai International Circuit,russell,17
+2019,3,Shanghai International Circuit,kubica,18
+2019,4,Baku City Circuit,bottas,1
+2019,4,Baku City Circuit,hamilton,2
+2019,4,Baku City Circuit,vettel,3
+2019,4,Baku City Circuit,max_verstappen,4
+2019,4,Baku City Circuit,perez,5
+2019,4,Baku City Circuit,kvyat,6
+2019,4,Baku City Circuit,norris,7
+2019,4,Baku City Circuit,giovinazzi,8
+2019,4,Baku City Circuit,leclerc,9
+2019,4,Baku City Circuit,sainz,10
+2019,4,Baku City Circuit,ricciardo,11
+2019,4,Baku City Circuit,albon,12
+2019,4,Baku City Circuit,kevin_magnussen,13
+2019,4,Baku City Circuit,stroll,14
+2019,4,Baku City Circuit,grosjean,15
+2019,4,Baku City Circuit,hulkenberg,16
+2019,4,Baku City Circuit,russell,17
+2019,4,Baku City Circuit,kubica,18
+2019,4,Baku City Circuit,raikkonen,19
+2019,4,Baku City Circuit,gasly,20
+2019,5,Circuit de Barcelona-Catalunya,bottas,1
+2019,5,Circuit de Barcelona-Catalunya,hamilton,2
+2019,5,Circuit de Barcelona-Catalunya,vettel,3
+2019,5,Circuit de Barcelona-Catalunya,max_verstappen,4
+2019,5,Circuit de Barcelona-Catalunya,leclerc,5
+2019,5,Circuit de Barcelona-Catalunya,gasly,6
+2019,5,Circuit de Barcelona-Catalunya,grosjean,7
+2019,5,Circuit de Barcelona-Catalunya,kevin_magnussen,8
+2019,5,Circuit de Barcelona-Catalunya,kvyat,9
+2019,5,Circuit de Barcelona-Catalunya,ricciardo,10
+2019,5,Circuit de Barcelona-Catalunya,norris,11
+2019,5,Circuit de Barcelona-Catalunya,albon,12
+2019,5,Circuit de Barcelona-Catalunya,sainz,13
+2019,5,Circuit de Barcelona-Catalunya,raikkonen,14
+2019,5,Circuit de Barcelona-Catalunya,perez,15
+2019,5,Circuit de Barcelona-Catalunya,hulkenberg,16
+2019,5,Circuit de Barcelona-Catalunya,stroll,17
+2019,5,Circuit de Barcelona-Catalunya,giovinazzi,18
+2019,5,Circuit de Barcelona-Catalunya,russell,19
+2019,5,Circuit de Barcelona-Catalunya,kubica,20
+2019,6,Circuit de Monaco,hamilton,1
+2019,6,Circuit de Monaco,bottas,2
+2019,6,Circuit de Monaco,max_verstappen,3
+2019,6,Circuit de Monaco,vettel,4
+2019,6,Circuit de Monaco,gasly,5
+2019,6,Circuit de Monaco,kevin_magnussen,6
+2019,6,Circuit de Monaco,ricciardo,7
+2019,6,Circuit de Monaco,kvyat,8
+2019,6,Circuit de Monaco,sainz,9
+2019,6,Circuit de Monaco,albon,10
+2019,6,Circuit de Monaco,hulkenberg,11
+2019,6,Circuit de Monaco,norris,12
+2019,6,Circuit de Monaco,grosjean,13
+2019,6,Circuit de Monaco,raikkonen,14
+2019,6,Circuit de Monaco,giovinazzi,15
+2019,6,Circuit de Monaco,leclerc,16
+2019,6,Circuit de Monaco,perez,17
+2019,6,Circuit de Monaco,stroll,18
+2019,6,Circuit de Monaco,russell,19
+2019,6,Circuit de Monaco,kubica,20
+2019,7,Circuit Gilles Villeneuve,vettel,1
+2019,7,Circuit Gilles Villeneuve,hamilton,2
+2019,7,Circuit Gilles Villeneuve,leclerc,3
+2019,7,Circuit Gilles Villeneuve,ricciardo,4
+2019,7,Circuit Gilles Villeneuve,gasly,5
+2019,7,Circuit Gilles Villeneuve,bottas,6
+2019,7,Circuit Gilles Villeneuve,hulkenberg,7
+2019,7,Circuit Gilles Villeneuve,norris,8
+2019,7,Circuit Gilles Villeneuve,sainz,9
+2019,7,Circuit Gilles Villeneuve,kevin_magnussen,10
+2019,7,Circuit Gilles Villeneuve,max_verstappen,11
+2019,7,Circuit Gilles Villeneuve,kvyat,12
+2019,7,Circuit Gilles Villeneuve,giovinazzi,13
+2019,7,Circuit Gilles Villeneuve,albon,14
+2019,7,Circuit Gilles Villeneuve,grosjean,15
+2019,7,Circuit Gilles Villeneuve,perez,16
+2019,7,Circuit Gilles Villeneuve,raikkonen,17
+2019,7,Circuit Gilles Villeneuve,stroll,18
+2019,7,Circuit Gilles Villeneuve,russell,19
+2019,7,Circuit Gilles Villeneuve,kubica,20
+2019,8,Circuit Paul Ricard,hamilton,1
+2019,8,Circuit Paul Ricard,bottas,2
+2019,8,Circuit Paul Ricard,leclerc,3
+2019,8,Circuit Paul Ricard,max_verstappen,4
+2019,8,Circuit Paul Ricard,norris,5
+2019,8,Circuit Paul Ricard,sainz,6
+2019,8,Circuit Paul Ricard,vettel,7
+2019,8,Circuit Paul Ricard,ricciardo,8
+2019,8,Circuit Paul Ricard,gasly,9
+2019,8,Circuit Paul Ricard,giovinazzi,10
+2019,8,Circuit Paul Ricard,albon,11
+2019,8,Circuit Paul Ricard,raikkonen,12
+2019,8,Circuit Paul Ricard,hulkenberg,13
+2019,8,Circuit Paul Ricard,perez,14
+2019,8,Circuit Paul Ricard,kevin_magnussen,15
+2019,8,Circuit Paul Ricard,kvyat,16
+2019,8,Circuit Paul Ricard,grosjean,17
+2019,8,Circuit Paul Ricard,stroll,18
+2019,8,Circuit Paul Ricard,russell,19
+2019,8,Circuit Paul Ricard,kubica,20
+2019,9,Red Bull Ring,leclerc,1
+2019,9,Red Bull Ring,hamilton,2
+2019,9,Red Bull Ring,max_verstappen,3
+2019,9,Red Bull Ring,bottas,4
+2019,9,Red Bull Ring,kevin_magnussen,5
+2019,9,Red Bull Ring,norris,6
+2019,9,Red Bull Ring,raikkonen,7
+2019,9,Red Bull Ring,giovinazzi,8
+2019,9,Red Bull Ring,gasly,9
+2019,9,Red Bull Ring,vettel,10
+2019,9,Red Bull Ring,grosjean,11
+2019,9,Red Bull Ring,hulkenberg,12
+2019,9,Red Bull Ring,albon,13
+2019,9,Red Bull Ring,ricciardo,14
+2019,9,Red Bull Ring,sainz,15
+2019,9,Red Bull Ring,perez,16
+2019,9,Red Bull Ring,stroll,17
+2019,9,Red Bull Ring,kvyat,18
+2019,9,Red Bull Ring,russell,19
+2019,9,Red Bull Ring,kubica,20
+2019,10,Silverstone Circuit,bottas,1
+2019,10,Silverstone Circuit,hamilton,2
+2019,10,Silverstone Circuit,leclerc,3
+2019,10,Silverstone Circuit,max_verstappen,4
+2019,10,Silverstone Circuit,gasly,5
+2019,10,Silverstone Circuit,vettel,6
+2019,10,Silverstone Circuit,ricciardo,7
+2019,10,Silverstone Circuit,norris,8
+2019,10,Silverstone Circuit,albon,9
+2019,10,Silverstone Circuit,hulkenberg,10
+2019,10,Silverstone Circuit,giovinazzi,11
+2019,10,Silverstone Circuit,raikkonen,12
+2019,10,Silverstone Circuit,sainz,13
+2019,10,Silverstone Circuit,grosjean,14
+2019,10,Silverstone Circuit,perez,15
+2019,10,Silverstone Circuit,kevin_magnussen,16
+2019,10,Silverstone Circuit,kvyat,17
+2019,10,Silverstone Circuit,stroll,18
+2019,10,Silverstone Circuit,russell,19
+2019,10,Silverstone Circuit,kubica,20
+2019,11,Hockenheimring,hamilton,1
+2019,11,Hockenheimring,max_verstappen,2
+2019,11,Hockenheimring,bottas,3
+2019,11,Hockenheimring,gasly,4
+2019,11,Hockenheimring,raikkonen,5
+2019,11,Hockenheimring,grosjean,6
+2019,11,Hockenheimring,sainz,7
+2019,11,Hockenheimring,perez,8
+2019,11,Hockenheimring,hulkenberg,9
+2019,11,Hockenheimring,leclerc,10
+2019,11,Hockenheimring,giovinazzi,11
+2019,11,Hockenheimring,kevin_magnussen,12
+2019,11,Hockenheimring,ricciardo,13
+2019,11,Hockenheimring,kvyat,14
+2019,11,Hockenheimring,stroll,15
+2019,11,Hockenheimring,norris,16
+2019,11,Hockenheimring,albon,17
+2019,11,Hockenheimring,russell,18
+2019,11,Hockenheimring,kubica,19
+2019,11,Hockenheimring,vettel,20
+2019,12,Hungaroring,max_verstappen,1
+2019,12,Hungaroring,bottas,2
+2019,12,Hungaroring,hamilton,3
+2019,12,Hungaroring,leclerc,4
+2019,12,Hungaroring,vettel,5
+2019,12,Hungaroring,gasly,6
+2019,12,Hungaroring,norris,7
+2019,12,Hungaroring,sainz,8
+2019,12,Hungaroring,grosjean,9
+2019,12,Hungaroring,raikkonen,10
+2019,12,Hungaroring,hulkenberg,11
+2019,12,Hungaroring,albon,12
+2019,12,Hungaroring,kvyat,13
+2019,12,Hungaroring,giovinazzi,14
+2019,12,Hungaroring,kevin_magnussen,15
+2019,12,Hungaroring,russell,16
+2019,12,Hungaroring,perez,17
+2019,12,Hungaroring,ricciardo,18
+2019,12,Hungaroring,stroll,19
+2019,12,Hungaroring,kubica,20
+2019,13,Circuit de Spa-Francorchamps,leclerc,1
+2019,13,Circuit de Spa-Francorchamps,vettel,2
+2019,13,Circuit de Spa-Francorchamps,hamilton,3
+2019,13,Circuit de Spa-Francorchamps,bottas,4
+2019,13,Circuit de Spa-Francorchamps,max_verstappen,5
+2019,13,Circuit de Spa-Francorchamps,ricciardo,6
+2019,13,Circuit de Spa-Francorchamps,hulkenberg,7
+2019,13,Circuit de Spa-Francorchamps,raikkonen,8
+2019,13,Circuit de Spa-Francorchamps,perez,9
+2019,13,Circuit de Spa-Francorchamps,kevin_magnussen,10
+2019,13,Circuit de Spa-Francorchamps,grosjean,11
+2019,13,Circuit de Spa-Francorchamps,norris,12
+2019,13,Circuit de Spa-Francorchamps,stroll,13
+2019,13,Circuit de Spa-Francorchamps,albon,14
+2019,13,Circuit de Spa-Francorchamps,giovinazzi,15
+2019,13,Circuit de Spa-Francorchamps,gasly,16
+2019,13,Circuit de Spa-Francorchamps,sainz,17
+2019,13,Circuit de Spa-Francorchamps,kvyat,18
+2019,13,Circuit de Spa-Francorchamps,russell,19
+2019,13,Circuit de Spa-Francorchamps,kubica,20
+2019,14,Autodromo Nazionale di Monza,leclerc,1
+2019,14,Autodromo Nazionale di Monza,hamilton,2
+2019,14,Autodromo Nazionale di Monza,bottas,3
+2019,14,Autodromo Nazionale di Monza,vettel,4
+2019,14,Autodromo Nazionale di Monza,ricciardo,5
+2019,14,Autodromo Nazionale di Monza,hulkenberg,6
+2019,14,Autodromo Nazionale di Monza,sainz,7
+2019,14,Autodromo Nazionale di Monza,albon,8
+2019,14,Autodromo Nazionale di Monza,stroll,9
+2019,14,Autodromo Nazionale di Monza,raikkonen,10
+2019,14,Autodromo Nazionale di Monza,giovinazzi,11
+2019,14,Autodromo Nazionale di Monza,kevin_magnussen,12
+2019,14,Autodromo Nazionale di Monza,kvyat,13
+2019,14,Autodromo Nazionale di Monza,norris,14
+2019,14,Autodromo Nazionale di Monza,gasly,15
+2019,14,Autodromo Nazionale di Monza,grosjean,16
+2019,14,Autodromo Nazionale di Monza,perez,17
+2019,14,Autodromo Nazionale di Monza,russell,18
+2019,14,Autodromo Nazionale di Monza,kubica,19
+2019,14,Autodromo Nazionale di Monza,max_verstappen,20
+2019,15,Marina Bay Street Circuit,leclerc,1
+2019,15,Marina Bay Street Circuit,hamilton,2
+2019,15,Marina Bay Street Circuit,vettel,3
+2019,15,Marina Bay Street Circuit,max_verstappen,4
+2019,15,Marina Bay Street Circuit,bottas,5
+2019,15,Marina Bay Street Circuit,albon,6
+2019,15,Marina Bay Street Circuit,sainz,7
+2019,15,Marina Bay Street Circuit,hulkenberg,8
+2019,15,Marina Bay Street Circuit,norris,9
+2019,15,Marina Bay Street Circuit,perez,10
+2019,15,Marina Bay Street Circuit,giovinazzi,11
+2019,15,Marina Bay Street Circuit,gasly,12
+2019,15,Marina Bay Street Circuit,raikkonen,13
+2019,15,Marina Bay Street Circuit,kevin_magnussen,14
+2019,15,Marina Bay Street Circuit,kvyat,15
+2019,15,Marina Bay Street Circuit,stroll,16
+2019,15,Marina Bay Street Circuit,grosjean,17
+2019,15,Marina Bay Street Circuit,russell,18
+2019,15,Marina Bay Street Circuit,kubica,19
+2019,15,Marina Bay Street Circuit,ricciardo,20
+2019,16,Sochi Autodrom,leclerc,1
+2019,16,Sochi Autodrom,hamilton,2
+2019,16,Sochi Autodrom,vettel,3
+2019,16,Sochi Autodrom,max_verstappen,4
+2019,16,Sochi Autodrom,bottas,5
+2019,16,Sochi Autodrom,sainz,6
+2019,16,Sochi Autodrom,hulkenberg,7
+2019,16,Sochi Autodrom,norris,8
+2019,16,Sochi Autodrom,grosjean,9
+2019,16,Sochi Autodrom,ricciardo,10
+2019,16,Sochi Autodrom,gasly,11
+2019,16,Sochi Autodrom,perez,12
+2019,16,Sochi Autodrom,giovinazzi,13
+2019,16,Sochi Autodrom,kevin_magnussen,14
+2019,16,Sochi Autodrom,stroll,15
+2019,16,Sochi Autodrom,raikkonen,16
+2019,16,Sochi Autodrom,russell,17
+2019,16,Sochi Autodrom,kubica,18
+2019,16,Sochi Autodrom,albon,19
+2019,16,Sochi Autodrom,kvyat,20
+2019,17,Suzuka Circuit,vettel,1
+2019,17,Suzuka Circuit,leclerc,2
+2019,17,Suzuka Circuit,bottas,3
+2019,17,Suzuka Circuit,hamilton,4
+2019,17,Suzuka Circuit,max_verstappen,5
+2019,17,Suzuka Circuit,albon,6
+2019,17,Suzuka Circuit,sainz,7
+2019,17,Suzuka Circuit,norris,8
+2019,17,Suzuka Circuit,gasly,9
+2019,17,Suzuka Circuit,grosjean,10
+2019,17,Suzuka Circuit,giovinazzi,11
+2019,17,Suzuka Circuit,stroll,12
+2019,17,Suzuka Circuit,raikkonen,13
+2019,17,Suzuka Circuit,kvyat,14
+2019,17,Suzuka Circuit,hulkenberg,15
+2019,17,Suzuka Circuit,ricciardo,16
+2019,17,Suzuka Circuit,perez,17
+2019,17,Suzuka Circuit,russell,18
+2019,17,Suzuka Circuit,kevin_magnussen,19
+2019,17,Suzuka Circuit,kubica,20
+2019,18,Autódromo Hermanos Rodríguez,max_verstappen,1
+2019,18,Autódromo Hermanos Rodríguez,leclerc,2
+2019,18,Autódromo Hermanos Rodríguez,vettel,3
+2019,18,Autódromo Hermanos Rodríguez,hamilton,4
+2019,18,Autódromo Hermanos Rodríguez,albon,5
+2019,18,Autódromo Hermanos Rodríguez,bottas,6
+2019,18,Autódromo Hermanos Rodríguez,sainz,7
+2019,18,Autódromo Hermanos Rodríguez,norris,8
+2019,18,Autódromo Hermanos Rodríguez,kvyat,9
+2019,18,Autódromo Hermanos Rodríguez,gasly,10
+2019,18,Autódromo Hermanos Rodríguez,perez,11
+2019,18,Autódromo Hermanos Rodríguez,hulkenberg,12
+2019,18,Autódromo Hermanos Rodríguez,ricciardo,13
+2019,18,Autódromo Hermanos Rodríguez,raikkonen,14
+2019,18,Autódromo Hermanos Rodríguez,giovinazzi,15
+2019,18,Autódromo Hermanos Rodríguez,stroll,16
+2019,18,Autódromo Hermanos Rodríguez,kevin_magnussen,17
+2019,18,Autódromo Hermanos Rodríguez,grosjean,18
+2019,18,Autódromo Hermanos Rodríguez,russell,19
+2019,18,Autódromo Hermanos Rodríguez,kubica,20
+2019,19,Circuit of the Americas,bottas,1
+2019,19,Circuit of the Americas,vettel,2
+2019,19,Circuit of the Americas,max_verstappen,3
+2019,19,Circuit of the Americas,leclerc,4
+2019,19,Circuit of the Americas,hamilton,5
+2019,19,Circuit of the Americas,albon,6
+2019,19,Circuit of the Americas,sainz,7
+2019,19,Circuit of the Americas,norris,8
+2019,19,Circuit of the Americas,ricciardo,9
+2019,19,Circuit of the Americas,gasly,10
+2019,19,Circuit of the Americas,hulkenberg,11
+2019,19,Circuit of the Americas,kevin_magnussen,12
+2019,19,Circuit of the Americas,kvyat,13
+2019,19,Circuit of the Americas,stroll,14
+2019,19,Circuit of the Americas,grosjean,15
+2019,19,Circuit of the Americas,giovinazzi,16
+2019,19,Circuit of the Americas,raikkonen,17
+2019,19,Circuit of the Americas,russell,18
+2019,19,Circuit of the Americas,perez,19
+2019,19,Circuit of the Americas,kubica,20
+2019,20,Autódromo José Carlos Pace,max_verstappen,1
+2019,20,Autódromo José Carlos Pace,vettel,2
+2019,20,Autódromo José Carlos Pace,hamilton,3
+2019,20,Autódromo José Carlos Pace,leclerc,4
+2019,20,Autódromo José Carlos Pace,bottas,5
+2019,20,Autódromo José Carlos Pace,albon,6
+2019,20,Autódromo José Carlos Pace,gasly,7
+2019,20,Autódromo José Carlos Pace,grosjean,8
+2019,20,Autódromo José Carlos Pace,raikkonen,9
+2019,20,Autódromo José Carlos Pace,kevin_magnussen,10
+2019,20,Autódromo José Carlos Pace,norris,11
+2019,20,Autódromo José Carlos Pace,ricciardo,12
+2019,20,Autódromo José Carlos Pace,giovinazzi,13
+2019,20,Autódromo José Carlos Pace,hulkenberg,14
+2019,20,Autódromo José Carlos Pace,perez,15
+2019,20,Autódromo José Carlos Pace,kvyat,16
+2019,20,Autódromo José Carlos Pace,stroll,17
+2019,20,Autódromo José Carlos Pace,russell,18
+2019,20,Autódromo José Carlos Pace,kubica,19
+2019,20,Autódromo José Carlos Pace,sainz,20
+2019,21,Yas Marina Circuit,hamilton,1
+2019,21,Yas Marina Circuit,bottas,2
+2019,21,Yas Marina Circuit,max_verstappen,3
+2019,21,Yas Marina Circuit,leclerc,4
+2019,21,Yas Marina Circuit,vettel,5
+2019,21,Yas Marina Circuit,albon,6
+2019,21,Yas Marina Circuit,norris,7
+2019,21,Yas Marina Circuit,ricciardo,8
+2019,21,Yas Marina Circuit,sainz,9
+2019,21,Yas Marina Circuit,hulkenberg,10
+2019,21,Yas Marina Circuit,perez,11
+2019,21,Yas Marina Circuit,gasly,12
+2019,21,Yas Marina Circuit,stroll,13
+2019,21,Yas Marina Circuit,kvyat,14
+2019,21,Yas Marina Circuit,kevin_magnussen,15
+2019,21,Yas Marina Circuit,grosjean,16
+2019,21,Yas Marina Circuit,giovinazzi,17
+2019,21,Yas Marina Circuit,raikkonen,18
+2019,21,Yas Marina Circuit,russell,19
+2019,21,Yas Marina Circuit,kubica,20
+2020,1,Red Bull Ring,bottas,1
+2020,1,Red Bull Ring,hamilton,2
+2020,1,Red Bull Ring,max_verstappen,3
+2020,1,Red Bull Ring,norris,4
+2020,1,Red Bull Ring,albon,5
+2020,1,Red Bull Ring,perez,6
+2020,1,Red Bull Ring,leclerc,7
+2020,1,Red Bull Ring,sainz,8
+2020,1,Red Bull Ring,stroll,9
+2020,1,Red Bull Ring,ricciardo,10
+2020,1,Red Bull Ring,vettel,11
+2020,1,Red Bull Ring,gasly,12
+2020,1,Red Bull Ring,kvyat,13
+2020,1,Red Bull Ring,ocon,14
+2020,1,Red Bull Ring,grosjean,15
+2020,1,Red Bull Ring,kevin_magnussen,16
+2020,1,Red Bull Ring,russell,17
+2020,1,Red Bull Ring,giovinazzi,18
+2020,1,Red Bull Ring,raikkonen,19
+2020,1,Red Bull Ring,latifi,20
+2020,2,Red Bull Ring,hamilton,1
+2020,2,Red Bull Ring,max_verstappen,2
+2020,2,Red Bull Ring,sainz,3
+2020,2,Red Bull Ring,bottas,4
+2020,2,Red Bull Ring,ocon,5
+2020,2,Red Bull Ring,norris,6
+2020,2,Red Bull Ring,albon,7
+2020,2,Red Bull Ring,gasly,8
+2020,2,Red Bull Ring,ricciardo,9
+2020,2,Red Bull Ring,vettel,10
+2020,2,Red Bull Ring,leclerc,11
+2020,2,Red Bull Ring,russell,12
+2020,2,Red Bull Ring,stroll,13
+2020,2,Red Bull Ring,kvyat,14
+2020,2,Red Bull Ring,kevin_magnussen,15
+2020,2,Red Bull Ring,raikkonen,16
+2020,2,Red Bull Ring,perez,17
+2020,2,Red Bull Ring,latifi,18
+2020,2,Red Bull Ring,giovinazzi,19
+2020,2,Red Bull Ring,grosjean,20
+2020,3,Hungaroring,hamilton,1
+2020,3,Hungaroring,bottas,2
+2020,3,Hungaroring,stroll,3
+2020,3,Hungaroring,perez,4
+2020,3,Hungaroring,vettel,5
+2020,3,Hungaroring,leclerc,6
+2020,3,Hungaroring,max_verstappen,7
+2020,3,Hungaroring,norris,8
+2020,3,Hungaroring,sainz,9
+2020,3,Hungaroring,gasly,10
+2020,3,Hungaroring,ricciardo,11
+2020,3,Hungaroring,russell,12
+2020,3,Hungaroring,albon,13
+2020,3,Hungaroring,ocon,14
+2020,3,Hungaroring,latifi,15
+2020,3,Hungaroring,kevin_magnussen,16
+2020,3,Hungaroring,kvyat,17
+2020,3,Hungaroring,grosjean,18
+2020,3,Hungaroring,giovinazzi,19
+2020,3,Hungaroring,raikkonen,20
+2020,4,Silverstone Circuit,hamilton,1
+2020,4,Silverstone Circuit,bottas,2
+2020,4,Silverstone Circuit,max_verstappen,3
+2020,4,Silverstone Circuit,leclerc,4
+2020,4,Silverstone Circuit,norris,5
+2020,4,Silverstone Circuit,stroll,6
+2020,4,Silverstone Circuit,sainz,7
+2020,4,Silverstone Circuit,ricciardo,8
+2020,4,Silverstone Circuit,ocon,9
+2020,4,Silverstone Circuit,vettel,10
+2020,4,Silverstone Circuit,gasly,11
+2020,4,Silverstone Circuit,albon,12
+2020,4,Silverstone Circuit,hulkenberg,13
+2020,4,Silverstone Circuit,kvyat,14
+2020,4,Silverstone Circuit,russell,15
+2020,4,Silverstone Circuit,kevin_magnussen,16
+2020,4,Silverstone Circuit,giovinazzi,17
+2020,4,Silverstone Circuit,raikkonen,18
+2020,4,Silverstone Circuit,grosjean,19
+2020,4,Silverstone Circuit,latifi,20
+2020,5,Silverstone Circuit,bottas,1
+2020,5,Silverstone Circuit,hamilton,2
+2020,5,Silverstone Circuit,hulkenberg,3
+2020,5,Silverstone Circuit,max_verstappen,4
+2020,5,Silverstone Circuit,ricciardo,5
+2020,5,Silverstone Circuit,stroll,6
+2020,5,Silverstone Circuit,gasly,7
+2020,5,Silverstone Circuit,leclerc,8
+2020,5,Silverstone Circuit,albon,9
+2020,5,Silverstone Circuit,norris,10
+2020,5,Silverstone Circuit,ocon,11
+2020,5,Silverstone Circuit,vettel,12
+2020,5,Silverstone Circuit,sainz,13
+2020,5,Silverstone Circuit,grosjean,14
+2020,5,Silverstone Circuit,russell,15
+2020,5,Silverstone Circuit,kvyat,16
+2020,5,Silverstone Circuit,kevin_magnussen,17
+2020,5,Silverstone Circuit,latifi,18
+2020,5,Silverstone Circuit,giovinazzi,19
+2020,5,Silverstone Circuit,raikkonen,20
+2020,6,Circuit de Barcelona-Catalunya,hamilton,1
+2020,6,Circuit de Barcelona-Catalunya,bottas,2
+2020,6,Circuit de Barcelona-Catalunya,max_verstappen,3
+2020,6,Circuit de Barcelona-Catalunya,perez,4
+2020,6,Circuit de Barcelona-Catalunya,stroll,5
+2020,6,Circuit de Barcelona-Catalunya,albon,6
+2020,6,Circuit de Barcelona-Catalunya,sainz,7
+2020,6,Circuit de Barcelona-Catalunya,norris,8
+2020,6,Circuit de Barcelona-Catalunya,leclerc,9
+2020,6,Circuit de Barcelona-Catalunya,gasly,10
+2020,6,Circuit de Barcelona-Catalunya,vettel,11
+2020,6,Circuit de Barcelona-Catalunya,kvyat,12
+2020,6,Circuit de Barcelona-Catalunya,ricciardo,13
+2020,6,Circuit de Barcelona-Catalunya,raikkonen,14
+2020,6,Circuit de Barcelona-Catalunya,ocon,15
+2020,6,Circuit de Barcelona-Catalunya,kevin_magnussen,16
+2020,6,Circuit de Barcelona-Catalunya,grosjean,17
+2020,6,Circuit de Barcelona-Catalunya,russell,18
+2020,6,Circuit de Barcelona-Catalunya,latifi,19
+2020,6,Circuit de Barcelona-Catalunya,giovinazzi,20
+2020,7,Circuit de Spa-Francorchamps,hamilton,1
+2020,7,Circuit de Spa-Francorchamps,bottas,2
+2020,7,Circuit de Spa-Francorchamps,max_verstappen,3
+2020,7,Circuit de Spa-Francorchamps,ricciardo,4
+2020,7,Circuit de Spa-Francorchamps,albon,5
+2020,7,Circuit de Spa-Francorchamps,ocon,6
+2020,7,Circuit de Spa-Francorchamps,sainz,7
+2020,7,Circuit de Spa-Francorchamps,perez,8
+2020,7,Circuit de Spa-Francorchamps,stroll,9
+2020,7,Circuit de Spa-Francorchamps,norris,10
+2020,7,Circuit de Spa-Francorchamps,kvyat,11
+2020,7,Circuit de Spa-Francorchamps,gasly,12
+2020,7,Circuit de Spa-Francorchamps,leclerc,13
+2020,7,Circuit de Spa-Francorchamps,vettel,14
+2020,7,Circuit de Spa-Francorchamps,russell,15
+2020,7,Circuit de Spa-Francorchamps,raikkonen,16
+2020,7,Circuit de Spa-Francorchamps,grosjean,17
+2020,7,Circuit de Spa-Francorchamps,giovinazzi,18
+2020,7,Circuit de Spa-Francorchamps,latifi,19
+2020,7,Circuit de Spa-Francorchamps,kevin_magnussen,20
+2020,8,Autodromo Nazionale di Monza,hamilton,1
+2020,8,Autodromo Nazionale di Monza,bottas,2
+2020,8,Autodromo Nazionale di Monza,sainz,3
+2020,8,Autodromo Nazionale di Monza,perez,4
+2020,8,Autodromo Nazionale di Monza,max_verstappen,5
+2020,8,Autodromo Nazionale di Monza,norris,6
+2020,8,Autodromo Nazionale di Monza,ricciardo,7
+2020,8,Autodromo Nazionale di Monza,stroll,8
+2020,8,Autodromo Nazionale di Monza,albon,9
+2020,8,Autodromo Nazionale di Monza,gasly,10
+2020,8,Autodromo Nazionale di Monza,kvyat,11
+2020,8,Autodromo Nazionale di Monza,ocon,12
+2020,8,Autodromo Nazionale di Monza,leclerc,13
+2020,8,Autodromo Nazionale di Monza,raikkonen,14
+2020,8,Autodromo Nazionale di Monza,kevin_magnussen,15
+2020,8,Autodromo Nazionale di Monza,grosjean,16
+2020,8,Autodromo Nazionale di Monza,vettel,17
+2020,8,Autodromo Nazionale di Monza,giovinazzi,18
+2020,8,Autodromo Nazionale di Monza,russell,19
+2020,8,Autodromo Nazionale di Monza,latifi,20
+2020,9,Autodromo Internazionale del Mugello,hamilton,1
+2020,9,Autodromo Internazionale del Mugello,bottas,2
+2020,9,Autodromo Internazionale del Mugello,max_verstappen,3
+2020,9,Autodromo Internazionale del Mugello,albon,4
+2020,9,Autodromo Internazionale del Mugello,leclerc,5
+2020,9,Autodromo Internazionale del Mugello,perez,6
+2020,9,Autodromo Internazionale del Mugello,stroll,7
+2020,9,Autodromo Internazionale del Mugello,ricciardo,8
+2020,9,Autodromo Internazionale del Mugello,sainz,9
+2020,9,Autodromo Internazionale del Mugello,ocon,10
+2020,9,Autodromo Internazionale del Mugello,norris,11
+2020,9,Autodromo Internazionale del Mugello,kvyat,12
+2020,9,Autodromo Internazionale del Mugello,raikkonen,13
+2020,9,Autodromo Internazionale del Mugello,vettel,14
+2020,9,Autodromo Internazionale del Mugello,grosjean,15
+2020,9,Autodromo Internazionale del Mugello,gasly,16
+2020,9,Autodromo Internazionale del Mugello,giovinazzi,17
+2020,9,Autodromo Internazionale del Mugello,russell,18
+2020,9,Autodromo Internazionale del Mugello,latifi,19
+2020,9,Autodromo Internazionale del Mugello,kevin_magnussen,20
+2020,10,Sochi Autodrom,hamilton,1
+2020,10,Sochi Autodrom,max_verstappen,2
+2020,10,Sochi Autodrom,bottas,3
+2020,10,Sochi Autodrom,perez,4
+2020,10,Sochi Autodrom,ricciardo,5
+2020,10,Sochi Autodrom,sainz,6
+2020,10,Sochi Autodrom,ocon,7
+2020,10,Sochi Autodrom,norris,8
+2020,10,Sochi Autodrom,gasly,9
+2020,10,Sochi Autodrom,albon,10
+2020,10,Sochi Autodrom,leclerc,11
+2020,10,Sochi Autodrom,kvyat,12
+2020,10,Sochi Autodrom,stroll,13
+2020,10,Sochi Autodrom,russell,14
+2020,10,Sochi Autodrom,vettel,15
+2020,10,Sochi Autodrom,grosjean,16
+2020,10,Sochi Autodrom,giovinazzi,17
+2020,10,Sochi Autodrom,kevin_magnussen,18
+2020,10,Sochi Autodrom,latifi,19
+2020,10,Sochi Autodrom,raikkonen,20
+2020,11,Nürburgring,bottas,1
+2020,11,Nürburgring,hamilton,2
+2020,11,Nürburgring,max_verstappen,3
+2020,11,Nürburgring,leclerc,4
+2020,11,Nürburgring,albon,5
+2020,11,Nürburgring,ricciardo,6
+2020,11,Nürburgring,ocon,7
+2020,11,Nürburgring,norris,8
+2020,11,Nürburgring,perez,9
+2020,11,Nürburgring,sainz,10
+2020,11,Nürburgring,vettel,11
+2020,11,Nürburgring,gasly,12
+2020,11,Nürburgring,kvyat,13
+2020,11,Nürburgring,giovinazzi,14
+2020,11,Nürburgring,kevin_magnussen,15
+2020,11,Nürburgring,grosjean,16
+2020,11,Nürburgring,russell,17
+2020,11,Nürburgring,latifi,18
+2020,11,Nürburgring,raikkonen,19
+2020,11,Nürburgring,hulkenberg,20
+2020,12,Autódromo Internacional do Algarve,hamilton,1
+2020,12,Autódromo Internacional do Algarve,bottas,2
+2020,12,Autódromo Internacional do Algarve,max_verstappen,3
+2020,12,Autódromo Internacional do Algarve,leclerc,4
+2020,12,Autódromo Internacional do Algarve,perez,5
+2020,12,Autódromo Internacional do Algarve,albon,6
+2020,12,Autódromo Internacional do Algarve,sainz,7
+2020,12,Autódromo Internacional do Algarve,norris,8
+2020,12,Autódromo Internacional do Algarve,gasly,9
+2020,12,Autódromo Internacional do Algarve,ricciardo,10
+2020,12,Autódromo Internacional do Algarve,ocon,11
+2020,12,Autódromo Internacional do Algarve,stroll,12
+2020,12,Autódromo Internacional do Algarve,kvyat,13
+2020,12,Autódromo Internacional do Algarve,russell,14
+2020,12,Autódromo Internacional do Algarve,vettel,15
+2020,12,Autódromo Internacional do Algarve,raikkonen,16
+2020,12,Autódromo Internacional do Algarve,giovinazzi,17
+2020,12,Autódromo Internacional do Algarve,grosjean,18
+2020,12,Autódromo Internacional do Algarve,kevin_magnussen,19
+2020,12,Autódromo Internacional do Algarve,latifi,20
+2020,13,Autodromo Enzo e Dino Ferrari,bottas,1
+2020,13,Autodromo Enzo e Dino Ferrari,hamilton,2
+2020,13,Autodromo Enzo e Dino Ferrari,max_verstappen,3
+2020,13,Autodromo Enzo e Dino Ferrari,gasly,4
+2020,13,Autodromo Enzo e Dino Ferrari,ricciardo,5
+2020,13,Autodromo Enzo e Dino Ferrari,albon,6
+2020,13,Autodromo Enzo e Dino Ferrari,leclerc,7
+2020,13,Autodromo Enzo e Dino Ferrari,kvyat,8
+2020,13,Autodromo Enzo e Dino Ferrari,norris,9
+2020,13,Autodromo Enzo e Dino Ferrari,sainz,10
+2020,13,Autodromo Enzo e Dino Ferrari,perez,11
+2020,13,Autodromo Enzo e Dino Ferrari,ocon,12
+2020,13,Autodromo Enzo e Dino Ferrari,russell,13
+2020,13,Autodromo Enzo e Dino Ferrari,vettel,14
+2020,13,Autodromo Enzo e Dino Ferrari,stroll,15
+2020,13,Autodromo Enzo e Dino Ferrari,grosjean,16
+2020,13,Autodromo Enzo e Dino Ferrari,kevin_magnussen,17
+2020,13,Autodromo Enzo e Dino Ferrari,raikkonen,18
+2020,13,Autodromo Enzo e Dino Ferrari,latifi,19
+2020,13,Autodromo Enzo e Dino Ferrari,giovinazzi,20
+2020,14,Istanbul Park,stroll,1
+2020,14,Istanbul Park,max_verstappen,2
+2020,14,Istanbul Park,perez,3
+2020,14,Istanbul Park,albon,4
+2020,14,Istanbul Park,ricciardo,5
+2020,14,Istanbul Park,hamilton,6
+2020,14,Istanbul Park,ocon,7
+2020,14,Istanbul Park,raikkonen,8
+2020,14,Istanbul Park,bottas,9
+2020,14,Istanbul Park,giovinazzi,10
+2020,14,Istanbul Park,norris,11
+2020,14,Istanbul Park,vettel,12
+2020,14,Istanbul Park,sainz,13
+2020,14,Istanbul Park,leclerc,14
+2020,14,Istanbul Park,gasly,15
+2020,14,Istanbul Park,kevin_magnussen,16
+2020,14,Istanbul Park,kvyat,17
+2020,14,Istanbul Park,russell,18
+2020,14,Istanbul Park,grosjean,19
+2020,14,Istanbul Park,latifi,20
+2020,15,Bahrain International Circuit,hamilton,1
+2020,15,Bahrain International Circuit,bottas,2
+2020,15,Bahrain International Circuit,max_verstappen,3
+2020,15,Bahrain International Circuit,albon,4
+2020,15,Bahrain International Circuit,perez,5
+2020,15,Bahrain International Circuit,ricciardo,6
+2020,15,Bahrain International Circuit,ocon,7
+2020,15,Bahrain International Circuit,gasly,8
+2020,15,Bahrain International Circuit,norris,9
+2020,15,Bahrain International Circuit,kvyat,10
+2020,15,Bahrain International Circuit,vettel,11
+2020,15,Bahrain International Circuit,leclerc,12
+2020,15,Bahrain International Circuit,stroll,13
+2020,15,Bahrain International Circuit,russell,14
+2020,15,Bahrain International Circuit,sainz,15
+2020,15,Bahrain International Circuit,giovinazzi,16
+2020,15,Bahrain International Circuit,raikkonen,17
+2020,15,Bahrain International Circuit,kevin_magnussen,18
+2020,15,Bahrain International Circuit,grosjean,19
+2020,15,Bahrain International Circuit,latifi,20
+2020,16,Bahrain International Circuit,bottas,1
+2020,16,Bahrain International Circuit,russell,2
+2020,16,Bahrain International Circuit,max_verstappen,3
+2020,16,Bahrain International Circuit,leclerc,4
+2020,16,Bahrain International Circuit,perez,5
+2020,16,Bahrain International Circuit,kvyat,6
+2020,16,Bahrain International Circuit,ricciardo,7
+2020,16,Bahrain International Circuit,sainz,8
+2020,16,Bahrain International Circuit,gasly,9
+2020,16,Bahrain International Circuit,stroll,10
+2020,16,Bahrain International Circuit,ocon,11
+2020,16,Bahrain International Circuit,albon,12
+2020,16,Bahrain International Circuit,vettel,13
+2020,16,Bahrain International Circuit,giovinazzi,14
+2020,16,Bahrain International Circuit,norris,15
+2020,16,Bahrain International Circuit,kevin_magnussen,16
+2020,16,Bahrain International Circuit,latifi,17
+2020,16,Bahrain International Circuit,aitken,18
+2020,16,Bahrain International Circuit,raikkonen,19
+2020,16,Bahrain International Circuit,pietro_fittipaldi,20
+2020,17,Yas Marina Circuit,max_verstappen,1
+2020,17,Yas Marina Circuit,bottas,2
+2020,17,Yas Marina Circuit,hamilton,3
+2020,17,Yas Marina Circuit,norris,4
+2020,17,Yas Marina Circuit,albon,5
+2020,17,Yas Marina Circuit,sainz,6
+2020,17,Yas Marina Circuit,kvyat,7
+2020,17,Yas Marina Circuit,stroll,8
+2020,17,Yas Marina Circuit,leclerc,9
+2020,17,Yas Marina Circuit,gasly,10
+2020,17,Yas Marina Circuit,ocon,11
+2020,17,Yas Marina Circuit,ricciardo,12
+2020,17,Yas Marina Circuit,vettel,13
+2020,17,Yas Marina Circuit,giovinazzi,14
+2020,17,Yas Marina Circuit,perez,15
+2020,17,Yas Marina Circuit,raikkonen,16
+2020,17,Yas Marina Circuit,kevin_magnussen,17
+2020,17,Yas Marina Circuit,russell,18
+2020,17,Yas Marina Circuit,pietro_fittipaldi,19
+2020,17,Yas Marina Circuit,latifi,20
+2021,1,Bahrain International Circuit,max_verstappen,1
+2021,1,Bahrain International Circuit,hamilton,2
+2021,1,Bahrain International Circuit,bottas,3
+2021,1,Bahrain International Circuit,leclerc,4
+2021,1,Bahrain International Circuit,gasly,5
+2021,1,Bahrain International Circuit,ricciardo,6
+2021,1,Bahrain International Circuit,norris,7
+2021,1,Bahrain International Circuit,sainz,8
+2021,1,Bahrain International Circuit,alonso,9
+2021,1,Bahrain International Circuit,stroll,10
+2021,1,Bahrain International Circuit,perez,11
+2021,1,Bahrain International Circuit,giovinazzi,12
+2021,1,Bahrain International Circuit,tsunoda,13
+2021,1,Bahrain International Circuit,raikkonen,14
+2021,1,Bahrain International Circuit,russell,15
+2021,1,Bahrain International Circuit,ocon,16
+2021,1,Bahrain International Circuit,latifi,17
+2021,1,Bahrain International Circuit,vettel,18
+2021,1,Bahrain International Circuit,mick_schumacher,19
+2021,1,Bahrain International Circuit,mazepin,20
+2021,2,Autodromo Enzo e Dino Ferrari,hamilton,1
+2021,2,Autodromo Enzo e Dino Ferrari,perez,2
+2021,2,Autodromo Enzo e Dino Ferrari,max_verstappen,3
+2021,2,Autodromo Enzo e Dino Ferrari,leclerc,4
+2021,2,Autodromo Enzo e Dino Ferrari,gasly,5
+2021,2,Autodromo Enzo e Dino Ferrari,ricciardo,6
+2021,2,Autodromo Enzo e Dino Ferrari,norris,7
+2021,2,Autodromo Enzo e Dino Ferrari,bottas,8
+2021,2,Autodromo Enzo e Dino Ferrari,ocon,9
+2021,2,Autodromo Enzo e Dino Ferrari,stroll,10
+2021,2,Autodromo Enzo e Dino Ferrari,sainz,11
+2021,2,Autodromo Enzo e Dino Ferrari,russell,12
+2021,2,Autodromo Enzo e Dino Ferrari,vettel,13
+2021,2,Autodromo Enzo e Dino Ferrari,latifi,14
+2021,2,Autodromo Enzo e Dino Ferrari,alonso,15
+2021,2,Autodromo Enzo e Dino Ferrari,raikkonen,16
+2021,2,Autodromo Enzo e Dino Ferrari,giovinazzi,17
+2021,2,Autodromo Enzo e Dino Ferrari,mick_schumacher,18
+2021,2,Autodromo Enzo e Dino Ferrari,mazepin,19
+2021,2,Autodromo Enzo e Dino Ferrari,tsunoda,20
+2021,3,Autódromo Internacional do Algarve,bottas,1
+2021,3,Autódromo Internacional do Algarve,hamilton,2
+2021,3,Autódromo Internacional do Algarve,max_verstappen,3
+2021,3,Autódromo Internacional do Algarve,perez,4
+2021,3,Autódromo Internacional do Algarve,sainz,5
+2021,3,Autódromo Internacional do Algarve,ocon,6
+2021,3,Autódromo Internacional do Algarve,norris,7
+2021,3,Autódromo Internacional do Algarve,leclerc,8
+2021,3,Autódromo Internacional do Algarve,gasly,9
+2021,3,Autódromo Internacional do Algarve,vettel,10
+2021,3,Autódromo Internacional do Algarve,russell,11
+2021,3,Autódromo Internacional do Algarve,giovinazzi,12
+2021,3,Autódromo Internacional do Algarve,alonso,13
+2021,3,Autódromo Internacional do Algarve,tsunoda,14
+2021,3,Autódromo Internacional do Algarve,raikkonen,15
+2021,3,Autódromo Internacional do Algarve,ricciardo,16
+2021,3,Autódromo Internacional do Algarve,stroll,17
+2021,3,Autódromo Internacional do Algarve,latifi,18
+2021,3,Autódromo Internacional do Algarve,mick_schumacher,19
+2021,3,Autódromo Internacional do Algarve,mazepin,20
+2021,4,Circuit de Barcelona-Catalunya,hamilton,1
+2021,4,Circuit de Barcelona-Catalunya,max_verstappen,2
+2021,4,Circuit de Barcelona-Catalunya,bottas,3
+2021,4,Circuit de Barcelona-Catalunya,leclerc,4
+2021,4,Circuit de Barcelona-Catalunya,ocon,5
+2021,4,Circuit de Barcelona-Catalunya,sainz,6
+2021,4,Circuit de Barcelona-Catalunya,ricciardo,7
+2021,4,Circuit de Barcelona-Catalunya,perez,8
+2021,4,Circuit de Barcelona-Catalunya,norris,9
+2021,4,Circuit de Barcelona-Catalunya,alonso,10
+2021,4,Circuit de Barcelona-Catalunya,stroll,11
+2021,4,Circuit de Barcelona-Catalunya,gasly,12
+2021,4,Circuit de Barcelona-Catalunya,vettel,13
+2021,4,Circuit de Barcelona-Catalunya,giovinazzi,14
+2021,4,Circuit de Barcelona-Catalunya,russell,15
+2021,4,Circuit de Barcelona-Catalunya,tsunoda,16
+2021,4,Circuit de Barcelona-Catalunya,raikkonen,17
+2021,4,Circuit de Barcelona-Catalunya,mick_schumacher,18
+2021,4,Circuit de Barcelona-Catalunya,latifi,19
+2021,4,Circuit de Barcelona-Catalunya,mazepin,20
+2021,5,Circuit de Monaco,leclerc,1
+2021,5,Circuit de Monaco,max_verstappen,2
+2021,5,Circuit de Monaco,bottas,3
+2021,5,Circuit de Monaco,sainz,4
+2021,5,Circuit de Monaco,norris,5
+2021,5,Circuit de Monaco,gasly,6
+2021,5,Circuit de Monaco,hamilton,7
+2021,5,Circuit de Monaco,vettel,8
+2021,5,Circuit de Monaco,perez,9
+2021,5,Circuit de Monaco,giovinazzi,10
+2021,5,Circuit de Monaco,ocon,11
+2021,5,Circuit de Monaco,ricciardo,12
+2021,5,Circuit de Monaco,stroll,13
+2021,5,Circuit de Monaco,raikkonen,14
+2021,5,Circuit de Monaco,russell,15
+2021,5,Circuit de Monaco,tsunoda,16
+2021,5,Circuit de Monaco,alonso,17
+2021,5,Circuit de Monaco,latifi,18
+2021,5,Circuit de Monaco,mazepin,19
+2021,6,Baku City Circuit,leclerc,1
+2021,6,Baku City Circuit,hamilton,2
+2021,6,Baku City Circuit,max_verstappen,3
+2021,6,Baku City Circuit,gasly,4
+2021,6,Baku City Circuit,sainz,5
+2021,6,Baku City Circuit,norris,6
+2021,6,Baku City Circuit,perez,7
+2021,6,Baku City Circuit,tsunoda,8
+2021,6,Baku City Circuit,alonso,9
+2021,6,Baku City Circuit,bottas,10
+2021,6,Baku City Circuit,vettel,11
+2021,6,Baku City Circuit,ocon,12
+2021,6,Baku City Circuit,ricciardo,13
+2021,6,Baku City Circuit,raikkonen,14
+2021,6,Baku City Circuit,russell,15
+2021,6,Baku City Circuit,latifi,16
+2021,6,Baku City Circuit,mick_schumacher,17
+2021,6,Baku City Circuit,mazepin,18
+2021,6,Baku City Circuit,stroll,19
+2021,6,Baku City Circuit,giovinazzi,20
+2021,7,Circuit Paul Ricard,max_verstappen,1
+2021,7,Circuit Paul Ricard,hamilton,2
+2021,7,Circuit Paul Ricard,bottas,3
+2021,7,Circuit Paul Ricard,perez,4
+2021,7,Circuit Paul Ricard,sainz,5
+2021,7,Circuit Paul Ricard,gasly,6
+2021,7,Circuit Paul Ricard,leclerc,7
+2021,7,Circuit Paul Ricard,norris,8
+2021,7,Circuit Paul Ricard,alonso,9
+2021,7,Circuit Paul Ricard,ricciardo,10
+2021,7,Circuit Paul Ricard,ocon,11
+2021,7,Circuit Paul Ricard,vettel,12
+2021,7,Circuit Paul Ricard,giovinazzi,13
+2021,7,Circuit Paul Ricard,russell,14
+2021,7,Circuit Paul Ricard,mick_schumacher,15
+2021,7,Circuit Paul Ricard,latifi,16
+2021,7,Circuit Paul Ricard,raikkonen,17
+2021,7,Circuit Paul Ricard,mazepin,18
+2021,7,Circuit Paul Ricard,stroll,19
+2021,7,Circuit Paul Ricard,tsunoda,20
+2021,8,Red Bull Ring,max_verstappen,1
+2021,8,Red Bull Ring,bottas,2
+2021,8,Red Bull Ring,hamilton,3
+2021,8,Red Bull Ring,norris,4
+2021,8,Red Bull Ring,perez,5
+2021,8,Red Bull Ring,gasly,6
+2021,8,Red Bull Ring,leclerc,7
+2021,8,Red Bull Ring,tsunoda,8
+2021,8,Red Bull Ring,alonso,9
+2021,8,Red Bull Ring,stroll,10
+2021,8,Red Bull Ring,russell,11
+2021,8,Red Bull Ring,sainz,12
+2021,8,Red Bull Ring,ricciardo,13
+2021,8,Red Bull Ring,vettel,14
+2021,8,Red Bull Ring,giovinazzi,15
+2021,8,Red Bull Ring,latifi,16
+2021,8,Red Bull Ring,ocon,17
+2021,8,Red Bull Ring,raikkonen,18
+2021,8,Red Bull Ring,mick_schumacher,19
+2021,8,Red Bull Ring,mazepin,20
+2021,9,Red Bull Ring,max_verstappen,1
+2021,9,Red Bull Ring,norris,2
+2021,9,Red Bull Ring,perez,3
+2021,9,Red Bull Ring,hamilton,4
+2021,9,Red Bull Ring,bottas,5
+2021,9,Red Bull Ring,gasly,6
+2021,9,Red Bull Ring,tsunoda,7
+2021,9,Red Bull Ring,vettel,8
+2021,9,Red Bull Ring,russell,9
+2021,9,Red Bull Ring,stroll,10
+2021,9,Red Bull Ring,sainz,11
+2021,9,Red Bull Ring,leclerc,12
+2021,9,Red Bull Ring,ricciardo,13
+2021,9,Red Bull Ring,alonso,14
+2021,9,Red Bull Ring,giovinazzi,15
+2021,9,Red Bull Ring,raikkonen,16
+2021,9,Red Bull Ring,ocon,17
+2021,9,Red Bull Ring,latifi,18
+2021,9,Red Bull Ring,mick_schumacher,19
+2021,9,Red Bull Ring,mazepin,20
+2021,10,Silverstone Circuit,hamilton,1
+2021,10,Silverstone Circuit,max_verstappen,2
+2021,10,Silverstone Circuit,bottas,3
+2021,10,Silverstone Circuit,leclerc,4
+2021,10,Silverstone Circuit,perez,5
+2021,10,Silverstone Circuit,norris,6
+2021,10,Silverstone Circuit,ricciardo,7
+2021,10,Silverstone Circuit,russell,8
+2021,10,Silverstone Circuit,sainz,9
+2021,10,Silverstone Circuit,vettel,10
+2021,10,Silverstone Circuit,alonso,11
+2021,10,Silverstone Circuit,gasly,12
+2021,10,Silverstone Circuit,ocon,13
+2021,10,Silverstone Circuit,giovinazzi,14
+2021,10,Silverstone Circuit,stroll,15
+2021,10,Silverstone Circuit,tsunoda,16
+2021,10,Silverstone Circuit,raikkonen,17
+2021,10,Silverstone Circuit,latifi,18
+2021,10,Silverstone Circuit,mick_schumacher,19
+2021,10,Silverstone Circuit,mazepin,20
+2021,11,Hungaroring,hamilton,1
+2021,11,Hungaroring,bottas,2
+2021,11,Hungaroring,max_verstappen,3
+2021,11,Hungaroring,perez,4
+2021,11,Hungaroring,gasly,5
+2021,11,Hungaroring,norris,6
+2021,11,Hungaroring,leclerc,7
+2021,11,Hungaroring,ocon,8
+2021,11,Hungaroring,alonso,9
+2021,11,Hungaroring,vettel,10
+2021,11,Hungaroring,ricciardo,11
+2021,11,Hungaroring,stroll,12
+2021,11,Hungaroring,raikkonen,13
+2021,11,Hungaroring,giovinazzi,14
+2021,11,Hungaroring,sainz,15
+2021,11,Hungaroring,tsunoda,16
+2021,11,Hungaroring,russell,17
+2021,11,Hungaroring,latifi,18
+2021,11,Hungaroring,mazepin,19
+2021,11,Hungaroring,mick_schumacher,20
+2021,12,Circuit de Spa-Francorchamps,max_verstappen,1
+2021,12,Circuit de Spa-Francorchamps,russell,2
+2021,12,Circuit de Spa-Francorchamps,hamilton,3
+2021,12,Circuit de Spa-Francorchamps,ricciardo,4
+2021,12,Circuit de Spa-Francorchamps,vettel,5
+2021,12,Circuit de Spa-Francorchamps,gasly,6
+2021,12,Circuit de Spa-Francorchamps,perez,7
+2021,12,Circuit de Spa-Francorchamps,bottas,8
+2021,12,Circuit de Spa-Francorchamps,ocon,9
+2021,12,Circuit de Spa-Francorchamps,norris,10
+2021,12,Circuit de Spa-Francorchamps,leclerc,11
+2021,12,Circuit de Spa-Francorchamps,latifi,12
+2021,12,Circuit de Spa-Francorchamps,sainz,13
+2021,12,Circuit de Spa-Francorchamps,alonso,14
+2021,12,Circuit de Spa-Francorchamps,stroll,15
+2021,12,Circuit de Spa-Francorchamps,giovinazzi,16
+2021,12,Circuit de Spa-Francorchamps,tsunoda,17
+2021,12,Circuit de Spa-Francorchamps,mick_schumacher,18
+2021,12,Circuit de Spa-Francorchamps,raikkonen,19
+2021,12,Circuit de Spa-Francorchamps,mazepin,20
+2021,13,Circuit Park Zandvoort,max_verstappen,1
+2021,13,Circuit Park Zandvoort,hamilton,2
+2021,13,Circuit Park Zandvoort,bottas,3
+2021,13,Circuit Park Zandvoort,gasly,4
+2021,13,Circuit Park Zandvoort,leclerc,5
+2021,13,Circuit Park Zandvoort,sainz,6
+2021,13,Circuit Park Zandvoort,giovinazzi,7
+2021,13,Circuit Park Zandvoort,ocon,8
+2021,13,Circuit Park Zandvoort,alonso,9
+2021,13,Circuit Park Zandvoort,ricciardo,10
+2021,13,Circuit Park Zandvoort,russell,11
+2021,13,Circuit Park Zandvoort,stroll,12
+2021,13,Circuit Park Zandvoort,norris,13
+2021,13,Circuit Park Zandvoort,latifi,14
+2021,13,Circuit Park Zandvoort,tsunoda,15
+2021,13,Circuit Park Zandvoort,perez,16
+2021,13,Circuit Park Zandvoort,vettel,17
+2021,13,Circuit Park Zandvoort,kubica,18
+2021,13,Circuit Park Zandvoort,mick_schumacher,19
+2021,13,Circuit Park Zandvoort,mazepin,20
+2021,14,Autodromo Nazionale di Monza,bottas,1
+2021,14,Autodromo Nazionale di Monza,hamilton,2
+2021,14,Autodromo Nazionale di Monza,max_verstappen,3
+2021,14,Autodromo Nazionale di Monza,norris,4
+2021,14,Autodromo Nazionale di Monza,ricciardo,5
+2021,14,Autodromo Nazionale di Monza,gasly,6
+2021,14,Autodromo Nazionale di Monza,sainz,7
+2021,14,Autodromo Nazionale di Monza,leclerc,8
+2021,14,Autodromo Nazionale di Monza,perez,9
+2021,14,Autodromo Nazionale di Monza,giovinazzi,10
+2021,14,Autodromo Nazionale di Monza,vettel,11
+2021,14,Autodromo Nazionale di Monza,stroll,12
+2021,14,Autodromo Nazionale di Monza,alonso,13
+2021,14,Autodromo Nazionale di Monza,ocon,14
+2021,14,Autodromo Nazionale di Monza,russell,15
+2021,14,Autodromo Nazionale di Monza,latifi,16
+2021,14,Autodromo Nazionale di Monza,tsunoda,17
+2021,14,Autodromo Nazionale di Monza,mick_schumacher,18
+2021,14,Autodromo Nazionale di Monza,kubica,19
+2021,14,Autodromo Nazionale di Monza,mazepin,20
+2021,15,Sochi Autodrom,norris,1
+2021,15,Sochi Autodrom,sainz,2
+2021,15,Sochi Autodrom,russell,3
+2021,15,Sochi Autodrom,hamilton,4
+2021,15,Sochi Autodrom,ricciardo,5
+2021,15,Sochi Autodrom,alonso,6
+2021,15,Sochi Autodrom,bottas,7
+2021,15,Sochi Autodrom,stroll,8
+2021,15,Sochi Autodrom,perez,9
+2021,15,Sochi Autodrom,ocon,10
+2021,15,Sochi Autodrom,vettel,11
+2021,15,Sochi Autodrom,gasly,12
+2021,15,Sochi Autodrom,tsunoda,13
+2021,15,Sochi Autodrom,latifi,14
+2021,15,Sochi Autodrom,leclerc,15
+2021,15,Sochi Autodrom,raikkonen,16
+2021,15,Sochi Autodrom,mick_schumacher,17
+2021,15,Sochi Autodrom,giovinazzi,18
+2021,15,Sochi Autodrom,mazepin,19
+2021,15,Sochi Autodrom,max_verstappen,20
+2021,16,Istanbul Park,hamilton,1
+2021,16,Istanbul Park,bottas,2
+2021,16,Istanbul Park,max_verstappen,3
+2021,16,Istanbul Park,leclerc,4
+2021,16,Istanbul Park,gasly,5
+2021,16,Istanbul Park,alonso,6
+2021,16,Istanbul Park,perez,7
+2021,16,Istanbul Park,norris,8
+2021,16,Istanbul Park,stroll,9
+2021,16,Istanbul Park,tsunoda,10
+2021,16,Istanbul Park,vettel,11
+2021,16,Istanbul Park,ocon,12
+2021,16,Istanbul Park,russell,13
+2021,16,Istanbul Park,mick_schumacher,14
+2021,16,Istanbul Park,sainz,15
+2021,16,Istanbul Park,ricciardo,16
+2021,16,Istanbul Park,latifi,17
+2021,16,Istanbul Park,giovinazzi,18
+2021,16,Istanbul Park,raikkonen,19
+2021,16,Istanbul Park,mazepin,20
+2021,17,Circuit of the Americas,max_verstappen,1
+2021,17,Circuit of the Americas,hamilton,2
+2021,17,Circuit of the Americas,perez,3
+2021,17,Circuit of the Americas,bottas,4
+2021,17,Circuit of the Americas,leclerc,5
+2021,17,Circuit of the Americas,sainz,6
+2021,17,Circuit of the Americas,ricciardo,7
+2021,17,Circuit of the Americas,norris,8
+2021,17,Circuit of the Americas,gasly,9
+2021,17,Circuit of the Americas,tsunoda,10
+2021,17,Circuit of the Americas,ocon,11
+2021,17,Circuit of the Americas,vettel,12
+2021,17,Circuit of the Americas,giovinazzi,13
+2021,17,Circuit of the Americas,alonso,14
+2021,17,Circuit of the Americas,russell,15
+2021,17,Circuit of the Americas,stroll,16
+2021,17,Circuit of the Americas,latifi,17
+2021,17,Circuit of the Americas,raikkonen,18
+2021,17,Circuit of the Americas,mick_schumacher,19
+2021,17,Circuit of the Americas,mazepin,20
+2021,18,Autódromo Hermanos Rodríguez,bottas,1
+2021,18,Autódromo Hermanos Rodríguez,hamilton,2
+2021,18,Autódromo Hermanos Rodríguez,max_verstappen,3
+2021,18,Autódromo Hermanos Rodríguez,perez,4
+2021,18,Autódromo Hermanos Rodríguez,gasly,5
+2021,18,Autódromo Hermanos Rodríguez,sainz,6
+2021,18,Autódromo Hermanos Rodríguez,ricciardo,7
+2021,18,Autódromo Hermanos Rodríguez,leclerc,8
+2021,18,Autódromo Hermanos Rodríguez,tsunoda,9
+2021,18,Autódromo Hermanos Rodríguez,norris,10
+2021,18,Autódromo Hermanos Rodríguez,vettel,11
+2021,18,Autódromo Hermanos Rodríguez,raikkonen,12
+2021,18,Autódromo Hermanos Rodríguez,russell,13
+2021,18,Autódromo Hermanos Rodríguez,giovinazzi,14
+2021,18,Autódromo Hermanos Rodríguez,ocon,15
+2021,18,Autódromo Hermanos Rodríguez,alonso,16
+2021,18,Autódromo Hermanos Rodríguez,latifi,17
+2021,18,Autódromo Hermanos Rodríguez,mick_schumacher,18
+2021,18,Autódromo Hermanos Rodríguez,mazepin,19
+2021,18,Autódromo Hermanos Rodríguez,stroll,20
+2021,19,Autódromo José Carlos Pace,hamilton,1
+2021,19,Autódromo José Carlos Pace,max_verstappen,2
+2021,19,Autódromo José Carlos Pace,bottas,3
+2021,19,Autódromo José Carlos Pace,perez,4
+2021,19,Autódromo José Carlos Pace,gasly,5
+2021,19,Autódromo José Carlos Pace,sainz,6
+2021,19,Autódromo José Carlos Pace,leclerc,7
+2021,19,Autódromo José Carlos Pace,norris,8
+2021,19,Autódromo José Carlos Pace,ricciardo,9
+2021,19,Autódromo José Carlos Pace,alonso,10
+2021,19,Autódromo José Carlos Pace,ocon,11
+2021,19,Autódromo José Carlos Pace,vettel,12
+2021,19,Autódromo José Carlos Pace,tsunoda,13
+2021,19,Autódromo José Carlos Pace,raikkonen,14
+2021,19,Autódromo José Carlos Pace,giovinazzi,15
+2021,19,Autódromo José Carlos Pace,stroll,16
+2021,19,Autódromo José Carlos Pace,latifi,17
+2021,19,Autódromo José Carlos Pace,russell,18
+2021,19,Autódromo José Carlos Pace,mick_schumacher,19
+2021,19,Autódromo José Carlos Pace,mazepin,20
+2021,20,Losail International Circuit,hamilton,1
+2021,20,Losail International Circuit,max_verstappen,2
+2021,20,Losail International Circuit,bottas,3
+2021,20,Losail International Circuit,gasly,4
+2021,20,Losail International Circuit,alonso,5
+2021,20,Losail International Circuit,norris,6
+2021,20,Losail International Circuit,sainz,7
+2021,20,Losail International Circuit,tsunoda,8
+2021,20,Losail International Circuit,ocon,9
+2021,20,Losail International Circuit,vettel,10
+2021,20,Losail International Circuit,perez,11
+2021,20,Losail International Circuit,stroll,12
+2021,20,Losail International Circuit,leclerc,13
+2021,20,Losail International Circuit,ricciardo,14
+2021,20,Losail International Circuit,russell,15
+2021,20,Losail International Circuit,raikkonen,16
+2021,20,Losail International Circuit,latifi,17
+2021,20,Losail International Circuit,giovinazzi,18
+2021,20,Losail International Circuit,mick_schumacher,19
+2021,20,Losail International Circuit,mazepin,20
+2021,21,Jeddah Corniche Circuit,hamilton,1
+2021,21,Jeddah Corniche Circuit,bottas,2
+2021,21,Jeddah Corniche Circuit,max_verstappen,3
+2021,21,Jeddah Corniche Circuit,leclerc,4
+2021,21,Jeddah Corniche Circuit,perez,5
+2021,21,Jeddah Corniche Circuit,gasly,6
+2021,21,Jeddah Corniche Circuit,norris,7
+2021,21,Jeddah Corniche Circuit,tsunoda,8
+2021,21,Jeddah Corniche Circuit,ocon,9
+2021,21,Jeddah Corniche Circuit,giovinazzi,10
+2021,21,Jeddah Corniche Circuit,ricciardo,11
+2021,21,Jeddah Corniche Circuit,raikkonen,12
+2021,21,Jeddah Corniche Circuit,alonso,13
+2021,21,Jeddah Corniche Circuit,russell,14
+2021,21,Jeddah Corniche Circuit,sainz,15
+2021,21,Jeddah Corniche Circuit,latifi,16
+2021,21,Jeddah Corniche Circuit,vettel,17
+2021,21,Jeddah Corniche Circuit,stroll,18
+2021,21,Jeddah Corniche Circuit,mick_schumacher,19
+2021,21,Jeddah Corniche Circuit,mazepin,20
+2021,22,Yas Marina Circuit,max_verstappen,1
+2021,22,Yas Marina Circuit,hamilton,2
+2021,22,Yas Marina Circuit,norris,3
+2021,22,Yas Marina Circuit,perez,4
+2021,22,Yas Marina Circuit,sainz,5
+2021,22,Yas Marina Circuit,bottas,6
+2021,22,Yas Marina Circuit,leclerc,7
+2021,22,Yas Marina Circuit,tsunoda,8
+2021,22,Yas Marina Circuit,ocon,9
+2021,22,Yas Marina Circuit,ricciardo,10
+2021,22,Yas Marina Circuit,alonso,11
+2021,22,Yas Marina Circuit,gasly,12
+2021,22,Yas Marina Circuit,stroll,13
+2021,22,Yas Marina Circuit,giovinazzi,14
+2021,22,Yas Marina Circuit,vettel,15
+2021,22,Yas Marina Circuit,latifi,16
+2021,22,Yas Marina Circuit,russell,17
+2021,22,Yas Marina Circuit,raikkonen,18
+2021,22,Yas Marina Circuit,mick_schumacher,19
+2021,22,Yas Marina Circuit,mazepin,20
+2022,1,Bahrain International Circuit,leclerc,1
+2022,1,Bahrain International Circuit,max_verstappen,2
+2022,1,Bahrain International Circuit,sainz,3
+2022,1,Bahrain International Circuit,perez,4
+2022,1,Bahrain International Circuit,hamilton,5
+2022,1,Bahrain International Circuit,bottas,6
+2022,1,Bahrain International Circuit,kevin_magnussen,7
+2022,1,Bahrain International Circuit,alonso,8
+2022,1,Bahrain International Circuit,russell,9
+2022,1,Bahrain International Circuit,gasly,10
+2022,1,Bahrain International Circuit,ocon,11
+2022,1,Bahrain International Circuit,mick_schumacher,12
+2022,1,Bahrain International Circuit,norris,13
+2022,1,Bahrain International Circuit,albon,14
+2022,1,Bahrain International Circuit,zhou,15
+2022,1,Bahrain International Circuit,tsunoda,16
+2022,1,Bahrain International Circuit,hulkenberg,17
+2022,1,Bahrain International Circuit,ricciardo,18
+2022,1,Bahrain International Circuit,stroll,19
+2022,1,Bahrain International Circuit,latifi,20
+2022,2,Jeddah Corniche Circuit,perez,1
+2022,2,Jeddah Corniche Circuit,leclerc,2
+2022,2,Jeddah Corniche Circuit,sainz,3
+2022,2,Jeddah Corniche Circuit,max_verstappen,4
+2022,2,Jeddah Corniche Circuit,ocon,5
+2022,2,Jeddah Corniche Circuit,russell,6
+2022,2,Jeddah Corniche Circuit,alonso,7
+2022,2,Jeddah Corniche Circuit,bottas,8
+2022,2,Jeddah Corniche Circuit,gasly,9
+2022,2,Jeddah Corniche Circuit,kevin_magnussen,10
+2022,2,Jeddah Corniche Circuit,norris,11
+2022,2,Jeddah Corniche Circuit,ricciardo,12
+2022,2,Jeddah Corniche Circuit,zhou,13
+2022,2,Jeddah Corniche Circuit,mick_schumacher,14
+2022,2,Jeddah Corniche Circuit,stroll,15
+2022,2,Jeddah Corniche Circuit,hamilton,16
+2022,2,Jeddah Corniche Circuit,albon,17
+2022,2,Jeddah Corniche Circuit,hulkenberg,18
+2022,2,Jeddah Corniche Circuit,latifi,19
+2022,2,Jeddah Corniche Circuit,tsunoda,20
+2022,3,Albert Park Grand Prix Circuit,leclerc,1
+2022,3,Albert Park Grand Prix Circuit,max_verstappen,2
+2022,3,Albert Park Grand Prix Circuit,perez,3
+2022,3,Albert Park Grand Prix Circuit,norris,4
+2022,3,Albert Park Grand Prix Circuit,hamilton,5
+2022,3,Albert Park Grand Prix Circuit,russell,6
+2022,3,Albert Park Grand Prix Circuit,ricciardo,7
+2022,3,Albert Park Grand Prix Circuit,ocon,8
+2022,3,Albert Park Grand Prix Circuit,sainz,9
+2022,3,Albert Park Grand Prix Circuit,alonso,10
+2022,3,Albert Park Grand Prix Circuit,gasly,11
+2022,3,Albert Park Grand Prix Circuit,bottas,12
+2022,3,Albert Park Grand Prix Circuit,tsunoda,13
+2022,3,Albert Park Grand Prix Circuit,zhou,14
+2022,3,Albert Park Grand Prix Circuit,mick_schumacher,15
+2022,3,Albert Park Grand Prix Circuit,albon,16
+2022,3,Albert Park Grand Prix Circuit,kevin_magnussen,17
+2022,3,Albert Park Grand Prix Circuit,vettel,18
+2022,3,Albert Park Grand Prix Circuit,latifi,19
+2022,3,Albert Park Grand Prix Circuit,stroll,20
+2022,4,Autodromo Enzo e Dino Ferrari,max_verstappen,1
+2022,4,Autodromo Enzo e Dino Ferrari,leclerc,2
+2022,4,Autodromo Enzo e Dino Ferrari,norris,3
+2022,4,Autodromo Enzo e Dino Ferrari,kevin_magnussen,4
+2022,4,Autodromo Enzo e Dino Ferrari,alonso,5
+2022,4,Autodromo Enzo e Dino Ferrari,ricciardo,6
+2022,4,Autodromo Enzo e Dino Ferrari,perez,7
+2022,4,Autodromo Enzo e Dino Ferrari,bottas,8
+2022,4,Autodromo Enzo e Dino Ferrari,vettel,9
+2022,4,Autodromo Enzo e Dino Ferrari,sainz,10
+2022,4,Autodromo Enzo e Dino Ferrari,russell,11
+2022,4,Autodromo Enzo e Dino Ferrari,mick_schumacher,12
+2022,4,Autodromo Enzo e Dino Ferrari,hamilton,13
+2022,4,Autodromo Enzo e Dino Ferrari,zhou,14
+2022,4,Autodromo Enzo e Dino Ferrari,stroll,15
+2022,4,Autodromo Enzo e Dino Ferrari,tsunoda,16
+2022,4,Autodromo Enzo e Dino Ferrari,gasly,17
+2022,4,Autodromo Enzo e Dino Ferrari,latifi,18
+2022,4,Autodromo Enzo e Dino Ferrari,ocon,19
+2022,4,Autodromo Enzo e Dino Ferrari,albon,20
+2022,5,Miami International Autodrome,leclerc,1
+2022,5,Miami International Autodrome,sainz,2
+2022,5,Miami International Autodrome,max_verstappen,3
+2022,5,Miami International Autodrome,perez,4
+2022,5,Miami International Autodrome,bottas,5
+2022,5,Miami International Autodrome,hamilton,6
+2022,5,Miami International Autodrome,gasly,7
+2022,5,Miami International Autodrome,norris,8
+2022,5,Miami International Autodrome,tsunoda,9
+2022,5,Miami International Autodrome,stroll,10
+2022,5,Miami International Autodrome,alonso,11
+2022,5,Miami International Autodrome,russell,12
+2022,5,Miami International Autodrome,vettel,13
+2022,5,Miami International Autodrome,ricciardo,14
+2022,5,Miami International Autodrome,mick_schumacher,15
+2022,5,Miami International Autodrome,kevin_magnussen,16
+2022,5,Miami International Autodrome,zhou,17
+2022,5,Miami International Autodrome,albon,18
+2022,5,Miami International Autodrome,latifi,19
+2022,5,Miami International Autodrome,ocon,20
+2022,6,Circuit de Barcelona-Catalunya,leclerc,1
+2022,6,Circuit de Barcelona-Catalunya,max_verstappen,2
+2022,6,Circuit de Barcelona-Catalunya,sainz,3
+2022,6,Circuit de Barcelona-Catalunya,russell,4
+2022,6,Circuit de Barcelona-Catalunya,perez,5
+2022,6,Circuit de Barcelona-Catalunya,hamilton,6
+2022,6,Circuit de Barcelona-Catalunya,bottas,7
+2022,6,Circuit de Barcelona-Catalunya,kevin_magnussen,8
+2022,6,Circuit de Barcelona-Catalunya,ricciardo,9
+2022,6,Circuit de Barcelona-Catalunya,mick_schumacher,10
+2022,6,Circuit de Barcelona-Catalunya,norris,11
+2022,6,Circuit de Barcelona-Catalunya,ocon,12
+2022,6,Circuit de Barcelona-Catalunya,tsunoda,13
+2022,6,Circuit de Barcelona-Catalunya,gasly,14
+2022,6,Circuit de Barcelona-Catalunya,zhou,15
+2022,6,Circuit de Barcelona-Catalunya,vettel,16
+2022,6,Circuit de Barcelona-Catalunya,alonso,17
+2022,6,Circuit de Barcelona-Catalunya,stroll,18
+2022,6,Circuit de Barcelona-Catalunya,albon,19
+2022,6,Circuit de Barcelona-Catalunya,latifi,20
+2022,7,Circuit de Monaco,leclerc,1
+2022,7,Circuit de Monaco,sainz,2
+2022,7,Circuit de Monaco,perez,3
+2022,7,Circuit de Monaco,max_verstappen,4
+2022,7,Circuit de Monaco,norris,5
+2022,7,Circuit de Monaco,russell,6
+2022,7,Circuit de Monaco,alonso,7
+2022,7,Circuit de Monaco,hamilton,8
+2022,7,Circuit de Monaco,vettel,9
+2022,7,Circuit de Monaco,ocon,10
+2022,7,Circuit de Monaco,tsunoda,11
+2022,7,Circuit de Monaco,bottas,12
+2022,7,Circuit de Monaco,kevin_magnussen,13
+2022,7,Circuit de Monaco,ricciardo,14
+2022,7,Circuit de Monaco,mick_schumacher,15
+2022,7,Circuit de Monaco,albon,16
+2022,7,Circuit de Monaco,gasly,17
+2022,7,Circuit de Monaco,stroll,18
+2022,7,Circuit de Monaco,latifi,19
+2022,7,Circuit de Monaco,zhou,20
+2022,8,Baku City Circuit,leclerc,1
+2022,8,Baku City Circuit,perez,2
+2022,8,Baku City Circuit,max_verstappen,3
+2022,8,Baku City Circuit,sainz,4
+2022,8,Baku City Circuit,russell,5
+2022,8,Baku City Circuit,gasly,6
+2022,8,Baku City Circuit,hamilton,7
+2022,8,Baku City Circuit,tsunoda,8
+2022,8,Baku City Circuit,vettel,9
+2022,8,Baku City Circuit,alonso,10
+2022,8,Baku City Circuit,norris,11
+2022,8,Baku City Circuit,ricciardo,12
+2022,8,Baku City Circuit,ocon,13
+2022,8,Baku City Circuit,zhou,14
+2022,8,Baku City Circuit,bottas,15
+2022,8,Baku City Circuit,kevin_magnussen,16
+2022,8,Baku City Circuit,albon,17
+2022,8,Baku City Circuit,latifi,18
+2022,8,Baku City Circuit,stroll,19
+2022,8,Baku City Circuit,mick_schumacher,20
+2022,9,Circuit Gilles Villeneuve,max_verstappen,1
+2022,9,Circuit Gilles Villeneuve,alonso,2
+2022,9,Circuit Gilles Villeneuve,sainz,3
+2022,9,Circuit Gilles Villeneuve,hamilton,4
+2022,9,Circuit Gilles Villeneuve,kevin_magnussen,5
+2022,9,Circuit Gilles Villeneuve,mick_schumacher,6
+2022,9,Circuit Gilles Villeneuve,ocon,7
+2022,9,Circuit Gilles Villeneuve,russell,8
+2022,9,Circuit Gilles Villeneuve,ricciardo,9
+2022,9,Circuit Gilles Villeneuve,zhou,10
+2022,9,Circuit Gilles Villeneuve,bottas,11
+2022,9,Circuit Gilles Villeneuve,albon,12
+2022,9,Circuit Gilles Villeneuve,perez,13
+2022,9,Circuit Gilles Villeneuve,norris,14
+2022,9,Circuit Gilles Villeneuve,leclerc,15
+2022,9,Circuit Gilles Villeneuve,gasly,16
+2022,9,Circuit Gilles Villeneuve,vettel,17
+2022,9,Circuit Gilles Villeneuve,stroll,18
+2022,9,Circuit Gilles Villeneuve,latifi,19
+2022,9,Circuit Gilles Villeneuve,tsunoda,20
+2022,10,Silverstone Circuit,sainz,1
+2022,10,Silverstone Circuit,max_verstappen,2
+2022,10,Silverstone Circuit,leclerc,3
+2022,10,Silverstone Circuit,perez,4
+2022,10,Silverstone Circuit,hamilton,5
+2022,10,Silverstone Circuit,norris,6
+2022,10,Silverstone Circuit,alonso,7
+2022,10,Silverstone Circuit,russell,8
+2022,10,Silverstone Circuit,zhou,9
+2022,10,Silverstone Circuit,latifi,10
+2022,10,Silverstone Circuit,gasly,11
+2022,10,Silverstone Circuit,bottas,12
+2022,10,Silverstone Circuit,tsunoda,13
+2022,10,Silverstone Circuit,ricciardo,14
+2022,10,Silverstone Circuit,ocon,15
+2022,10,Silverstone Circuit,albon,16
+2022,10,Silverstone Circuit,kevin_magnussen,17
+2022,10,Silverstone Circuit,vettel,18
+2022,10,Silverstone Circuit,mick_schumacher,19
+2022,10,Silverstone Circuit,stroll,20
+2022,11,Red Bull Ring,max_verstappen,1
+2022,11,Red Bull Ring,leclerc,2
+2022,11,Red Bull Ring,sainz,3
+2022,11,Red Bull Ring,russell,4
+2022,11,Red Bull Ring,ocon,5
+2022,11,Red Bull Ring,kevin_magnussen,6
+2022,11,Red Bull Ring,mick_schumacher,7
+2022,11,Red Bull Ring,alonso,8
+2022,11,Red Bull Ring,hamilton,9
+2022,11,Red Bull Ring,gasly,10
+2022,11,Red Bull Ring,albon,11
+2022,11,Red Bull Ring,bottas,12
+2022,11,Red Bull Ring,perez,13
+2022,11,Red Bull Ring,tsunoda,14
+2022,11,Red Bull Ring,norris,15
+2022,11,Red Bull Ring,ricciardo,16
+2022,11,Red Bull Ring,stroll,17
+2022,11,Red Bull Ring,zhou,18
+2022,11,Red Bull Ring,latifi,19
+2022,11,Red Bull Ring,vettel,20
+2022,12,Circuit Paul Ricard,leclerc,1
+2022,12,Circuit Paul Ricard,max_verstappen,2
+2022,12,Circuit Paul Ricard,perez,3
+2022,12,Circuit Paul Ricard,hamilton,4
+2022,12,Circuit Paul Ricard,norris,5
+2022,12,Circuit Paul Ricard,russell,6
+2022,12,Circuit Paul Ricard,alonso,7
+2022,12,Circuit Paul Ricard,tsunoda,8
+2022,12,Circuit Paul Ricard,sainz,9
+2022,12,Circuit Paul Ricard,kevin_magnussen,10
+2022,12,Circuit Paul Ricard,ricciardo,11
+2022,12,Circuit Paul Ricard,ocon,12
+2022,12,Circuit Paul Ricard,bottas,13
+2022,12,Circuit Paul Ricard,vettel,14
+2022,12,Circuit Paul Ricard,albon,15
+2022,12,Circuit Paul Ricard,gasly,16
+2022,12,Circuit Paul Ricard,stroll,17
+2022,12,Circuit Paul Ricard,zhou,18
+2022,12,Circuit Paul Ricard,mick_schumacher,19
+2022,12,Circuit Paul Ricard,latifi,20
+2022,13,Hungaroring,russell,1
+2022,13,Hungaroring,sainz,2
+2022,13,Hungaroring,leclerc,3
+2022,13,Hungaroring,norris,4
+2022,13,Hungaroring,ocon,5
+2022,13,Hungaroring,alonso,6
+2022,13,Hungaroring,hamilton,7
+2022,13,Hungaroring,bottas,8
+2022,13,Hungaroring,ricciardo,9
+2022,13,Hungaroring,max_verstappen,10
+2022,13,Hungaroring,perez,11
+2022,13,Hungaroring,zhou,12
+2022,13,Hungaroring,kevin_magnussen,13
+2022,13,Hungaroring,stroll,14
+2022,13,Hungaroring,mick_schumacher,15
+2022,13,Hungaroring,tsunoda,16
+2022,13,Hungaroring,albon,17
+2022,13,Hungaroring,vettel,18
+2022,13,Hungaroring,gasly,19
+2022,13,Hungaroring,latifi,20
+2022,14,Circuit de Spa-Francorchamps,max_verstappen,1
+2022,14,Circuit de Spa-Francorchamps,sainz,2
+2022,14,Circuit de Spa-Francorchamps,perez,3
+2022,14,Circuit de Spa-Francorchamps,leclerc,4
+2022,14,Circuit de Spa-Francorchamps,ocon,5
+2022,14,Circuit de Spa-Francorchamps,alonso,6
+2022,14,Circuit de Spa-Francorchamps,hamilton,7
+2022,14,Circuit de Spa-Francorchamps,russell,8
+2022,14,Circuit de Spa-Francorchamps,albon,9
+2022,14,Circuit de Spa-Francorchamps,norris,10
+2022,14,Circuit de Spa-Francorchamps,ricciardo,11
+2022,14,Circuit de Spa-Francorchamps,gasly,12
+2022,14,Circuit de Spa-Francorchamps,zhou,13
+2022,14,Circuit de Spa-Francorchamps,stroll,14
+2022,14,Circuit de Spa-Francorchamps,mick_schumacher,15
+2022,14,Circuit de Spa-Francorchamps,vettel,16
+2022,14,Circuit de Spa-Francorchamps,latifi,17
+2022,14,Circuit de Spa-Francorchamps,kevin_magnussen,18
+2022,14,Circuit de Spa-Francorchamps,tsunoda,19
+2022,14,Circuit de Spa-Francorchamps,bottas,20
+2022,15,Circuit Park Zandvoort,max_verstappen,1
+2022,15,Circuit Park Zandvoort,leclerc,2
+2022,15,Circuit Park Zandvoort,sainz,3
+2022,15,Circuit Park Zandvoort,hamilton,4
+2022,15,Circuit Park Zandvoort,perez,5
+2022,15,Circuit Park Zandvoort,russell,6
+2022,15,Circuit Park Zandvoort,norris,7
+2022,15,Circuit Park Zandvoort,mick_schumacher,8
+2022,15,Circuit Park Zandvoort,tsunoda,9
+2022,15,Circuit Park Zandvoort,stroll,10
+2022,15,Circuit Park Zandvoort,gasly,11
+2022,15,Circuit Park Zandvoort,ocon,12
+2022,15,Circuit Park Zandvoort,alonso,13
+2022,15,Circuit Park Zandvoort,zhou,14
+2022,15,Circuit Park Zandvoort,albon,15
+2022,15,Circuit Park Zandvoort,bottas,16
+2022,15,Circuit Park Zandvoort,ricciardo,17
+2022,15,Circuit Park Zandvoort,kevin_magnussen,18
+2022,15,Circuit Park Zandvoort,vettel,19
+2022,15,Circuit Park Zandvoort,latifi,20
+2022,16,Autodromo Nazionale di Monza,leclerc,1
+2022,16,Autodromo Nazionale di Monza,max_verstappen,2
+2022,16,Autodromo Nazionale di Monza,sainz,3
+2022,16,Autodromo Nazionale di Monza,perez,4
+2022,16,Autodromo Nazionale di Monza,hamilton,5
+2022,16,Autodromo Nazionale di Monza,russell,6
+2022,16,Autodromo Nazionale di Monza,norris,7
+2022,16,Autodromo Nazionale di Monza,ricciardo,8
+2022,16,Autodromo Nazionale di Monza,gasly,9
+2022,16,Autodromo Nazionale di Monza,alonso,10
+2022,16,Autodromo Nazionale di Monza,ocon,11
+2022,16,Autodromo Nazionale di Monza,bottas,12
+2022,16,Autodromo Nazionale di Monza,de_vries,13
+2022,16,Autodromo Nazionale di Monza,zhou,14
+2022,16,Autodromo Nazionale di Monza,tsunoda,15
+2022,16,Autodromo Nazionale di Monza,latifi,16
+2022,16,Autodromo Nazionale di Monza,vettel,17
+2022,16,Autodromo Nazionale di Monza,stroll,18
+2022,16,Autodromo Nazionale di Monza,kevin_magnussen,19
+2022,16,Autodromo Nazionale di Monza,mick_schumacher,20
+2022,17,Marina Bay Street Circuit,leclerc,1
+2022,17,Marina Bay Street Circuit,perez,2
+2022,17,Marina Bay Street Circuit,hamilton,3
+2022,17,Marina Bay Street Circuit,sainz,4
+2022,17,Marina Bay Street Circuit,alonso,5
+2022,17,Marina Bay Street Circuit,norris,6
+2022,17,Marina Bay Street Circuit,gasly,7
+2022,17,Marina Bay Street Circuit,max_verstappen,8
+2022,17,Marina Bay Street Circuit,kevin_magnussen,9
+2022,17,Marina Bay Street Circuit,tsunoda,10
+2022,17,Marina Bay Street Circuit,russell,11
+2022,17,Marina Bay Street Circuit,stroll,12
+2022,17,Marina Bay Street Circuit,mick_schumacher,13
+2022,17,Marina Bay Street Circuit,vettel,14
+2022,17,Marina Bay Street Circuit,zhou,15
+2022,17,Marina Bay Street Circuit,bottas,16
+2022,17,Marina Bay Street Circuit,ricciardo,17
+2022,17,Marina Bay Street Circuit,ocon,18
+2022,17,Marina Bay Street Circuit,albon,19
+2022,17,Marina Bay Street Circuit,latifi,20
+2022,18,Suzuka Circuit,max_verstappen,1
+2022,18,Suzuka Circuit,leclerc,2
+2022,18,Suzuka Circuit,sainz,3
+2022,18,Suzuka Circuit,perez,4
+2022,18,Suzuka Circuit,ocon,5
+2022,18,Suzuka Circuit,hamilton,6
+2022,18,Suzuka Circuit,alonso,7
+2022,18,Suzuka Circuit,russell,8
+2022,18,Suzuka Circuit,vettel,9
+2022,18,Suzuka Circuit,norris,10
+2022,18,Suzuka Circuit,ricciardo,11
+2022,18,Suzuka Circuit,bottas,12
+2022,18,Suzuka Circuit,tsunoda,13
+2022,18,Suzuka Circuit,zhou,14
+2022,18,Suzuka Circuit,mick_schumacher,15
+2022,18,Suzuka Circuit,albon,16
+2022,18,Suzuka Circuit,gasly,17
+2022,18,Suzuka Circuit,kevin_magnussen,18
+2022,18,Suzuka Circuit,stroll,19
+2022,18,Suzuka Circuit,latifi,20
+2022,19,Circuit of the Americas,sainz,1
+2022,19,Circuit of the Americas,leclerc,2
+2022,19,Circuit of the Americas,max_verstappen,3
+2022,19,Circuit of the Americas,perez,4
+2022,19,Circuit of the Americas,hamilton,5
+2022,19,Circuit of the Americas,russell,6
+2022,19,Circuit of the Americas,stroll,7
+2022,19,Circuit of the Americas,norris,8
+2022,19,Circuit of the Americas,alonso,9
+2022,19,Circuit of the Americas,bottas,10
+2022,19,Circuit of the Americas,albon,11
+2022,19,Circuit of the Americas,vettel,12
+2022,19,Circuit of the Americas,gasly,13
+2022,19,Circuit of the Americas,zhou,14
+2022,19,Circuit of the Americas,tsunoda,15
+2022,19,Circuit of the Americas,kevin_magnussen,16
+2022,19,Circuit of the Americas,ricciardo,17
+2022,19,Circuit of the Americas,ocon,18
+2022,19,Circuit of the Americas,mick_schumacher,19
+2022,19,Circuit of the Americas,latifi,20
+2022,20,Autódromo Hermanos Rodríguez,max_verstappen,1
+2022,20,Autódromo Hermanos Rodríguez,russell,2
+2022,20,Autódromo Hermanos Rodríguez,hamilton,3
+2022,20,Autódromo Hermanos Rodríguez,perez,4
+2022,20,Autódromo Hermanos Rodríguez,sainz,5
+2022,20,Autódromo Hermanos Rodríguez,bottas,6
+2022,20,Autódromo Hermanos Rodríguez,leclerc,7
+2022,20,Autódromo Hermanos Rodríguez,norris,8
+2022,20,Autódromo Hermanos Rodríguez,alonso,9
+2022,20,Autódromo Hermanos Rodríguez,ocon,10
+2022,20,Autódromo Hermanos Rodríguez,ricciardo,11
+2022,20,Autódromo Hermanos Rodríguez,zhou,12
+2022,20,Autódromo Hermanos Rodríguez,tsunoda,13
+2022,20,Autódromo Hermanos Rodríguez,gasly,14
+2022,20,Autódromo Hermanos Rodríguez,kevin_magnussen,15
+2022,20,Autódromo Hermanos Rodríguez,mick_schumacher,16
+2022,20,Autódromo Hermanos Rodríguez,vettel,17
+2022,20,Autódromo Hermanos Rodríguez,stroll,18
+2022,20,Autódromo Hermanos Rodríguez,albon,19
+2022,20,Autódromo Hermanos Rodríguez,latifi,20
+2022,21,Autódromo José Carlos Pace,kevin_magnussen,1
+2022,21,Autódromo José Carlos Pace,max_verstappen,2
+2022,21,Autódromo José Carlos Pace,russell,3
+2022,21,Autódromo José Carlos Pace,norris,4
+2022,21,Autódromo José Carlos Pace,sainz,5
+2022,21,Autódromo José Carlos Pace,ocon,6
+2022,21,Autódromo José Carlos Pace,alonso,7
+2022,21,Autódromo José Carlos Pace,hamilton,8
+2022,21,Autódromo José Carlos Pace,perez,9
+2022,21,Autódromo José Carlos Pace,leclerc,10
+2022,21,Autódromo José Carlos Pace,albon,11
+2022,21,Autódromo José Carlos Pace,gasly,12
+2022,21,Autódromo José Carlos Pace,vettel,13
+2022,21,Autódromo José Carlos Pace,ricciardo,14
+2022,21,Autódromo José Carlos Pace,stroll,15
+2022,21,Autódromo José Carlos Pace,latifi,16
+2022,21,Autódromo José Carlos Pace,zhou,17
+2022,21,Autódromo José Carlos Pace,bottas,18
+2022,21,Autódromo José Carlos Pace,tsunoda,19
+2022,21,Autódromo José Carlos Pace,mick_schumacher,20
+2022,22,Yas Marina Circuit,max_verstappen,1
+2022,22,Yas Marina Circuit,perez,2
+2022,22,Yas Marina Circuit,leclerc,3
+2022,22,Yas Marina Circuit,sainz,4
+2022,22,Yas Marina Circuit,hamilton,5
+2022,22,Yas Marina Circuit,russell,6
+2022,22,Yas Marina Circuit,norris,7
+2022,22,Yas Marina Circuit,ocon,8
+2022,22,Yas Marina Circuit,vettel,9
+2022,22,Yas Marina Circuit,ricciardo,10
+2022,22,Yas Marina Circuit,alonso,11
+2022,22,Yas Marina Circuit,tsunoda,12
+2022,22,Yas Marina Circuit,mick_schumacher,13
+2022,22,Yas Marina Circuit,stroll,14
+2022,22,Yas Marina Circuit,zhou,15
+2022,22,Yas Marina Circuit,kevin_magnussen,16
+2022,22,Yas Marina Circuit,gasly,17
+2022,22,Yas Marina Circuit,bottas,18
+2022,22,Yas Marina Circuit,albon,19
+2022,22,Yas Marina Circuit,latifi,20
+2023,1,Bahrain International Circuit,max_verstappen,1
+2023,1,Bahrain International Circuit,perez,2
+2023,1,Bahrain International Circuit,leclerc,3
+2023,1,Bahrain International Circuit,sainz,4
+2023,1,Bahrain International Circuit,alonso,5
+2023,1,Bahrain International Circuit,russell,6
+2023,1,Bahrain International Circuit,hamilton,7
+2023,1,Bahrain International Circuit,stroll,8
+2023,1,Bahrain International Circuit,ocon,9
+2023,1,Bahrain International Circuit,hulkenberg,10
+2023,1,Bahrain International Circuit,norris,11
+2023,1,Bahrain International Circuit,bottas,12
+2023,1,Bahrain International Circuit,zhou,13
+2023,1,Bahrain International Circuit,tsunoda,14
+2023,1,Bahrain International Circuit,albon,15
+2023,1,Bahrain International Circuit,sargeant,16
+2023,1,Bahrain International Circuit,kevin_magnussen,17
+2023,1,Bahrain International Circuit,piastri,18
+2023,1,Bahrain International Circuit,de_vries,19
+2023,1,Bahrain International Circuit,gasly,20
+2023,2,Jeddah Corniche Circuit,perez,1
+2023,2,Jeddah Corniche Circuit,leclerc,2
+2023,2,Jeddah Corniche Circuit,alonso,3
+2023,2,Jeddah Corniche Circuit,russell,4
+2023,2,Jeddah Corniche Circuit,sainz,5
+2023,2,Jeddah Corniche Circuit,stroll,6
+2023,2,Jeddah Corniche Circuit,ocon,7
+2023,2,Jeddah Corniche Circuit,hamilton,8
+2023,2,Jeddah Corniche Circuit,piastri,9
+2023,2,Jeddah Corniche Circuit,gasly,10
+2023,2,Jeddah Corniche Circuit,hulkenberg,11
+2023,2,Jeddah Corniche Circuit,zhou,12
+2023,2,Jeddah Corniche Circuit,kevin_magnussen,13
+2023,2,Jeddah Corniche Circuit,bottas,14
+2023,2,Jeddah Corniche Circuit,max_verstappen,15
+2023,2,Jeddah Corniche Circuit,tsunoda,16
+2023,2,Jeddah Corniche Circuit,albon,17
+2023,2,Jeddah Corniche Circuit,de_vries,18
+2023,2,Jeddah Corniche Circuit,norris,19
+2023,2,Jeddah Corniche Circuit,sargeant,20
+2023,3,Albert Park Grand Prix Circuit,max_verstappen,1
+2023,3,Albert Park Grand Prix Circuit,russell,2
+2023,3,Albert Park Grand Prix Circuit,hamilton,3
+2023,3,Albert Park Grand Prix Circuit,alonso,4
+2023,3,Albert Park Grand Prix Circuit,sainz,5
+2023,3,Albert Park Grand Prix Circuit,stroll,6
+2023,3,Albert Park Grand Prix Circuit,leclerc,7
+2023,3,Albert Park Grand Prix Circuit,albon,8
+2023,3,Albert Park Grand Prix Circuit,gasly,9
+2023,3,Albert Park Grand Prix Circuit,hulkenberg,10
+2023,3,Albert Park Grand Prix Circuit,ocon,11
+2023,3,Albert Park Grand Prix Circuit,tsunoda,12
+2023,3,Albert Park Grand Prix Circuit,norris,13
+2023,3,Albert Park Grand Prix Circuit,kevin_magnussen,14
+2023,3,Albert Park Grand Prix Circuit,de_vries,15
+2023,3,Albert Park Grand Prix Circuit,piastri,16
+2023,3,Albert Park Grand Prix Circuit,zhou,17
+2023,3,Albert Park Grand Prix Circuit,sargeant,18
+2023,3,Albert Park Grand Prix Circuit,bottas,19
+2023,3,Albert Park Grand Prix Circuit,perez,20
+2023,4,Baku City Circuit,leclerc,1
+2023,4,Baku City Circuit,max_verstappen,2
+2023,4,Baku City Circuit,perez,3
+2023,4,Baku City Circuit,sainz,4
+2023,4,Baku City Circuit,hamilton,5
+2023,4,Baku City Circuit,alonso,6
+2023,4,Baku City Circuit,norris,7
+2023,4,Baku City Circuit,tsunoda,8
+2023,4,Baku City Circuit,stroll,9
+2023,4,Baku City Circuit,piastri,10
+2023,4,Baku City Circuit,russell,11
+2023,4,Baku City Circuit,ocon,12
+2023,4,Baku City Circuit,albon,13
+2023,4,Baku City Circuit,bottas,14
+2023,4,Baku City Circuit,sargeant,15
+2023,4,Baku City Circuit,zhou,16
+2023,4,Baku City Circuit,hulkenberg,17
+2023,4,Baku City Circuit,kevin_magnussen,18
+2023,4,Baku City Circuit,gasly,19
+2023,4,Baku City Circuit,de_vries,20
+2023,5,Miami International Autodrome,perez,1
+2023,5,Miami International Autodrome,alonso,2
+2023,5,Miami International Autodrome,sainz,3
+2023,5,Miami International Autodrome,kevin_magnussen,4
+2023,5,Miami International Autodrome,gasly,5
+2023,5,Miami International Autodrome,russell,6
+2023,5,Miami International Autodrome,leclerc,7
+2023,5,Miami International Autodrome,ocon,8
+2023,5,Miami International Autodrome,max_verstappen,9
+2023,5,Miami International Autodrome,bottas,10
+2023,5,Miami International Autodrome,albon,11
+2023,5,Miami International Autodrome,hulkenberg,12
+2023,5,Miami International Autodrome,hamilton,13
+2023,5,Miami International Autodrome,zhou,14
+2023,5,Miami International Autodrome,de_vries,15
+2023,5,Miami International Autodrome,norris,16
+2023,5,Miami International Autodrome,tsunoda,17
+2023,5,Miami International Autodrome,stroll,18
+2023,5,Miami International Autodrome,piastri,19
+2023,5,Miami International Autodrome,sargeant,20
+2023,6,Circuit de Monaco,max_verstappen,1
+2023,6,Circuit de Monaco,alonso,2
+2023,6,Circuit de Monaco,leclerc,3
+2023,6,Circuit de Monaco,ocon,4
+2023,6,Circuit de Monaco,sainz,5
+2023,6,Circuit de Monaco,hamilton,6
+2023,6,Circuit de Monaco,gasly,7
+2023,6,Circuit de Monaco,russell,8
+2023,6,Circuit de Monaco,tsunoda,9
+2023,6,Circuit de Monaco,norris,10
+2023,6,Circuit de Monaco,piastri,11
+2023,6,Circuit de Monaco,de_vries,12
+2023,6,Circuit de Monaco,albon,13
+2023,6,Circuit de Monaco,stroll,14
+2023,6,Circuit de Monaco,bottas,15
+2023,6,Circuit de Monaco,sargeant,16
+2023,6,Circuit de Monaco,kevin_magnussen,17
+2023,6,Circuit de Monaco,hulkenberg,18
+2023,6,Circuit de Monaco,zhou,19
+2023,6,Circuit de Monaco,perez,20
+2023,7,Circuit de Barcelona-Catalunya,max_verstappen,1
+2023,7,Circuit de Barcelona-Catalunya,sainz,2
+2023,7,Circuit de Barcelona-Catalunya,norris,3
+2023,7,Circuit de Barcelona-Catalunya,gasly,4
+2023,7,Circuit de Barcelona-Catalunya,hamilton,5
+2023,7,Circuit de Barcelona-Catalunya,stroll,6
+2023,7,Circuit de Barcelona-Catalunya,ocon,7
+2023,7,Circuit de Barcelona-Catalunya,hulkenberg,8
+2023,7,Circuit de Barcelona-Catalunya,alonso,9
+2023,7,Circuit de Barcelona-Catalunya,piastri,10
+2023,7,Circuit de Barcelona-Catalunya,perez,11
+2023,7,Circuit de Barcelona-Catalunya,russell,12
+2023,7,Circuit de Barcelona-Catalunya,zhou,13
+2023,7,Circuit de Barcelona-Catalunya,de_vries,14
+2023,7,Circuit de Barcelona-Catalunya,tsunoda,15
+2023,7,Circuit de Barcelona-Catalunya,bottas,16
+2023,7,Circuit de Barcelona-Catalunya,kevin_magnussen,17
+2023,7,Circuit de Barcelona-Catalunya,albon,18
+2023,7,Circuit de Barcelona-Catalunya,leclerc,19
+2023,7,Circuit de Barcelona-Catalunya,sargeant,20
+2023,8,Circuit Gilles Villeneuve,max_verstappen,1
+2023,8,Circuit Gilles Villeneuve,hulkenberg,2
+2023,8,Circuit Gilles Villeneuve,alonso,3
+2023,8,Circuit Gilles Villeneuve,hamilton,4
+2023,8,Circuit Gilles Villeneuve,russell,5
+2023,8,Circuit Gilles Villeneuve,ocon,6
+2023,8,Circuit Gilles Villeneuve,norris,7
+2023,8,Circuit Gilles Villeneuve,sainz,8
+2023,8,Circuit Gilles Villeneuve,piastri,9
+2023,8,Circuit Gilles Villeneuve,albon,10
+2023,8,Circuit Gilles Villeneuve,leclerc,11
+2023,8,Circuit Gilles Villeneuve,perez,12
+2023,8,Circuit Gilles Villeneuve,stroll,13
+2023,8,Circuit Gilles Villeneuve,kevin_magnussen,14
+2023,8,Circuit Gilles Villeneuve,bottas,15
+2023,8,Circuit Gilles Villeneuve,tsunoda,16
+2023,8,Circuit Gilles Villeneuve,gasly,17
+2023,8,Circuit Gilles Villeneuve,de_vries,18
+2023,8,Circuit Gilles Villeneuve,sargeant,19
+2023,8,Circuit Gilles Villeneuve,zhou,20
+2023,9,Red Bull Ring,max_verstappen,1
+2023,9,Red Bull Ring,leclerc,2
+2023,9,Red Bull Ring,sainz,3
+2023,9,Red Bull Ring,norris,4
+2023,9,Red Bull Ring,hamilton,5
+2023,9,Red Bull Ring,stroll,6
+2023,9,Red Bull Ring,alonso,7
+2023,9,Red Bull Ring,hulkenberg,8
+2023,9,Red Bull Ring,gasly,9
+2023,9,Red Bull Ring,albon,10
+2023,9,Red Bull Ring,russell,11
+2023,9,Red Bull Ring,ocon,12
+2023,9,Red Bull Ring,piastri,13
+2023,9,Red Bull Ring,bottas,14
+2023,9,Red Bull Ring,perez,15
+2023,9,Red Bull Ring,tsunoda,16
+2023,9,Red Bull Ring,zhou,17
+2023,9,Red Bull Ring,sargeant,18
+2023,9,Red Bull Ring,kevin_magnussen,19
+2023,9,Red Bull Ring,de_vries,20
+2023,10,Silverstone Circuit,max_verstappen,1
+2023,10,Silverstone Circuit,norris,2
+2023,10,Silverstone Circuit,piastri,3
+2023,10,Silverstone Circuit,leclerc,4
+2023,10,Silverstone Circuit,sainz,5
+2023,10,Silverstone Circuit,russell,6
+2023,10,Silverstone Circuit,hamilton,7
+2023,10,Silverstone Circuit,albon,8
+2023,10,Silverstone Circuit,alonso,9
+2023,10,Silverstone Circuit,gasly,10
+2023,10,Silverstone Circuit,hulkenberg,11
+2023,10,Silverstone Circuit,stroll,12
+2023,10,Silverstone Circuit,ocon,13
+2023,10,Silverstone Circuit,sargeant,14
+2023,10,Silverstone Circuit,perez,15
+2023,10,Silverstone Circuit,bottas,15
+2023,10,Silverstone Circuit,tsunoda,16
+2023,10,Silverstone Circuit,zhou,17
+2023,10,Silverstone Circuit,de_vries,18
+2023,10,Silverstone Circuit,kevin_magnussen,19
+2023,11,Hungaroring,hamilton,1
+2023,11,Hungaroring,max_verstappen,2
+2023,11,Hungaroring,norris,3
+2023,11,Hungaroring,piastri,4
+2023,11,Hungaroring,zhou,5
+2023,11,Hungaroring,leclerc,6
+2023,11,Hungaroring,bottas,7
+2023,11,Hungaroring,alonso,8
+2023,11,Hungaroring,perez,9
+2023,11,Hungaroring,hulkenberg,10
+2023,11,Hungaroring,sainz,11
+2023,11,Hungaroring,ocon,12
+2023,11,Hungaroring,ricciardo,13
+2023,11,Hungaroring,stroll,14
+2023,11,Hungaroring,gasly,15
+2023,11,Hungaroring,albon,16
+2023,11,Hungaroring,tsunoda,17
+2023,11,Hungaroring,russell,18
+2023,11,Hungaroring,kevin_magnussen,19
+2023,11,Hungaroring,sargeant,20
+2023,12,Circuit de Spa-Francorchamps,max_verstappen,1
+2023,12,Circuit de Spa-Francorchamps,leclerc,2
+2023,12,Circuit de Spa-Francorchamps,perez,3
+2023,12,Circuit de Spa-Francorchamps,hamilton,4
+2023,12,Circuit de Spa-Francorchamps,sainz,5
+2023,12,Circuit de Spa-Francorchamps,piastri,6
+2023,12,Circuit de Spa-Francorchamps,norris,7
+2023,12,Circuit de Spa-Francorchamps,russell,8
+2023,12,Circuit de Spa-Francorchamps,alonso,9
+2023,12,Circuit de Spa-Francorchamps,stroll,10
+2023,12,Circuit de Spa-Francorchamps,tsunoda,11
+2023,12,Circuit de Spa-Francorchamps,gasly,12
+2023,12,Circuit de Spa-Francorchamps,kevin_magnussen,13
+2023,12,Circuit de Spa-Francorchamps,bottas,14
+2023,12,Circuit de Spa-Francorchamps,ocon,15
+2023,12,Circuit de Spa-Francorchamps,albon,16
+2023,12,Circuit de Spa-Francorchamps,zhou,17
+2023,12,Circuit de Spa-Francorchamps,sargeant,18
+2023,12,Circuit de Spa-Francorchamps,ricciardo,19
+2023,12,Circuit de Spa-Francorchamps,hulkenberg,20
+2023,13,Circuit Park Zandvoort,max_verstappen,1
+2023,13,Circuit Park Zandvoort,norris,2
+2023,13,Circuit Park Zandvoort,russell,3
+2023,13,Circuit Park Zandvoort,albon,4
+2023,13,Circuit Park Zandvoort,alonso,5
+2023,13,Circuit Park Zandvoort,sainz,6
+2023,13,Circuit Park Zandvoort,perez,7
+2023,13,Circuit Park Zandvoort,piastri,8
+2023,13,Circuit Park Zandvoort,leclerc,9
+2023,13,Circuit Park Zandvoort,sargeant,10
+2023,13,Circuit Park Zandvoort,stroll,11
+2023,13,Circuit Park Zandvoort,gasly,12
+2023,13,Circuit Park Zandvoort,hamilton,13
+2023,13,Circuit Park Zandvoort,tsunoda,14
+2023,13,Circuit Park Zandvoort,hulkenberg,15
+2023,13,Circuit Park Zandvoort,zhou,16
+2023,13,Circuit Park Zandvoort,ocon,17
+2023,13,Circuit Park Zandvoort,kevin_magnussen,18
+2023,13,Circuit Park Zandvoort,bottas,19
+2023,13,Circuit Park Zandvoort,lawson,20
+2023,14,Autodromo Nazionale di Monza,sainz,1
+2023,14,Autodromo Nazionale di Monza,max_verstappen,2
+2023,14,Autodromo Nazionale di Monza,leclerc,3
+2023,14,Autodromo Nazionale di Monza,russell,4
+2023,14,Autodromo Nazionale di Monza,perez,5
+2023,14,Autodromo Nazionale di Monza,albon,6
+2023,14,Autodromo Nazionale di Monza,piastri,7
+2023,14,Autodromo Nazionale di Monza,hamilton,8
+2023,14,Autodromo Nazionale di Monza,norris,9
+2023,14,Autodromo Nazionale di Monza,alonso,10
+2023,14,Autodromo Nazionale di Monza,tsunoda,11
+2023,14,Autodromo Nazionale di Monza,lawson,12
+2023,14,Autodromo Nazionale di Monza,hulkenberg,13
+2023,14,Autodromo Nazionale di Monza,bottas,14
+2023,14,Autodromo Nazionale di Monza,sargeant,15
+2023,14,Autodromo Nazionale di Monza,zhou,16
+2023,14,Autodromo Nazionale di Monza,gasly,17
+2023,14,Autodromo Nazionale di Monza,ocon,18
+2023,14,Autodromo Nazionale di Monza,kevin_magnussen,19
+2023,14,Autodromo Nazionale di Monza,stroll,20
+2023,15,Marina Bay Street Circuit,sainz,1
+2023,15,Marina Bay Street Circuit,russell,2
+2023,15,Marina Bay Street Circuit,leclerc,3
+2023,15,Marina Bay Street Circuit,norris,4
+2023,15,Marina Bay Street Circuit,hamilton,5
+2023,15,Marina Bay Street Circuit,kevin_magnussen,6
+2023,15,Marina Bay Street Circuit,alonso,7
+2023,15,Marina Bay Street Circuit,ocon,8
+2023,15,Marina Bay Street Circuit,hulkenberg,9
+2023,15,Marina Bay Street Circuit,lawson,10
+2023,15,Marina Bay Street Circuit,max_verstappen,11
+2023,15,Marina Bay Street Circuit,gasly,12
+2023,15,Marina Bay Street Circuit,perez,13
+2023,15,Marina Bay Street Circuit,albon,14
+2023,15,Marina Bay Street Circuit,tsunoda,15
+2023,15,Marina Bay Street Circuit,bottas,16
+2023,15,Marina Bay Street Circuit,piastri,17
+2023,15,Marina Bay Street Circuit,sargeant,18
+2023,15,Marina Bay Street Circuit,zhou,19
+2023,15,Marina Bay Street Circuit,stroll,20
+2023,16,Suzuka Circuit,max_verstappen,1
+2023,16,Suzuka Circuit,piastri,2
+2023,16,Suzuka Circuit,norris,3
+2023,16,Suzuka Circuit,leclerc,4
+2023,16,Suzuka Circuit,perez,5
+2023,16,Suzuka Circuit,sainz,6
+2023,16,Suzuka Circuit,hamilton,7
+2023,16,Suzuka Circuit,russell,8
+2023,16,Suzuka Circuit,tsunoda,9
+2023,16,Suzuka Circuit,alonso,10
+2023,16,Suzuka Circuit,lawson,11
+2023,16,Suzuka Circuit,gasly,12
+2023,16,Suzuka Circuit,albon,13
+2023,16,Suzuka Circuit,ocon,14
+2023,16,Suzuka Circuit,kevin_magnussen,15
+2023,16,Suzuka Circuit,bottas,16
+2023,16,Suzuka Circuit,stroll,17
+2023,16,Suzuka Circuit,hulkenberg,18
+2023,16,Suzuka Circuit,zhou,19
+2023,16,Suzuka Circuit,sargeant,20
+2023,17,Losail International Circuit,max_verstappen,1
+2023,17,Losail International Circuit,russell,2
+2023,17,Losail International Circuit,hamilton,3
+2023,17,Losail International Circuit,alonso,4
+2023,17,Losail International Circuit,leclerc,5
+2023,17,Losail International Circuit,piastri,6
+2023,17,Losail International Circuit,gasly,7
+2023,17,Losail International Circuit,ocon,8
+2023,17,Losail International Circuit,bottas,9
+2023,17,Losail International Circuit,norris,10
+2023,17,Losail International Circuit,tsunoda,11
+2023,17,Losail International Circuit,sainz,12
+2023,17,Losail International Circuit,perez,13
+2023,17,Losail International Circuit,albon,14
+2023,17,Losail International Circuit,hulkenberg,15
+2023,17,Losail International Circuit,sargeant,16
+2023,17,Losail International Circuit,stroll,17
+2023,17,Losail International Circuit,lawson,18
+2023,17,Losail International Circuit,kevin_magnussen,19
+2023,17,Losail International Circuit,zhou,20
+2023,18,Circuit of the Americas,leclerc,1
+2023,18,Circuit of the Americas,norris,2
+2023,18,Circuit of the Americas,hamilton,3
+2023,18,Circuit of the Americas,sainz,4
+2023,18,Circuit of the Americas,russell,5
+2023,18,Circuit of the Americas,max_verstappen,6
+2023,18,Circuit of the Americas,gasly,7
+2023,18,Circuit of the Americas,ocon,8
+2023,18,Circuit of the Americas,perez,9
+2023,18,Circuit of the Americas,piastri,10
+2023,18,Circuit of the Americas,tsunoda,11
+2023,18,Circuit of the Americas,zhou,12
+2023,18,Circuit of the Americas,bottas,13
+2023,18,Circuit of the Americas,kevin_magnussen,14
+2023,18,Circuit of the Americas,ricciardo,15
+2023,18,Circuit of the Americas,hulkenberg,16
+2023,18,Circuit of the Americas,alonso,17
+2023,18,Circuit of the Americas,albon,18
+2023,18,Circuit of the Americas,stroll,19
+2023,18,Circuit of the Americas,sargeant,20
+2023,19,Autódromo Hermanos Rodríguez,leclerc,1
+2023,19,Autódromo Hermanos Rodríguez,sainz,2
+2023,19,Autódromo Hermanos Rodríguez,max_verstappen,3
+2023,19,Autódromo Hermanos Rodríguez,ricciardo,4
+2023,19,Autódromo Hermanos Rodríguez,perez,5
+2023,19,Autódromo Hermanos Rodríguez,hamilton,6
+2023,19,Autódromo Hermanos Rodríguez,piastri,7
+2023,19,Autódromo Hermanos Rodríguez,russell,8
+2023,19,Autódromo Hermanos Rodríguez,bottas,9
+2023,19,Autódromo Hermanos Rodríguez,zhou,10
+2023,19,Autódromo Hermanos Rodríguez,gasly,11
+2023,19,Autódromo Hermanos Rodríguez,hulkenberg,12
+2023,19,Autódromo Hermanos Rodríguez,alonso,13
+2023,19,Autódromo Hermanos Rodríguez,albon,14
+2023,19,Autódromo Hermanos Rodríguez,tsunoda,15
+2023,19,Autódromo Hermanos Rodríguez,ocon,16
+2023,19,Autódromo Hermanos Rodríguez,kevin_magnussen,17
+2023,19,Autódromo Hermanos Rodríguez,stroll,18
+2023,19,Autódromo Hermanos Rodríguez,norris,19
+2023,19,Autódromo Hermanos Rodríguez,sargeant,20
+2023,20,Autódromo José Carlos Pace,max_verstappen,1
+2023,20,Autódromo José Carlos Pace,leclerc,2
+2023,20,Autódromo José Carlos Pace,stroll,3
+2023,20,Autódromo José Carlos Pace,alonso,4
+2023,20,Autódromo José Carlos Pace,hamilton,5
+2023,20,Autódromo José Carlos Pace,russell,6
+2023,20,Autódromo José Carlos Pace,norris,7
+2023,20,Autódromo José Carlos Pace,sainz,8
+2023,20,Autódromo José Carlos Pace,perez,9
+2023,20,Autódromo José Carlos Pace,piastri,10
+2023,20,Autódromo José Carlos Pace,hulkenberg,11
+2023,20,Autódromo José Carlos Pace,ocon,12
+2023,20,Autódromo José Carlos Pace,gasly,13
+2023,20,Autódromo José Carlos Pace,kevin_magnussen,14
+2023,20,Autódromo José Carlos Pace,albon,15
+2023,20,Autódromo José Carlos Pace,tsunoda,16
+2023,20,Autódromo José Carlos Pace,ricciardo,17
+2023,20,Autódromo José Carlos Pace,bottas,18
+2023,20,Autódromo José Carlos Pace,sargeant,19
+2023,20,Autódromo José Carlos Pace,zhou,20
+2023,21,Las Vegas Strip Street Circuit,leclerc,1
+2023,21,Las Vegas Strip Street Circuit,sainz,2
+2023,21,Las Vegas Strip Street Circuit,max_verstappen,3
+2023,21,Las Vegas Strip Street Circuit,russell,4
+2023,21,Las Vegas Strip Street Circuit,gasly,5
+2023,21,Las Vegas Strip Street Circuit,albon,6
+2023,21,Las Vegas Strip Street Circuit,sargeant,7
+2023,21,Las Vegas Strip Street Circuit,bottas,8
+2023,21,Las Vegas Strip Street Circuit,kevin_magnussen,9
+2023,21,Las Vegas Strip Street Circuit,alonso,10
+2023,21,Las Vegas Strip Street Circuit,hamilton,11
+2023,21,Las Vegas Strip Street Circuit,perez,12
+2023,21,Las Vegas Strip Street Circuit,hulkenberg,13
+2023,21,Las Vegas Strip Street Circuit,stroll,14
+2023,21,Las Vegas Strip Street Circuit,ricciardo,15
+2023,21,Las Vegas Strip Street Circuit,norris,16
+2023,21,Las Vegas Strip Street Circuit,ocon,17
+2023,21,Las Vegas Strip Street Circuit,zhou,18
+2023,21,Las Vegas Strip Street Circuit,piastri,19
+2023,21,Las Vegas Strip Street Circuit,tsunoda,20
+2023,22,Yas Marina Circuit,max_verstappen,1
+2023,22,Yas Marina Circuit,leclerc,2
+2023,22,Yas Marina Circuit,piastri,3
+2023,22,Yas Marina Circuit,russell,4
+2023,22,Yas Marina Circuit,norris,5
+2023,22,Yas Marina Circuit,tsunoda,6
+2023,22,Yas Marina Circuit,alonso,7
+2023,22,Yas Marina Circuit,hulkenberg,8
+2023,22,Yas Marina Circuit,perez,9
+2023,22,Yas Marina Circuit,gasly,10
+2023,22,Yas Marina Circuit,hamilton,11
+2023,22,Yas Marina Circuit,ocon,12
+2023,22,Yas Marina Circuit,stroll,13
+2023,22,Yas Marina Circuit,albon,14
+2023,22,Yas Marina Circuit,ricciardo,15
+2023,22,Yas Marina Circuit,sainz,16
+2023,22,Yas Marina Circuit,kevin_magnussen,17
+2023,22,Yas Marina Circuit,bottas,18
+2023,22,Yas Marina Circuit,zhou,19
+2023,22,Yas Marina Circuit,sargeant,20
+2024,1,Bahrain International Circuit,max_verstappen,1
+2024,1,Bahrain International Circuit,leclerc,2
+2024,1,Bahrain International Circuit,russell,3
+2024,1,Bahrain International Circuit,sainz,4
+2024,1,Bahrain International Circuit,perez,5
+2024,1,Bahrain International Circuit,alonso,6
+2024,1,Bahrain International Circuit,norris,7
+2024,1,Bahrain International Circuit,piastri,8
+2024,1,Bahrain International Circuit,hamilton,9
+2024,1,Bahrain International Circuit,hulkenberg,10
+2024,1,Bahrain International Circuit,tsunoda,11
+2024,1,Bahrain International Circuit,stroll,12
+2024,1,Bahrain International Circuit,albon,13
+2024,1,Bahrain International Circuit,ricciardo,14
+2024,1,Bahrain International Circuit,kevin_magnussen,15
+2024,1,Bahrain International Circuit,bottas,16
+2024,1,Bahrain International Circuit,zhou,17
+2024,1,Bahrain International Circuit,sargeant,18
+2024,1,Bahrain International Circuit,ocon,19
+2024,1,Bahrain International Circuit,gasly,20
+2024,2,Jeddah Corniche Circuit,max_verstappen,1
+2024,2,Jeddah Corniche Circuit,leclerc,2
+2024,2,Jeddah Corniche Circuit,perez,3
+2024,2,Jeddah Corniche Circuit,alonso,4
+2024,2,Jeddah Corniche Circuit,piastri,5
+2024,2,Jeddah Corniche Circuit,norris,6
+2024,2,Jeddah Corniche Circuit,russell,7
+2024,2,Jeddah Corniche Circuit,hamilton,8
+2024,2,Jeddah Corniche Circuit,tsunoda,9
+2024,2,Jeddah Corniche Circuit,stroll,10
+2024,2,Jeddah Corniche Circuit,bearman,11
+2024,2,Jeddah Corniche Circuit,albon,12
+2024,2,Jeddah Corniche Circuit,kevin_magnussen,13
+2024,2,Jeddah Corniche Circuit,ricciardo,14
+2024,2,Jeddah Corniche Circuit,hulkenberg,15
+2024,2,Jeddah Corniche Circuit,bottas,16
+2024,2,Jeddah Corniche Circuit,ocon,17
+2024,2,Jeddah Corniche Circuit,gasly,18
+2024,2,Jeddah Corniche Circuit,sargeant,19
+2024,2,Jeddah Corniche Circuit,zhou,20
+2024,3,Albert Park Grand Prix Circuit,max_verstappen,1
+2024,3,Albert Park Grand Prix Circuit,sainz,2
+2024,3,Albert Park Grand Prix Circuit,perez,3
+2024,3,Albert Park Grand Prix Circuit,norris,4
+2024,3,Albert Park Grand Prix Circuit,leclerc,5
+2024,3,Albert Park Grand Prix Circuit,piastri,6
+2024,3,Albert Park Grand Prix Circuit,russell,7
+2024,3,Albert Park Grand Prix Circuit,tsunoda,8
+2024,3,Albert Park Grand Prix Circuit,stroll,9
+2024,3,Albert Park Grand Prix Circuit,alonso,10
+2024,3,Albert Park Grand Prix Circuit,hamilton,11
+2024,3,Albert Park Grand Prix Circuit,albon,12
+2024,3,Albert Park Grand Prix Circuit,bottas,13
+2024,3,Albert Park Grand Prix Circuit,kevin_magnussen,14
+2024,3,Albert Park Grand Prix Circuit,ocon,15
+2024,3,Albert Park Grand Prix Circuit,hulkenberg,16
+2024,3,Albert Park Grand Prix Circuit,gasly,17
+2024,3,Albert Park Grand Prix Circuit,ricciardo,18
+2024,3,Albert Park Grand Prix Circuit,zhou,19
+2024,4,Suzuka Circuit,max_verstappen,1
+2024,4,Suzuka Circuit,perez,2
+2024,4,Suzuka Circuit,norris,3
+2024,4,Suzuka Circuit,sainz,4
+2024,4,Suzuka Circuit,alonso,5
+2024,4,Suzuka Circuit,piastri,6
+2024,4,Suzuka Circuit,hamilton,7
+2024,4,Suzuka Circuit,leclerc,8
+2024,4,Suzuka Circuit,russell,9
+2024,4,Suzuka Circuit,tsunoda,10
+2024,4,Suzuka Circuit,ricciardo,11
+2024,4,Suzuka Circuit,hulkenberg,12
+2024,4,Suzuka Circuit,bottas,13
+2024,4,Suzuka Circuit,albon,14
+2024,4,Suzuka Circuit,ocon,15
+2024,4,Suzuka Circuit,stroll,16
+2024,4,Suzuka Circuit,gasly,17
+2024,4,Suzuka Circuit,kevin_magnussen,18
+2024,4,Suzuka Circuit,sargeant,19
+2024,4,Suzuka Circuit,zhou,20
+2024,5,Shanghai International Circuit,max_verstappen,1
+2024,5,Shanghai International Circuit,perez,2
+2024,5,Shanghai International Circuit,alonso,3
+2024,5,Shanghai International Circuit,norris,4
+2024,5,Shanghai International Circuit,piastri,5
+2024,5,Shanghai International Circuit,leclerc,6
+2024,5,Shanghai International Circuit,sainz,7
+2024,5,Shanghai International Circuit,russell,8
+2024,5,Shanghai International Circuit,hulkenberg,9
+2024,5,Shanghai International Circuit,bottas,10
+2024,5,Shanghai International Circuit,stroll,11
+2024,5,Shanghai International Circuit,ricciardo,12
+2024,5,Shanghai International Circuit,ocon,13
+2024,5,Shanghai International Circuit,albon,14
+2024,5,Shanghai International Circuit,gasly,15
+2024,5,Shanghai International Circuit,zhou,16
+2024,5,Shanghai International Circuit,kevin_magnussen,17
+2024,5,Shanghai International Circuit,hamilton,18
+2024,5,Shanghai International Circuit,tsunoda,19
+2024,5,Shanghai International Circuit,sargeant,20
+2024,6,Miami International Autodrome,max_verstappen,1
+2024,6,Miami International Autodrome,leclerc,2
+2024,6,Miami International Autodrome,sainz,3
+2024,6,Miami International Autodrome,perez,4
+2024,6,Miami International Autodrome,norris,5
+2024,6,Miami International Autodrome,piastri,6
+2024,6,Miami International Autodrome,russell,7
+2024,6,Miami International Autodrome,hamilton,8
+2024,6,Miami International Autodrome,hulkenberg,9
+2024,6,Miami International Autodrome,tsunoda,10
+2024,6,Miami International Autodrome,stroll,11
+2024,6,Miami International Autodrome,gasly,12
+2024,6,Miami International Autodrome,ocon,13
+2024,6,Miami International Autodrome,albon,14
+2024,6,Miami International Autodrome,alonso,15
+2024,6,Miami International Autodrome,bottas,16
+2024,6,Miami International Autodrome,sargeant,17
+2024,6,Miami International Autodrome,ricciardo,18
+2024,6,Miami International Autodrome,kevin_magnussen,19
+2024,6,Miami International Autodrome,zhou,20
+2024,7,Autodromo Enzo e Dino Ferrari,max_verstappen,1
+2024,7,Autodromo Enzo e Dino Ferrari,piastri,2
+2024,7,Autodromo Enzo e Dino Ferrari,norris,3
+2024,7,Autodromo Enzo e Dino Ferrari,leclerc,4
+2024,7,Autodromo Enzo e Dino Ferrari,sainz,5
+2024,7,Autodromo Enzo e Dino Ferrari,russell,6
+2024,7,Autodromo Enzo e Dino Ferrari,tsunoda,7
+2024,7,Autodromo Enzo e Dino Ferrari,hamilton,8
+2024,7,Autodromo Enzo e Dino Ferrari,ricciardo,9
+2024,7,Autodromo Enzo e Dino Ferrari,hulkenberg,10
+2024,7,Autodromo Enzo e Dino Ferrari,perez,11
+2024,7,Autodromo Enzo e Dino Ferrari,ocon,12
+2024,7,Autodromo Enzo e Dino Ferrari,stroll,13
+2024,7,Autodromo Enzo e Dino Ferrari,albon,14
+2024,7,Autodromo Enzo e Dino Ferrari,gasly,15
+2024,7,Autodromo Enzo e Dino Ferrari,bottas,16
+2024,7,Autodromo Enzo e Dino Ferrari,zhou,17
+2024,7,Autodromo Enzo e Dino Ferrari,kevin_magnussen,18
+2024,7,Autodromo Enzo e Dino Ferrari,alonso,19
+2024,7,Autodromo Enzo e Dino Ferrari,sargeant,20
+2024,8,Circuit de Monaco,leclerc,1
+2024,8,Circuit de Monaco,piastri,2
+2024,8,Circuit de Monaco,sainz,3
+2024,8,Circuit de Monaco,norris,4
+2024,8,Circuit de Monaco,russell,5
+2024,8,Circuit de Monaco,max_verstappen,6
+2024,8,Circuit de Monaco,hamilton,7
+2024,8,Circuit de Monaco,tsunoda,8
+2024,8,Circuit de Monaco,albon,9
+2024,8,Circuit de Monaco,gasly,10
+2024,8,Circuit de Monaco,ocon,11
+2024,8,Circuit de Monaco,ricciardo,12
+2024,8,Circuit de Monaco,stroll,13
+2024,8,Circuit de Monaco,alonso,14
+2024,8,Circuit de Monaco,hulkenberg,14
+2024,8,Circuit de Monaco,sargeant,15
+2024,8,Circuit de Monaco,kevin_magnussen,15
+2024,8,Circuit de Monaco,perez,16
+2024,8,Circuit de Monaco,bottas,17
+2024,8,Circuit de Monaco,zhou,18
+2024,9,Circuit Gilles Villeneuve,russell,1
+2024,9,Circuit Gilles Villeneuve,max_verstappen,2
+2024,9,Circuit Gilles Villeneuve,norris,3
+2024,9,Circuit Gilles Villeneuve,piastri,4
+2024,9,Circuit Gilles Villeneuve,ricciardo,5
+2024,9,Circuit Gilles Villeneuve,alonso,6
+2024,9,Circuit Gilles Villeneuve,hamilton,7
+2024,9,Circuit Gilles Villeneuve,tsunoda,8
+2024,9,Circuit Gilles Villeneuve,stroll,9
+2024,9,Circuit Gilles Villeneuve,albon,10
+2024,9,Circuit Gilles Villeneuve,leclerc,11
+2024,9,Circuit Gilles Villeneuve,sainz,12
+2024,9,Circuit Gilles Villeneuve,sargeant,13
+2024,9,Circuit Gilles Villeneuve,kevin_magnussen,14
+2024,9,Circuit Gilles Villeneuve,gasly,15
+2024,9,Circuit Gilles Villeneuve,perez,16
+2024,9,Circuit Gilles Villeneuve,bottas,17
+2024,9,Circuit Gilles Villeneuve,ocon,18
+2024,9,Circuit Gilles Villeneuve,hulkenberg,19
+2024,9,Circuit Gilles Villeneuve,zhou,20
+2024,10,Circuit de Barcelona-Catalunya,norris,1
+2024,10,Circuit de Barcelona-Catalunya,max_verstappen,2
+2024,10,Circuit de Barcelona-Catalunya,hamilton,3
+2024,10,Circuit de Barcelona-Catalunya,russell,4
+2024,10,Circuit de Barcelona-Catalunya,leclerc,5
+2024,10,Circuit de Barcelona-Catalunya,sainz,6
+2024,10,Circuit de Barcelona-Catalunya,gasly,7
+2024,10,Circuit de Barcelona-Catalunya,perez,8
+2024,10,Circuit de Barcelona-Catalunya,ocon,9
+2024,10,Circuit de Barcelona-Catalunya,piastri,10
+2024,10,Circuit de Barcelona-Catalunya,alonso,11
+2024,10,Circuit de Barcelona-Catalunya,bottas,12
+2024,10,Circuit de Barcelona-Catalunya,hulkenberg,13
+2024,10,Circuit de Barcelona-Catalunya,stroll,14
+2024,10,Circuit de Barcelona-Catalunya,zhou,15
+2024,10,Circuit de Barcelona-Catalunya,kevin_magnussen,16
+2024,10,Circuit de Barcelona-Catalunya,tsunoda,17
+2024,10,Circuit de Barcelona-Catalunya,ricciardo,18
+2024,10,Circuit de Barcelona-Catalunya,albon,19
+2024,10,Circuit de Barcelona-Catalunya,sargeant,20
+2024,11,Red Bull Ring,max_verstappen,1
+2024,11,Red Bull Ring,norris,2
+2024,11,Red Bull Ring,russell,3
+2024,11,Red Bull Ring,sainz,4
+2024,11,Red Bull Ring,hamilton,5
+2024,11,Red Bull Ring,leclerc,6
+2024,11,Red Bull Ring,piastri,7
+2024,11,Red Bull Ring,perez,8
+2024,11,Red Bull Ring,hulkenberg,9
+2024,11,Red Bull Ring,ocon,10
+2024,11,Red Bull Ring,ricciardo,11
+2024,11,Red Bull Ring,kevin_magnussen,12
+2024,11,Red Bull Ring,gasly,13
+2024,11,Red Bull Ring,tsunoda,14
+2024,11,Red Bull Ring,alonso,15
+2024,11,Red Bull Ring,albon,16
+2024,11,Red Bull Ring,stroll,17
+2024,11,Red Bull Ring,bottas,18
+2024,11,Red Bull Ring,sargeant,19
+2024,11,Red Bull Ring,zhou,20
+2024,12,Silverstone Circuit,russell,1
+2024,12,Silverstone Circuit,hamilton,2
+2024,12,Silverstone Circuit,norris,3
+2024,12,Silverstone Circuit,max_verstappen,4
+2024,12,Silverstone Circuit,piastri,5
+2024,12,Silverstone Circuit,hulkenberg,6
+2024,12,Silverstone Circuit,sainz,7
+2024,12,Silverstone Circuit,stroll,8
+2024,12,Silverstone Circuit,albon,9
+2024,12,Silverstone Circuit,alonso,10
+2024,12,Silverstone Circuit,leclerc,11
+2024,12,Silverstone Circuit,sargeant,12
+2024,12,Silverstone Circuit,tsunoda,13
+2024,12,Silverstone Circuit,zhou,14
+2024,12,Silverstone Circuit,ricciardo,15
+2024,12,Silverstone Circuit,bottas,16
+2024,12,Silverstone Circuit,kevin_magnussen,17
+2024,12,Silverstone Circuit,ocon,18
+2024,12,Silverstone Circuit,perez,19
+2024,12,Silverstone Circuit,gasly,20
+2024,13,Hungaroring,norris,1
+2024,13,Hungaroring,piastri,2
+2024,13,Hungaroring,max_verstappen,3
+2024,13,Hungaroring,sainz,4
+2024,13,Hungaroring,hamilton,5
+2024,13,Hungaroring,leclerc,6
+2024,13,Hungaroring,alonso,7
+2024,13,Hungaroring,stroll,8
+2024,13,Hungaroring,ricciardo,9
+2024,13,Hungaroring,tsunoda,10
+2024,13,Hungaroring,hulkenberg,11
+2024,13,Hungaroring,bottas,12
+2024,13,Hungaroring,albon,13
+2024,13,Hungaroring,sargeant,14
+2024,13,Hungaroring,kevin_magnussen,15
+2024,13,Hungaroring,perez,16
+2024,13,Hungaroring,russell,17
+2024,13,Hungaroring,zhou,18
+2024,13,Hungaroring,ocon,19
+2024,13,Hungaroring,gasly,20
+2024,14,Circuit de Spa-Francorchamps,max_verstappen,1
+2024,14,Circuit de Spa-Francorchamps,leclerc,2
+2024,14,Circuit de Spa-Francorchamps,perez,3
+2024,14,Circuit de Spa-Francorchamps,hamilton,4
+2024,14,Circuit de Spa-Francorchamps,norris,5
+2024,14,Circuit de Spa-Francorchamps,piastri,6
+2024,14,Circuit de Spa-Francorchamps,russell,7
+2024,14,Circuit de Spa-Francorchamps,sainz,8
+2024,14,Circuit de Spa-Francorchamps,alonso,9
+2024,14,Circuit de Spa-Francorchamps,ocon,10
+2024,14,Circuit de Spa-Francorchamps,albon,11
+2024,14,Circuit de Spa-Francorchamps,gasly,12
+2024,14,Circuit de Spa-Francorchamps,ricciardo,13
+2024,14,Circuit de Spa-Francorchamps,bottas,14
+2024,14,Circuit de Spa-Francorchamps,stroll,15
+2024,14,Circuit de Spa-Francorchamps,hulkenberg,16
+2024,14,Circuit de Spa-Francorchamps,kevin_magnussen,17
+2024,14,Circuit de Spa-Francorchamps,tsunoda,18
+2024,14,Circuit de Spa-Francorchamps,sargeant,19
+2024,14,Circuit de Spa-Francorchamps,zhou,20
+2024,15,Circuit Park Zandvoort,norris,1
+2024,15,Circuit Park Zandvoort,max_verstappen,2
+2024,15,Circuit Park Zandvoort,piastri,3
+2024,15,Circuit Park Zandvoort,russell,4
+2024,15,Circuit Park Zandvoort,perez,5
+2024,15,Circuit Park Zandvoort,leclerc,6
+2024,15,Circuit Park Zandvoort,alonso,7
+2024,15,Circuit Park Zandvoort,stroll,8
+2024,15,Circuit Park Zandvoort,gasly,9
+2024,15,Circuit Park Zandvoort,sainz,10
+2024,15,Circuit Park Zandvoort,albon,10
+2024,15,Circuit Park Zandvoort,hamilton,11
+2024,15,Circuit Park Zandvoort,tsunoda,12
+2024,15,Circuit Park Zandvoort,hulkenberg,13
+2024,15,Circuit Park Zandvoort,kevin_magnussen,14
+2024,15,Circuit Park Zandvoort,ricciardo,15
+2024,15,Circuit Park Zandvoort,ocon,16
+2024,15,Circuit Park Zandvoort,bottas,17
+2024,15,Circuit Park Zandvoort,zhou,18
+2024,15,Circuit Park Zandvoort,sargeant,20
+2024,16,Autodromo Nazionale di Monza,norris,1
+2024,16,Autodromo Nazionale di Monza,piastri,2
+2024,16,Autodromo Nazionale di Monza,russell,3
+2024,16,Autodromo Nazionale di Monza,leclerc,4
+2024,16,Autodromo Nazionale di Monza,sainz,5
+2024,16,Autodromo Nazionale di Monza,hamilton,6
+2024,16,Autodromo Nazionale di Monza,max_verstappen,7
+2024,16,Autodromo Nazionale di Monza,perez,8
+2024,16,Autodromo Nazionale di Monza,albon,9
+2024,16,Autodromo Nazionale di Monza,hulkenberg,10
+2024,16,Autodromo Nazionale di Monza,alonso,11
+2024,16,Autodromo Nazionale di Monza,ricciardo,12
+2024,16,Autodromo Nazionale di Monza,kevin_magnussen,13
+2024,16,Autodromo Nazionale di Monza,gasly,14
+2024,16,Autodromo Nazionale di Monza,ocon,15
+2024,16,Autodromo Nazionale di Monza,tsunoda,16
+2024,16,Autodromo Nazionale di Monza,stroll,17
+2024,16,Autodromo Nazionale di Monza,colapinto,18
+2024,16,Autodromo Nazionale di Monza,bottas,19
+2024,16,Autodromo Nazionale di Monza,zhou,20
+2024,17,Baku City Circuit,leclerc,1
+2024,17,Baku City Circuit,piastri,2
+2024,17,Baku City Circuit,sainz,3
+2024,17,Baku City Circuit,perez,4
+2024,17,Baku City Circuit,russell,5
+2024,17,Baku City Circuit,max_verstappen,6
+2024,17,Baku City Circuit,hamilton,7
+2024,17,Baku City Circuit,alonso,8
+2024,17,Baku City Circuit,colapinto,9
+2024,17,Baku City Circuit,albon,10
+2024,17,Baku City Circuit,bearman,11
+2024,17,Baku City Circuit,tsunoda,12
+2024,17,Baku City Circuit,hulkenberg,13
+2024,17,Baku City Circuit,stroll,14
+2024,17,Baku City Circuit,gasly,15
+2024,17,Baku City Circuit,ricciardo,15
+2024,17,Baku City Circuit,norris,16
+2024,17,Baku City Circuit,bottas,17
+2024,17,Baku City Circuit,zhou,18
+2024,17,Baku City Circuit,ocon,19
+2024,18,Marina Bay Street Circuit,norris,1
+2024,18,Marina Bay Street Circuit,max_verstappen,2
+2024,18,Marina Bay Street Circuit,hamilton,3
+2024,18,Marina Bay Street Circuit,russell,4
+2024,18,Marina Bay Street Circuit,piastri,5
+2024,18,Marina Bay Street Circuit,hulkenberg,6
+2024,18,Marina Bay Street Circuit,alonso,7
+2024,18,Marina Bay Street Circuit,tsunoda,8
+2024,18,Marina Bay Street Circuit,leclerc,9
+2024,18,Marina Bay Street Circuit,sainz,10
+2024,18,Marina Bay Street Circuit,albon,11
+2024,18,Marina Bay Street Circuit,colapinto,12
+2024,18,Marina Bay Street Circuit,perez,13
+2024,18,Marina Bay Street Circuit,kevin_magnussen,14
+2024,18,Marina Bay Street Circuit,ocon,15
+2024,18,Marina Bay Street Circuit,ricciardo,16
+2024,18,Marina Bay Street Circuit,stroll,17
+2024,18,Marina Bay Street Circuit,gasly,18
+2024,18,Marina Bay Street Circuit,bottas,19
+2024,18,Marina Bay Street Circuit,zhou,20
+2024,19,Circuit of the Americas,norris,1
+2024,19,Circuit of the Americas,max_verstappen,2
+2024,19,Circuit of the Americas,sainz,3
+2024,19,Circuit of the Americas,leclerc,4
+2024,19,Circuit of the Americas,piastri,5
+2024,19,Circuit of the Americas,russell,6
+2024,19,Circuit of the Americas,gasly,7
+2024,19,Circuit of the Americas,alonso,8
+2024,19,Circuit of the Americas,kevin_magnussen,9
+2024,19,Circuit of the Americas,perez,10
+2024,19,Circuit of the Americas,tsunoda,11
+2024,19,Circuit of the Americas,hulkenberg,12
+2024,19,Circuit of the Americas,ocon,13
+2024,19,Circuit of the Americas,stroll,14
+2024,19,Circuit of the Americas,lawson,15
+2024,19,Circuit of the Americas,albon,16
+2024,19,Circuit of the Americas,colapinto,17
+2024,19,Circuit of the Americas,bottas,18
+2024,19,Circuit of the Americas,hamilton,19
+2024,19,Circuit of the Americas,zhou,20
+2024,20,Autódromo Hermanos Rodríguez,sainz,1
+2024,20,Autódromo Hermanos Rodríguez,max_verstappen,2
+2024,20,Autódromo Hermanos Rodríguez,norris,3
+2024,20,Autódromo Hermanos Rodríguez,leclerc,4
+2024,20,Autódromo Hermanos Rodríguez,russell,5
+2024,20,Autódromo Hermanos Rodríguez,hamilton,6
+2024,20,Autódromo Hermanos Rodríguez,kevin_magnussen,7
+2024,20,Autódromo Hermanos Rodríguez,gasly,8
+2024,20,Autódromo Hermanos Rodríguez,albon,9
+2024,20,Autódromo Hermanos Rodríguez,hulkenberg,10
+2024,20,Autódromo Hermanos Rodríguez,tsunoda,11
+2024,20,Autódromo Hermanos Rodríguez,lawson,12
+2024,20,Autódromo Hermanos Rodríguez,alonso,13
+2024,20,Autódromo Hermanos Rodríguez,stroll,14
+2024,20,Autódromo Hermanos Rodríguez,bottas,15
+2024,20,Autódromo Hermanos Rodríguez,colapinto,16
+2024,20,Autódromo Hermanos Rodríguez,piastri,17
+2024,20,Autódromo Hermanos Rodríguez,perez,18
+2024,20,Autódromo Hermanos Rodríguez,ocon,19
+2024,20,Autódromo Hermanos Rodríguez,zhou,20
+2024,21,Autódromo José Carlos Pace,norris,1
+2024,21,Autódromo José Carlos Pace,russell,2
+2024,21,Autódromo José Carlos Pace,tsunoda,3
+2024,21,Autódromo José Carlos Pace,ocon,4
+2024,21,Autódromo José Carlos Pace,lawson,5
+2024,21,Autódromo José Carlos Pace,leclerc,6
+2024,21,Autódromo José Carlos Pace,albon,7
+2024,21,Autódromo José Carlos Pace,piastri,8
+2024,21,Autódromo José Carlos Pace,alonso,9
+2024,21,Autódromo José Carlos Pace,stroll,10
+2024,21,Autódromo José Carlos Pace,bottas,11
+2024,21,Autódromo José Carlos Pace,max_verstappen,12
+2024,21,Autódromo José Carlos Pace,perez,13
+2024,21,Autódromo José Carlos Pace,sainz,14
+2024,21,Autódromo José Carlos Pace,gasly,15
+2024,21,Autódromo José Carlos Pace,hamilton,16
+2024,21,Autódromo José Carlos Pace,bearman,17
+2024,21,Autódromo José Carlos Pace,colapinto,18
+2024,21,Autódromo José Carlos Pace,hulkenberg,19
+2024,21,Autódromo José Carlos Pace,zhou,20
+2024,22,Las Vegas Strip Street Circuit,russell,1
+2024,22,Las Vegas Strip Street Circuit,sainz,2
+2024,22,Las Vegas Strip Street Circuit,gasly,3
+2024,22,Las Vegas Strip Street Circuit,leclerc,4
+2024,22,Las Vegas Strip Street Circuit,max_verstappen,5
+2024,22,Las Vegas Strip Street Circuit,norris,6
+2024,22,Las Vegas Strip Street Circuit,tsunoda,7
+2024,22,Las Vegas Strip Street Circuit,piastri,8
+2024,22,Las Vegas Strip Street Circuit,hulkenberg,9
+2024,22,Las Vegas Strip Street Circuit,hamilton,10
+2024,22,Las Vegas Strip Street Circuit,ocon,11
+2024,22,Las Vegas Strip Street Circuit,kevin_magnussen,12
+2024,22,Las Vegas Strip Street Circuit,zhou,13
+2024,22,Las Vegas Strip Street Circuit,colapinto,14
+2024,22,Las Vegas Strip Street Circuit,lawson,15
+2024,22,Las Vegas Strip Street Circuit,perez,16
+2024,22,Las Vegas Strip Street Circuit,alonso,17
+2024,22,Las Vegas Strip Street Circuit,albon,18
+2024,22,Las Vegas Strip Street Circuit,bottas,19
+2024,22,Las Vegas Strip Street Circuit,stroll,20
+2024,23,Losail International Circuit,max_verstappen,1
+2024,23,Losail International Circuit,russell,2
+2024,23,Losail International Circuit,norris,3
+2024,23,Losail International Circuit,piastri,4
+2024,23,Losail International Circuit,leclerc,5
+2024,23,Losail International Circuit,hamilton,6
+2024,23,Losail International Circuit,sainz,7
+2024,23,Losail International Circuit,alonso,8
+2024,23,Losail International Circuit,perez,9
+2024,23,Losail International Circuit,kevin_magnussen,10
+2024,23,Losail International Circuit,gasly,11
+2024,23,Losail International Circuit,zhou,12
+2024,23,Losail International Circuit,bottas,13
+2024,23,Losail International Circuit,tsunoda,14
+2024,23,Losail International Circuit,stroll,15
+2024,23,Losail International Circuit,albon,16
+2024,23,Losail International Circuit,lawson,17
+2024,23,Losail International Circuit,hulkenberg,18
+2024,23,Losail International Circuit,colapinto,19
+2024,23,Losail International Circuit,ocon,20
+2024,24,Yas Marina Circuit,norris,1
+2024,24,Yas Marina Circuit,piastri,2
+2024,24,Yas Marina Circuit,sainz,3
+2024,24,Yas Marina Circuit,hulkenberg,4
+2024,24,Yas Marina Circuit,max_verstappen,5
+2024,24,Yas Marina Circuit,gasly,6
+2024,24,Yas Marina Circuit,russell,7
+2024,24,Yas Marina Circuit,alonso,8
+2024,24,Yas Marina Circuit,bottas,9
+2024,24,Yas Marina Circuit,perez,10
+2024,24,Yas Marina Circuit,tsunoda,11
+2024,24,Yas Marina Circuit,lawson,12
+2024,24,Yas Marina Circuit,stroll,13
+2024,24,Yas Marina Circuit,leclerc,14
+2024,24,Yas Marina Circuit,kevin_magnussen,15
+2024,24,Yas Marina Circuit,albon,16
+2024,24,Yas Marina Circuit,zhou,17
+2024,24,Yas Marina Circuit,hamilton,18
+2024,24,Yas Marina Circuit,colapinto,19
+2024,24,Yas Marina Circuit,doohan,20
+2025,1,Albert Park Grand Prix Circuit,norris,1
+2025,1,Albert Park Grand Prix Circuit,piastri,2
+2025,1,Albert Park Grand Prix Circuit,max_verstappen,3
+2025,1,Albert Park Grand Prix Circuit,russell,4
+2025,1,Albert Park Grand Prix Circuit,tsunoda,5
+2025,1,Albert Park Grand Prix Circuit,albon,6
+2025,1,Albert Park Grand Prix Circuit,leclerc,7
+2025,1,Albert Park Grand Prix Circuit,hamilton,8
+2025,1,Albert Park Grand Prix Circuit,gasly,9
+2025,1,Albert Park Grand Prix Circuit,sainz,10
+2025,1,Albert Park Grand Prix Circuit,hadjar,11
+2025,1,Albert Park Grand Prix Circuit,alonso,12
+2025,1,Albert Park Grand Prix Circuit,stroll,13
+2025,1,Albert Park Grand Prix Circuit,doohan,14
+2025,1,Albert Park Grand Prix Circuit,bortoleto,15
+2025,1,Albert Park Grand Prix Circuit,antonelli,16
+2025,1,Albert Park Grand Prix Circuit,hulkenberg,17
+2025,1,Albert Park Grand Prix Circuit,lawson,18
+2025,1,Albert Park Grand Prix Circuit,ocon,19
+2025,1,Albert Park Grand Prix Circuit,bearman,20
+2025,2,Shanghai International Circuit,piastri,1
+2025,2,Shanghai International Circuit,russell,2
+2025,2,Shanghai International Circuit,norris,3
+2025,2,Shanghai International Circuit,max_verstappen,4
+2025,2,Shanghai International Circuit,hamilton,5
+2025,2,Shanghai International Circuit,leclerc,6
+2025,2,Shanghai International Circuit,hadjar,7
+2025,2,Shanghai International Circuit,antonelli,8
+2025,2,Shanghai International Circuit,tsunoda,9
+2025,2,Shanghai International Circuit,albon,10
+2025,2,Shanghai International Circuit,ocon,11
+2025,2,Shanghai International Circuit,hulkenberg,12
+2025,2,Shanghai International Circuit,alonso,13
+2025,2,Shanghai International Circuit,stroll,14
+2025,2,Shanghai International Circuit,sainz,15
+2025,2,Shanghai International Circuit,gasly,16
+2025,2,Shanghai International Circuit,bearman,17
+2025,2,Shanghai International Circuit,doohan,18
+2025,2,Shanghai International Circuit,bortoleto,19
+2025,2,Shanghai International Circuit,lawson,20
+2025,3,Suzuka Circuit,max_verstappen,1
+2025,3,Suzuka Circuit,norris,2
+2025,3,Suzuka Circuit,piastri,3
+2025,3,Suzuka Circuit,leclerc,4
+2025,3,Suzuka Circuit,russell,5
+2025,3,Suzuka Circuit,antonelli,6
+2025,3,Suzuka Circuit,hadjar,7
+2025,3,Suzuka Circuit,hamilton,8
+2025,3,Suzuka Circuit,albon,9
+2025,3,Suzuka Circuit,bearman,10
+2025,3,Suzuka Circuit,gasly,11
+2025,3,Suzuka Circuit,sainz,12
+2025,3,Suzuka Circuit,alonso,13
+2025,3,Suzuka Circuit,lawson,14
+2025,3,Suzuka Circuit,tsunoda,15
+2025,3,Suzuka Circuit,hulkenberg,16
+2025,3,Suzuka Circuit,bortoleto,17
+2025,3,Suzuka Circuit,ocon,18
+2025,3,Suzuka Circuit,doohan,19
+2025,3,Suzuka Circuit,stroll,20
+2025,4,Bahrain International Circuit,piastri,1
+2025,4,Bahrain International Circuit,russell,2
+2025,4,Bahrain International Circuit,leclerc,3
+2025,4,Bahrain International Circuit,antonelli,4
+2025,4,Bahrain International Circuit,gasly,5
+2025,4,Bahrain International Circuit,norris,6
+2025,4,Bahrain International Circuit,max_verstappen,7
+2025,4,Bahrain International Circuit,sainz,8
+2025,4,Bahrain International Circuit,hamilton,9
+2025,4,Bahrain International Circuit,tsunoda,10
+2025,4,Bahrain International Circuit,doohan,11
+2025,4,Bahrain International Circuit,hadjar,12
+2025,4,Bahrain International Circuit,alonso,13
+2025,4,Bahrain International Circuit,ocon,14
+2025,4,Bahrain International Circuit,albon,15
+2025,4,Bahrain International Circuit,hulkenberg,16
+2025,4,Bahrain International Circuit,lawson,17
+2025,4,Bahrain International Circuit,bortoleto,18
+2025,4,Bahrain International Circuit,stroll,19
+2025,4,Bahrain International Circuit,bearman,20
+2025,5,Jeddah Corniche Circuit,max_verstappen,1
+2025,5,Jeddah Corniche Circuit,piastri,2
+2025,5,Jeddah Corniche Circuit,russell,3
+2025,5,Jeddah Corniche Circuit,leclerc,4
+2025,5,Jeddah Corniche Circuit,antonelli,5
+2025,5,Jeddah Corniche Circuit,sainz,6
+2025,5,Jeddah Corniche Circuit,hamilton,7
+2025,5,Jeddah Corniche Circuit,tsunoda,8
+2025,5,Jeddah Corniche Circuit,gasly,9
+2025,5,Jeddah Corniche Circuit,norris,10
+2025,5,Jeddah Corniche Circuit,albon,11
+2025,5,Jeddah Corniche Circuit,lawson,12
+2025,5,Jeddah Corniche Circuit,alonso,13
+2025,5,Jeddah Corniche Circuit,hadjar,14
+2025,5,Jeddah Corniche Circuit,bearman,15
+2025,5,Jeddah Corniche Circuit,stroll,16
+2025,5,Jeddah Corniche Circuit,doohan,17
+2025,5,Jeddah Corniche Circuit,hulkenberg,18
+2025,5,Jeddah Corniche Circuit,ocon,19
+2025,5,Jeddah Corniche Circuit,bortoleto,20
+2025,6,Miami International Autodrome,max_verstappen,1
+2025,6,Miami International Autodrome,norris,2
+2025,6,Miami International Autodrome,antonelli,3
+2025,6,Miami International Autodrome,piastri,4
+2025,6,Miami International Autodrome,russell,5
+2025,6,Miami International Autodrome,sainz,6
+2025,6,Miami International Autodrome,albon,7
+2025,6,Miami International Autodrome,leclerc,8
+2025,6,Miami International Autodrome,ocon,9
+2025,6,Miami International Autodrome,tsunoda,10
+2025,6,Miami International Autodrome,hadjar,11
+2025,6,Miami International Autodrome,hamilton,12
+2025,6,Miami International Autodrome,bortoleto,13
+2025,6,Miami International Autodrome,doohan,14
+2025,6,Miami International Autodrome,lawson,15
+2025,6,Miami International Autodrome,hulkenberg,16
+2025,6,Miami International Autodrome,alonso,17
+2025,6,Miami International Autodrome,gasly,18
+2025,6,Miami International Autodrome,stroll,19
+2025,6,Miami International Autodrome,bearman,20
+2025,7,Autodromo Enzo e Dino Ferrari,piastri,1
+2025,7,Autodromo Enzo e Dino Ferrari,max_verstappen,2
+2025,7,Autodromo Enzo e Dino Ferrari,russell,3
+2025,7,Autodromo Enzo e Dino Ferrari,norris,4
+2025,7,Autodromo Enzo e Dino Ferrari,alonso,5
+2025,7,Autodromo Enzo e Dino Ferrari,sainz,6
+2025,7,Autodromo Enzo e Dino Ferrari,albon,7
+2025,7,Autodromo Enzo e Dino Ferrari,stroll,8
+2025,7,Autodromo Enzo e Dino Ferrari,hadjar,9
+2025,7,Autodromo Enzo e Dino Ferrari,gasly,10
+2025,7,Autodromo Enzo e Dino Ferrari,leclerc,11
+2025,7,Autodromo Enzo e Dino Ferrari,hamilton,12
+2025,7,Autodromo Enzo e Dino Ferrari,antonelli,13
+2025,7,Autodromo Enzo e Dino Ferrari,bortoleto,14
+2025,7,Autodromo Enzo e Dino Ferrari,colapinto,15
+2025,7,Autodromo Enzo e Dino Ferrari,lawson,16
+2025,7,Autodromo Enzo e Dino Ferrari,hulkenberg,17
+2025,7,Autodromo Enzo e Dino Ferrari,ocon,18
+2025,7,Autodromo Enzo e Dino Ferrari,bearman,19
+2025,7,Autodromo Enzo e Dino Ferrari,tsunoda,20
+2025,8,Circuit de Monaco,norris,1
+2025,8,Circuit de Monaco,leclerc,2
+2025,8,Circuit de Monaco,piastri,3
+2025,8,Circuit de Monaco,hamilton,4
+2025,8,Circuit de Monaco,max_verstappen,5
+2025,8,Circuit de Monaco,hadjar,6
+2025,8,Circuit de Monaco,alonso,7
+2025,8,Circuit de Monaco,ocon,8
+2025,8,Circuit de Monaco,lawson,9
+2025,8,Circuit de Monaco,albon,10
+2025,8,Circuit de Monaco,sainz,11
+2025,8,Circuit de Monaco,tsunoda,12
+2025,8,Circuit de Monaco,hulkenberg,13
+2025,8,Circuit de Monaco,russell,14
+2025,8,Circuit de Monaco,antonelli,15
+2025,8,Circuit de Monaco,bortoleto,16
+2025,8,Circuit de Monaco,bearman,17
+2025,8,Circuit de Monaco,gasly,18
+2025,8,Circuit de Monaco,stroll,19
+2025,8,Circuit de Monaco,colapinto,20
+2025,9,Circuit de Barcelona-Catalunya,piastri,1
+2025,9,Circuit de Barcelona-Catalunya,norris,2
+2025,9,Circuit de Barcelona-Catalunya,max_verstappen,3
+2025,9,Circuit de Barcelona-Catalunya,russell,4
+2025,9,Circuit de Barcelona-Catalunya,hamilton,5
+2025,9,Circuit de Barcelona-Catalunya,antonelli,6
+2025,9,Circuit de Barcelona-Catalunya,leclerc,7
+2025,9,Circuit de Barcelona-Catalunya,gasly,8
+2025,9,Circuit de Barcelona-Catalunya,hadjar,9
+2025,9,Circuit de Barcelona-Catalunya,alonso,10
+2025,9,Circuit de Barcelona-Catalunya,albon,11
+2025,9,Circuit de Barcelona-Catalunya,bortoleto,12
+2025,9,Circuit de Barcelona-Catalunya,lawson,13
+2025,9,Circuit de Barcelona-Catalunya,stroll,14
+2025,9,Circuit de Barcelona-Catalunya,bearman,15
+2025,9,Circuit de Barcelona-Catalunya,hulkenberg,16
+2025,9,Circuit de Barcelona-Catalunya,ocon,17
+2025,9,Circuit de Barcelona-Catalunya,sainz,18
+2025,9,Circuit de Barcelona-Catalunya,colapinto,19
+2025,9,Circuit de Barcelona-Catalunya,tsunoda,20
+2025,10,Circuit Gilles Villeneuve,russell,1
+2025,10,Circuit Gilles Villeneuve,max_verstappen,2
+2025,10,Circuit Gilles Villeneuve,piastri,3
+2025,10,Circuit Gilles Villeneuve,antonelli,4
+2025,10,Circuit Gilles Villeneuve,hamilton,5
+2025,10,Circuit Gilles Villeneuve,alonso,6
+2025,10,Circuit Gilles Villeneuve,norris,7
+2025,10,Circuit Gilles Villeneuve,leclerc,8
+2025,10,Circuit Gilles Villeneuve,hadjar,9
+2025,10,Circuit Gilles Villeneuve,albon,10
+2025,10,Circuit Gilles Villeneuve,tsunoda,11
+2025,10,Circuit Gilles Villeneuve,colapinto,12
+2025,10,Circuit Gilles Villeneuve,hulkenberg,13
+2025,10,Circuit Gilles Villeneuve,bearman,14
+2025,10,Circuit Gilles Villeneuve,ocon,15
+2025,10,Circuit Gilles Villeneuve,bortoleto,16
+2025,10,Circuit Gilles Villeneuve,sainz,17
+2025,10,Circuit Gilles Villeneuve,stroll,18
+2025,10,Circuit Gilles Villeneuve,lawson,19
+2025,10,Circuit Gilles Villeneuve,gasly,20
+2025,11,Red Bull Ring,norris,1
+2025,11,Red Bull Ring,leclerc,2
+2025,11,Red Bull Ring,piastri,3
+2025,11,Red Bull Ring,hamilton,4
+2025,11,Red Bull Ring,russell,5
+2025,11,Red Bull Ring,lawson,6
+2025,11,Red Bull Ring,max_verstappen,7
+2025,11,Red Bull Ring,bortoleto,8
+2025,11,Red Bull Ring,antonelli,9
+2025,11,Red Bull Ring,gasly,10
+2025,11,Red Bull Ring,alonso,11
+2025,11,Red Bull Ring,albon,12
+2025,11,Red Bull Ring,hadjar,13
+2025,11,Red Bull Ring,colapinto,14
+2025,11,Red Bull Ring,bearman,15
+2025,11,Red Bull Ring,stroll,16
+2025,11,Red Bull Ring,ocon,17
+2025,11,Red Bull Ring,tsunoda,18
+2025,11,Red Bull Ring,sainz,19
+2025,11,Red Bull Ring,hulkenberg,20
+2025,12,Silverstone Circuit,max_verstappen,1
+2025,12,Silverstone Circuit,piastri,2
+2025,12,Silverstone Circuit,norris,3
+2025,12,Silverstone Circuit,russell,4
+2025,12,Silverstone Circuit,hamilton,5
+2025,12,Silverstone Circuit,leclerc,6
+2025,12,Silverstone Circuit,antonelli,7
+2025,12,Silverstone Circuit,bearman,8
+2025,12,Silverstone Circuit,alonso,9
+2025,12,Silverstone Circuit,gasly,10
+2025,12,Silverstone Circuit,sainz,11
+2025,12,Silverstone Circuit,tsunoda,12
+2025,12,Silverstone Circuit,hadjar,13
+2025,12,Silverstone Circuit,albon,14
+2025,12,Silverstone Circuit,ocon,15
+2025,12,Silverstone Circuit,lawson,16
+2025,12,Silverstone Circuit,bortoleto,17
+2025,12,Silverstone Circuit,stroll,18
+2025,12,Silverstone Circuit,hulkenberg,19
+2025,12,Silverstone Circuit,colapinto,20
+2025,13,Circuit de Spa-Francorchamps,norris,1
+2025,13,Circuit de Spa-Francorchamps,piastri,2
+2025,13,Circuit de Spa-Francorchamps,leclerc,3
+2025,13,Circuit de Spa-Francorchamps,max_verstappen,4
+2025,13,Circuit de Spa-Francorchamps,albon,5
+2025,13,Circuit de Spa-Francorchamps,russell,6
+2025,13,Circuit de Spa-Francorchamps,tsunoda,7
+2025,13,Circuit de Spa-Francorchamps,hadjar,8
+2025,13,Circuit de Spa-Francorchamps,lawson,9
+2025,13,Circuit de Spa-Francorchamps,bortoleto,10
+2025,13,Circuit de Spa-Francorchamps,ocon,11
+2025,13,Circuit de Spa-Francorchamps,bearman,12
+2025,13,Circuit de Spa-Francorchamps,gasly,13
+2025,13,Circuit de Spa-Francorchamps,hulkenberg,14
+2025,13,Circuit de Spa-Francorchamps,sainz,15
+2025,13,Circuit de Spa-Francorchamps,hamilton,16
+2025,13,Circuit de Spa-Francorchamps,colapinto,17
+2025,13,Circuit de Spa-Francorchamps,antonelli,18
+2025,13,Circuit de Spa-Francorchamps,alonso,19
+2025,13,Circuit de Spa-Francorchamps,stroll,20
+2025,14,Hungaroring,leclerc,1
+2025,14,Hungaroring,piastri,2
+2025,14,Hungaroring,norris,3
+2025,14,Hungaroring,russell,4
+2025,14,Hungaroring,alonso,5
+2025,14,Hungaroring,stroll,6
+2025,14,Hungaroring,bortoleto,7
+2025,14,Hungaroring,max_verstappen,8
+2025,14,Hungaroring,lawson,9
+2025,14,Hungaroring,hadjar,10
+2025,14,Hungaroring,bearman,11
+2025,14,Hungaroring,hamilton,12
+2025,14,Hungaroring,sainz,13
+2025,14,Hungaroring,colapinto,14
+2025,14,Hungaroring,antonelli,15
+2025,14,Hungaroring,tsunoda,16
+2025,14,Hungaroring,gasly,17
+2025,14,Hungaroring,ocon,18
+2025,14,Hungaroring,hulkenberg,19
+2025,14,Hungaroring,albon,20
+2025,15,Circuit Park Zandvoort,piastri,1
+2025,15,Circuit Park Zandvoort,norris,2
+2025,15,Circuit Park Zandvoort,max_verstappen,3
+2025,15,Circuit Park Zandvoort,hadjar,4
+2025,15,Circuit Park Zandvoort,russell,5
+2025,15,Circuit Park Zandvoort,leclerc,6
+2025,15,Circuit Park Zandvoort,hamilton,7
+2025,15,Circuit Park Zandvoort,lawson,8
+2025,15,Circuit Park Zandvoort,sainz,9
+2025,15,Circuit Park Zandvoort,alonso,10
+2025,15,Circuit Park Zandvoort,antonelli,11
+2025,15,Circuit Park Zandvoort,tsunoda,12
+2025,15,Circuit Park Zandvoort,bortoleto,13
+2025,15,Circuit Park Zandvoort,gasly,14
+2025,15,Circuit Park Zandvoort,albon,15
+2025,15,Circuit Park Zandvoort,colapinto,16
+2025,15,Circuit Park Zandvoort,hulkenberg,17
+2025,15,Circuit Park Zandvoort,ocon,18
+2025,15,Circuit Park Zandvoort,bearman,19
+2025,15,Circuit Park Zandvoort,stroll,20
+2025,16,Autodromo Nazionale di Monza,max_verstappen,1
+2025,16,Autodromo Nazionale di Monza,norris,2
+2025,16,Autodromo Nazionale di Monza,piastri,3
+2025,16,Autodromo Nazionale di Monza,leclerc,4
+2025,16,Autodromo Nazionale di Monza,hamilton,5
+2025,16,Autodromo Nazionale di Monza,russell,6
+2025,16,Autodromo Nazionale di Monza,antonelli,7
+2025,16,Autodromo Nazionale di Monza,bortoleto,8
+2025,16,Autodromo Nazionale di Monza,alonso,9
+2025,16,Autodromo Nazionale di Monza,tsunoda,10
+2025,16,Autodromo Nazionale di Monza,bearman,11
+2025,16,Autodromo Nazionale di Monza,hulkenberg,12
+2025,16,Autodromo Nazionale di Monza,sainz,13
+2025,16,Autodromo Nazionale di Monza,albon,14
+2025,16,Autodromo Nazionale di Monza,ocon,15
+2025,16,Autodromo Nazionale di Monza,hadjar,16
+2025,16,Autodromo Nazionale di Monza,stroll,17
+2025,16,Autodromo Nazionale di Monza,colapinto,18
+2025,16,Autodromo Nazionale di Monza,gasly,19
+2025,16,Autodromo Nazionale di Monza,lawson,20
+2025,17,Baku City Circuit,max_verstappen,1
+2025,17,Baku City Circuit,sainz,2
+2025,17,Baku City Circuit,lawson,3
+2025,17,Baku City Circuit,antonelli,4
+2025,17,Baku City Circuit,russell,5
+2025,17,Baku City Circuit,tsunoda,6
+2025,17,Baku City Circuit,norris,7
+2025,17,Baku City Circuit,hadjar,8
+2025,17,Baku City Circuit,piastri,9
+2025,17,Baku City Circuit,leclerc,10
+2025,17,Baku City Circuit,alonso,11
+2025,17,Baku City Circuit,hamilton,12
+2025,17,Baku City Circuit,bortoleto,13
+2025,17,Baku City Circuit,stroll,14
+2025,17,Baku City Circuit,bearman,15
+2025,17,Baku City Circuit,colapinto,16
+2025,17,Baku City Circuit,hulkenberg,17
+2025,17,Baku City Circuit,gasly,18
+2025,17,Baku City Circuit,albon,19
+2025,17,Baku City Circuit,ocon,20
+2025,18,Marina Bay Street Circuit,russell,1
+2025,18,Marina Bay Street Circuit,max_verstappen,2
+2025,18,Marina Bay Street Circuit,piastri,3
+2025,18,Marina Bay Street Circuit,antonelli,4
+2025,18,Marina Bay Street Circuit,norris,5
+2025,18,Marina Bay Street Circuit,hamilton,6
+2025,18,Marina Bay Street Circuit,leclerc,7
+2025,18,Marina Bay Street Circuit,hadjar,8
+2025,18,Marina Bay Street Circuit,bearman,9
+2025,18,Marina Bay Street Circuit,alonso,10
+2025,18,Marina Bay Street Circuit,hulkenberg,11
+2025,18,Marina Bay Street Circuit,lawson,12
+2025,18,Marina Bay Street Circuit,tsunoda,13
+2025,18,Marina Bay Street Circuit,bortoleto,14
+2025,18,Marina Bay Street Circuit,stroll,15
+2025,18,Marina Bay Street Circuit,colapinto,16
+2025,18,Marina Bay Street Circuit,ocon,17
+2025,18,Marina Bay Street Circuit,gasly,18
+2025,18,Marina Bay Street Circuit,albon,19
+2025,18,Marina Bay Street Circuit,sainz,20
+2025,19,Circuit of the Americas,max_verstappen,1
+2025,19,Circuit of the Americas,norris,2
+2025,19,Circuit of the Americas,leclerc,3
+2025,19,Circuit of the Americas,russell,4
+2025,19,Circuit of the Americas,hamilton,5
+2025,19,Circuit of the Americas,piastri,6
+2025,19,Circuit of the Americas,antonelli,7
+2025,19,Circuit of the Americas,bearman,8
+2025,19,Circuit of the Americas,sainz,9
+2025,19,Circuit of the Americas,alonso,10
+2025,19,Circuit of the Americas,hulkenberg,11
+2025,19,Circuit of the Americas,lawson,12
+2025,19,Circuit of the Americas,tsunoda,13
+2025,19,Circuit of the Americas,gasly,14
+2025,19,Circuit of the Americas,colapinto,15
+2025,19,Circuit of the Americas,bortoleto,16
+2025,19,Circuit of the Americas,ocon,17
+2025,19,Circuit of the Americas,stroll,18
+2025,19,Circuit of the Americas,albon,19
+2025,19,Circuit of the Americas,hadjar,20
+2025,20,Autódromo Hermanos Rodríguez,norris,1
+2025,20,Autódromo Hermanos Rodríguez,leclerc,2
+2025,20,Autódromo Hermanos Rodríguez,hamilton,3
+2025,20,Autódromo Hermanos Rodríguez,russell,4
+2025,20,Autódromo Hermanos Rodríguez,max_verstappen,5
+2025,20,Autódromo Hermanos Rodríguez,antonelli,6
+2025,20,Autódromo Hermanos Rodríguez,sainz,7
+2025,20,Autódromo Hermanos Rodríguez,piastri,8
+2025,20,Autódromo Hermanos Rodríguez,hadjar,9
+2025,20,Autódromo Hermanos Rodríguez,bearman,10
+2025,20,Autódromo Hermanos Rodríguez,tsunoda,11
+2025,20,Autódromo Hermanos Rodríguez,ocon,12
+2025,20,Autódromo Hermanos Rodríguez,hulkenberg,13
+2025,20,Autódromo Hermanos Rodríguez,alonso,14
+2025,20,Autódromo Hermanos Rodríguez,lawson,15
+2025,20,Autódromo Hermanos Rodríguez,bortoleto,16
+2025,20,Autódromo Hermanos Rodríguez,albon,17
+2025,20,Autódromo Hermanos Rodríguez,gasly,18
+2025,20,Autódromo Hermanos Rodríguez,stroll,19
+2025,20,Autódromo Hermanos Rodríguez,colapinto,20
+2025,21,Autódromo José Carlos Pace,norris,1
+2025,21,Autódromo José Carlos Pace,antonelli,2
+2025,21,Autódromo José Carlos Pace,leclerc,3
+2025,21,Autódromo José Carlos Pace,piastri,4
+2025,21,Autódromo José Carlos Pace,hadjar,5
+2025,21,Autódromo José Carlos Pace,russell,6
+2025,21,Autódromo José Carlos Pace,lawson,7
+2025,21,Autódromo José Carlos Pace,bearman,8
+2025,21,Autódromo José Carlos Pace,gasly,9
+2025,21,Autódromo José Carlos Pace,hulkenberg,10
+2025,21,Autódromo José Carlos Pace,alonso,11
+2025,21,Autódromo José Carlos Pace,albon,12
+2025,21,Autódromo José Carlos Pace,hamilton,13
+2025,21,Autódromo José Carlos Pace,stroll,14
+2025,21,Autódromo José Carlos Pace,sainz,15
+2025,21,Autódromo José Carlos Pace,max_verstappen,16
+2025,21,Autódromo José Carlos Pace,ocon,17
+2025,21,Autódromo José Carlos Pace,colapinto,18
+2025,21,Autódromo José Carlos Pace,tsunoda,19
+2025,22,Las Vegas Strip Street Circuit,norris,1
+2025,22,Las Vegas Strip Street Circuit,max_verstappen,2
+2025,22,Las Vegas Strip Street Circuit,sainz,3
+2025,22,Las Vegas Strip Street Circuit,russell,4
+2025,22,Las Vegas Strip Street Circuit,piastri,5
+2025,22,Las Vegas Strip Street Circuit,lawson,6
+2025,22,Las Vegas Strip Street Circuit,alonso,7
+2025,22,Las Vegas Strip Street Circuit,hadjar,8
+2025,22,Las Vegas Strip Street Circuit,leclerc,9
+2025,22,Las Vegas Strip Street Circuit,gasly,10
+2025,22,Las Vegas Strip Street Circuit,hulkenberg,11
+2025,22,Las Vegas Strip Street Circuit,stroll,12
+2025,22,Las Vegas Strip Street Circuit,ocon,13
+2025,22,Las Vegas Strip Street Circuit,bearman,14
+2025,22,Las Vegas Strip Street Circuit,colapinto,15
+2025,22,Las Vegas Strip Street Circuit,albon,16
+2025,22,Las Vegas Strip Street Circuit,antonelli,17
+2025,22,Las Vegas Strip Street Circuit,bortoleto,18
+2025,22,Las Vegas Strip Street Circuit,tsunoda,19
+2025,22,Las Vegas Strip Street Circuit,hamilton,20
+2025,23,Losail International Circuit,piastri,1
+2025,23,Losail International Circuit,norris,2
+2025,23,Losail International Circuit,max_verstappen,3
+2025,23,Losail International Circuit,russell,4
+2025,23,Losail International Circuit,antonelli,5
+2025,23,Losail International Circuit,hadjar,6
+2025,23,Losail International Circuit,sainz,7
+2025,23,Losail International Circuit,alonso,8
+2025,23,Losail International Circuit,gasly,9
+2025,23,Losail International Circuit,leclerc,10
+2025,23,Losail International Circuit,hulkenberg,11
+2025,23,Losail International Circuit,lawson,12
+2025,23,Losail International Circuit,bearman,13
+2025,23,Losail International Circuit,bortoleto,14
+2025,23,Losail International Circuit,albon,15
+2025,23,Losail International Circuit,tsunoda,16
+2025,23,Losail International Circuit,ocon,17
+2025,23,Losail International Circuit,hamilton,18
+2025,23,Losail International Circuit,stroll,19
+2025,23,Losail International Circuit,colapinto,20
+2025,24,Yas Marina Circuit,max_verstappen,1
+2025,24,Yas Marina Circuit,norris,2
+2025,24,Yas Marina Circuit,piastri,3
+2025,24,Yas Marina Circuit,russell,4
+2025,24,Yas Marina Circuit,leclerc,5
+2025,24,Yas Marina Circuit,alonso,6
+2025,24,Yas Marina Circuit,bortoleto,7
+2025,24,Yas Marina Circuit,ocon,8
+2025,24,Yas Marina Circuit,hadjar,9
+2025,24,Yas Marina Circuit,tsunoda,10
+2025,24,Yas Marina Circuit,bearman,11
+2025,24,Yas Marina Circuit,sainz,12
+2025,24,Yas Marina Circuit,lawson,13
+2025,24,Yas Marina Circuit,antonelli,14
+2025,24,Yas Marina Circuit,stroll,15
+2025,24,Yas Marina Circuit,hamilton,16
+2025,24,Yas Marina Circuit,albon,17
+2025,24,Yas Marina Circuit,hulkenberg,18
+2025,24,Yas Marina Circuit,gasly,19
+2025,24,Yas Marina Circuit,colapinto,20

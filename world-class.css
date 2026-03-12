@@ -92,6 +92,41 @@
     }
 }
 
+/* ===== SCREEN WIPE TRANSITION (Phase 10) ===== */
+.page-transition-wipe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    display: flex;
+    pointer-events: none;
+}
+
+.wipe-panel {
+    flex: 1;
+    height: 100%;
+    background: #E10600; /* Default red, will be overridden by JS theme if active */
+    background: var(--pk-red, #E10600);
+    transform: translateY(100%);
+    will-change: transform;
+}
+
+.wipe-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Instrument Serif', 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 8vw;
+    color: #fff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10001;
+}
+
 /* ===== GRAIN/NOISE TEXTURE OVERLAY ===== */
 .noise-overlay {
     position: fixed;
@@ -1379,5 +1414,156 @@ html.lenis {
     }
     .hero-countdown {
         bottom: 5rem;
+    }
+}
+/* ══════════════════════════════════════════════════════════════════════
+   PHASE 8: LIVE TELEMETRY DASHBOARD
+   ══════════════════════════════════════════════════════════════════════ */
+.telemetry-section {
+    padding: var(--section-spacing) 0;
+    position: relative;
+    background: linear-gradient(180deg, var(--pk-black) 0%, rgba(10,10,10,0.98) 100%);
+}
+
+.telemetry-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(20px);
+}
+
+.telemetry-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: flex-end;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tele-session-group, .tele-driver-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tele-session-group label, .tele-driver-group label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--pk-gray);
+    font-weight: 500;
+}
+
+.tele-status {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.tele-status.success {
+    color: #2ecc71;
+    border-color: rgba(46, 204, 113, 0.3);
+    background: rgba(46, 204, 113, 0.1);
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.2);
+}
+
+.tele-status.warning {
+    color: #f1c40f;
+    border-color: rgba(241, 196, 15, 0.3);
+    background: rgba(241, 196, 15, 0.1);
+}
+
+.tele-status.error {
+    color: var(--pk-red);
+    border-color: rgba(225, 6, 0, 0.3);
+    background: rgba(225, 6, 0, 0.1);
+}
+
+.theme-select {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-select:focus {
+    border-color: var(--pk-red);
+    box-shadow: 0 0 0 2px rgba(225, 6, 0, 0.2);
+}
+
+.telemetry-dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+}
+
+.tele-panel {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.tele-lap-data {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tele-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+    font-variant-numeric: tabular-nums;
+}
+
+.tele-table th {
+    text-align: left;
+    padding: 1rem 0.5rem;
+    color: var(--pk-gray);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tele-table td {
+    padding: 1rem 0.5rem;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 900px) {
+    .telemetry-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

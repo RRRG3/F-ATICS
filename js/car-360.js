@@ -1,423 +1,450 @@
 /**
- * F-ATICS Car 360° Viewer
- * Generates multi-angle SVG car frames and drives frame-based rotation
- * on team showcase cards via drag / touch / auto-spin.
+ * F-ATICS High-Fidelity 3D Car Viewer
+ * Replaces the old SVG generator with a true WebGL 3D procedural F1 Car using Three.js.
+ * Built with realistic PBR materials, shadows, and interactive rotation.
  */
 
 (function () {
-  'use strict';
-
-  // ─── SVG Frame Generator ────────────────────────────────────────────────────
-  // Produces an inline SVG of the car body at different yaw angles.
-  // Angles: 0=front, 45=front-3/4, 90=side, 135=rear-3/4, 180=rear + mirrors
-  function carSVG(color = '#E10600', angle = 90, label = 'F1 Car') {
-    const W = 380, H = 160;
-
-    // Derived look values from angle (0° = front … 180° = rear)
-    const norm = ((angle % 360) + 360) % 360;   // 0-360
-    const half = norm > 180 ? 360 - norm : norm; // 0-180 reflected
-    const t = half / 180;                        // 0=front → 1=rear
-
-    // Perspective width of car body top vs bottom (foreshortening)
-    const cx = W / 2;
-    const carW = 80 + 140 * Math.sin(t * Math.PI);  // narrow at front/rear, wide at side
-    const noseW = carW * 0.28;
-    const bodyH = 38;
-    const floorY = H * 0.68;
-
-    // Determine if we are viewing from left or right
-    const fromRight = norm > 180;
-    const mirrorX = (x) => fromRight ? W - x : x;
-    const mcp = (x) => mirrorX(cx + x);  // mirror around centre
-
-    // Tyre parameters
-    const tyreR = 22;
-    const tyreW = 14;
-
-    // Front/rear tyre X offset based on perspective
-    const frontTyreX = carW * 0.42;
-    const rearTyreX  = carW * 0.38;
-    const frontTyreShift = 28 + 60 * (1 - t);   // move towards nose at front
-    const rearTyreShift  = 28 + 60 * t;          // move towards tail at rear
-
-    // Cockpit position
-    const cockpitX = mcp(-carW * 0.05 + carW * 0.08 * (t - 0.5));
-
-    // ── Body polygon points ──────────────────────────────────────────────────
-    // We draw a simplified F1 car silhouette using polygons.
-    // The body narrows at the nose and widens toward the sidepods.
-
-    const noseY = floorY - bodyH * 0.5;
-    const bodyTopY = floorY - bodyH;
-    const noseTipX = mcp((norm < 180 ? -1 : 1) * (carW * 0.52 - 4));
-
-    // Main body polygon
-    const bodyPts = [
-      `${mcp(-carW * 0.5)},${floorY}`,          // rear bottom left
-      `${noseTipX},${floorY}`,                   // nose tip bottom
-      `${noseTipX},${noseY}`,                     // nose tip top
-      `${mcp(-carW * 0.5 + 10)},${bodyTopY}`,   // rear top
-    ].join(' ');
-
-    // Sidepod (wider mid-section)
-    const sidepodX = mcp(carW * 0.12);
-    const sidepodW = carW * 0.32;
-    const sidepodH = bodyH * 0.7;
-
-    // Halo/cockpit surround
-    const haloW = carW * 0.14;
-    const haloH = 20;
-
-    // Wing widths (foreshortened)
-    const fWingW = carW * 0.72;
-    const rWingW = carW * 0.62;
-    const wingThick = 6;
-
-    // Rear wing height
-    const rWingY = bodyTopY - 16;
-
-    // ── Shadow ellipse under car ─────────────────────────────────────────────
-    const shadowRx = carW * 0.52;
-    const shadowRy = 6;
-    const shadowY  = floorY + 8;
-
-    // ── Assemble SVG ─────────────────────────────────────────────────────────
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}"
-      width="${W}" height="${H}" preserveAspectRatio="xMidYMid meet"
-      style="width:100%;height:100%;display:block;">
-      <defs>
-        <radialGradient id="shd${W}" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#000" stop-opacity="0.35"/>
-          <stop offset="100%" stop-color="#000" stop-opacity="0"/>
-        </radialGradient>
-        <linearGradient id="bodyGrad${W}" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="${lighten(color, 0.28)}"/>
-          <stop offset="55%" stop-color="${color}"/>
-          <stop offset="100%" stop-color="${darken(color, 0.22)}"/>
-        </linearGradient>
-        <linearGradient id="tyreGrad${W}" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#444"/>
-          <stop offset="100%" stop-color="#111"/>
-        </linearGradient>
-        <filter id="blur${W}">
-          <feGaussianBlur stdDeviation="1.5"/>
-        </filter>
-      </defs>
-
-      <!-- Shadow -->
-      <ellipse cx="${cx}" cy="${shadowY}" rx="${shadowRx}" ry="${shadowRy}"
-        fill="url(#shd${W})" opacity="0.5"/>
-
-      <!-- Rear wing -->
-      <rect x="${mcp(-rWingW * 0.5)}" y="${rWingY}" width="${rWingW * 0.85}"
-        height="${wingThick}" rx="2"
-        fill="${darken(color, 0.18)}" stroke="${darken(color,0.35)}" stroke-width="0.5"/>
-      <!-- Rear wing pillar -->
-      <rect x="${mcp(-rWingW * 0.05)}" y="${rWingY}" width="${rWingW * 0.1}"
-        height="${bodyH * 0.55}" rx="1" fill="${darken(color,0.3)}"/>
-
-      <!-- Rear tyres -->
-      <ellipse cx="${mcp(-rearTyreX)}" cy="${floorY - tyreR * 0.4}"
-        rx="${tyreW * (1 - t * 0.4)}" ry="${tyreR}"
-        fill="url(#tyreGrad${W})"/>
-      <ellipse cx="${mcp(-rearTyreX)}" cy="${floorY - tyreR * 0.4}"
-        rx="${tyreW * (1 - t * 0.4) * 0.55}" ry="${tyreR * 0.55}"
-        fill="#2a2a2a"/>
-
-      <!-- Main car body -->
-      <polygon points="${bodyPts}" fill="url(#bodyGrad${W})"
-        stroke="${darken(color,0.3)}" stroke-width="1"/>
-
-      <!-- Sidepod -->
-      <rect x="${sidepodX - sidepodW * 0.5}" y="${floorY - sidepodH}"
-        width="${sidepodW}" height="${sidepodH}"
-        rx="4" fill="${lighten(color, 0.06)}"
-        stroke="${darken(color,0.2)}" stroke-width="0.5"/>
-
-      <!-- Engine cover / hump -->
-      <ellipse cx="${cockpitX}" cy="${bodyTopY - 4}"
-        rx="${haloW * 1.6}" ry="${bodyH * 0.28}"
-        fill="${darken(color,0.1)}"/>
-
-      <!-- Halo -->
-      <path d="M ${cockpitX - haloW},${bodyTopY}
-               Q ${cockpitX},${bodyTopY - haloH}
-               ${cockpitX + haloW},${bodyTopY}"
-        fill="none" stroke="#222" stroke-width="5" stroke-linecap="round"/>
-      <path d="M ${cockpitX - haloW},${bodyTopY}
-               Q ${cockpitX},${bodyTopY - haloH}
-               ${cockpitX + haloW},${bodyTopY}"
-        fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"/>
-
-      <!-- Cockpit opening -->
-      <ellipse cx="${cockpitX}" cy="${bodyTopY + 2}"
-        rx="${haloW * 0.8}" ry="${bodyH * 0.18}"
-        fill="#0a0a0a"/>
-
-      <!-- Front wing -->
-      <rect x="${noseTipX - fWingW * (fromRight ? 0 : 1)}"
-            y="${floorY - wingThick}"
-            width="${fWingW}" height="${wingThick}"
-            rx="2"
-            fill="${lighten(color, 0.08)}"
-            stroke="${darken(color,0.3)}" stroke-width="0.5"/>
-      <!-- Front wing endplates -->
-      <rect x="${noseTipX - fWingW * (fromRight ? 1 : 0) + (fromRight ? fWingW : 0) - 4}"
-            y="${floorY - wingThick - 8}"
-            width="4" height="${wingThick + 8}"
-            rx="1" fill="${darken(color,0.3)}"/>
-
-      <!-- Front tyres -->
-      <ellipse cx="${noseTipX + (fromRight ? -frontTyreX * 0.5 : frontTyreX * 0.5)}"
-               cy="${floorY - tyreR * 0.4}"
-        rx="${tyreW * t * 1.2 + 2}" ry="${tyreR}"
-        fill="url(#tyreGrad${W})"/>
-      <ellipse cx="${noseTipX + (fromRight ? -frontTyreX * 0.5 : frontTyreX * 0.5)}"
-               cy="${floorY - tyreR * 0.4}"
-        rx="${(tyreW * t * 1.2 + 2) * 0.55}" ry="${tyreR * 0.55}"
-        fill="#2a2a2a"/>
-
-      <!-- Highlight gloss -->
-      <ellipse cx="${mcp(-carW * 0.1)}" cy="${bodyTopY + 4}"
-        rx="${carW * 0.18}" ry="${bodyH * 0.08}"
-        fill="rgba(255,255,255,0.12)"/>
-    </svg>`;
-  }
-
-  // ── Colour helpers ────────────────────────────────────────────────────────
-  function hexToHsl(hex) {
-    let r = parseInt(hex.slice(1,3),16)/255;
-    let g = parseInt(hex.slice(3,5),16)/255;
-    let b = parseInt(hex.slice(5,7),16)/255;
-    const max = Math.max(r,g,b), min = Math.min(r,g,b);
-    let h, s, l = (max+min)/2;
-    if (max === min) { h = s = 0; }
-    else {
-      const d = max - min;
-      s = l > 0.5 ? d/(2-max-min) : d/(max+min);
-      switch(max){
-        case r: h = ((g-b)/d + (g<b?6:0))/6; break;
-        case g: h = ((b-r)/d + 2)/6; break;
-        default: h = ((r-g)/d + 4)/6;
-      }
-    }
-    return [h*360, s*100, l*100];
-  }
-
-  function hslToHex(h, s, l) {
-    h /= 360; s /= 100; l /= 100;
-    let r, g, b;
-    if (s === 0) { r = g = b = l; }
-    else {
-      const q = l < 0.5 ? l*(1+s) : l+s-l*s;
-      const p = 2*l - q;
-      const hue2rgb = (p,q,t) => {
-        if (t<0) t+=1; if (t>1) t-=1;
-        if (t<1/6) return p+(q-p)*6*t;
-        if (t<1/2) return q;
-        if (t<2/3) return p+(q-p)*(2/3-t)*6;
-        return p;
-      };
-      r = hue2rgb(p,q,h+1/3);
-      g = hue2rgb(p,q,h);
-      b = hue2rgb(p,q,h-1/3);
-    }
-    const toHex = x => Math.round(x*255).toString(16).padStart(2,'0');
-    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-  }
-
-  function lighten(hex, amt) {
-    try {
-      const [h,s,l] = hexToHsl(hex);
-      return hslToHex(h, s, Math.min(100, l + amt*100));
-    } catch { return hex; }
-  }
-
-  function darken(hex, amt) {
-    try {
-      const [h,s,l] = hexToHsl(hex);
-      return hslToHex(h, s, Math.max(0, l - amt*100));
-    } catch { return hex; }
-  }
-
-  // ─── Frame Sequence ───────────────────────────────────────────────────────
-  const TOTAL_FRAMES = 36; // one frame every 10°
-
-  function buildFrames(color, label) {
-    const frames = [];
-    for (let i = 0; i < TOTAL_FRAMES; i++) {
-      const angle = (i / TOTAL_FRAMES) * 360;
-      frames.push('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(carSVG(color, angle, label)));
-    }
-    return frames;
-  }
-
-  // ─── Viewer initialisation ────────────────────────────────────────────────
-  function init360Viewer(container, color, label) {
-    const frames = buildFrames(color, label);
-    let currentFrame = 9; // start at ~90° (side view)
-    let isDragging = false;
-    let startX = 0;
-    let accumX = 0;
-    let autoSpinInterval = null;
-    let autoSpinPaused = false;
-
-    // Replace existing car-360-viewer content
-    const viewer = container.querySelector('.car-360-viewer') || container;
-    viewer.style.cursor = 'grab';
-    viewer.style.userSelect = 'none';
-    viewer.style.position = 'relative';
-    viewer.style.overflow = 'hidden';
-
-    // Frame img element
-    const img = viewer.querySelector('.car-image') || document.createElement('img');
-    img.className = 'car-image car-360-frame';
-    img.style.cssText = `
-      width:100%; height:100%; object-fit:contain;
-      display:block; pointer-events:none;
-      transition: opacity 0.04s ease;
-    `;
-    img.src = frames[currentFrame];
-    if (!viewer.contains(img)) viewer.prepend(img);
-
-    // Replace rotation indicator overlay
-    let indicator = viewer.querySelector('.rotation-indicator');
-    if (!indicator) {
-      indicator = document.createElement('div');
-      indicator.className = 'rotation-indicator';
-      viewer.appendChild(indicator);
-    }
-    indicator.innerHTML = `
-      <div class="rot-hint">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-          <polyline points="16 6 22 6 22 12"/>
-        </svg>
-        <span>Drag</span>
-      </div>`;
-    indicator.style.cssText = `
-      position:absolute; bottom:10px; right:12px;
-      background:rgba(0,0,0,0.55); backdrop-filter:blur(6px);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:100px; padding:4px 10px;
-      font-size:11px; color:rgba(255,255,255,0.7);
-      font-family:'Inter',sans-serif;
-      pointer-events:none;
-      display:flex; align-items:center; gap:5px;
-      transition: opacity 0.3s ease;
-    `;
-
-    // Angle label overlay
-    let angleLabel = viewer.querySelector('.angle-label');
-    if (!angleLabel) {
-      angleLabel = document.createElement('div');
-      angleLabel.className = 'angle-label';
-      viewer.appendChild(angleLabel);
-    }
-    angleLabel.style.cssText = `
-      position:absolute; top:10px; left:12px;
-      font-size:10px; font-family:'SF Mono','Fira Mono',monospace;
-      color:${color}; letter-spacing:1.5px; text-transform:uppercase;
-      opacity:0; transition: opacity 0.3s ease;
-      pointer-events:none;
-    `;
-
-    function setFrame(idx) {
-      currentFrame = ((idx % TOTAL_FRAMES) + TOTAL_FRAMES) % TOTAL_FRAMES;
-      img.src = frames[currentFrame];
-      const deg = Math.round((currentFrame / TOTAL_FRAMES) * 360);
-      const angleMap = {0:'FRONT',90:'SIDE',180:'REAR',270:'SIDE'};
-      const closest = Object.keys(angleMap).reduce((a,b) =>
-        Math.abs(b - deg) < Math.abs(a - deg) ? b : a);
-      angleLabel.textContent = angleMap[closest] || `${deg}°`;
-    }
-
-    // Auto-spin: always spinning slowly unless user is interacting
-    function startAutoSpin() {
-      if (autoSpinInterval) return;
-      autoSpinInterval = setInterval(() => {
-        if (!isDragging && !autoSpinPaused) {
-          setFrame(currentFrame + 1);
+    'use strict';
+  
+    // Map to keep track of active viewers so we can handle resize and cleanup
+    const viewers = new Map();
+  
+    // Helper to blend colors
+    function lightenDarkenColor(col, amt) {
+        let usePound = false;
+        if (col[0] == "#") {
+            col = col.slice(1);
+            usePound = true;
         }
-      }, 80);
+        let num = parseInt(col, 16);
+        let r = (num >> 16) + amt;
+        if (r > 255) r = 255;
+        else if (r < 0) r = 0;
+        let b = ((num >> 8) & 0x00FF) + amt;
+        if (b > 255) b = 255;
+        else if (b < 0) b = 0;
+        let g = (num & 0x0000FF) + amt;
+        if (g > 255) g = 255;
+        else if (g < 0) g = 0;
+        return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0');
     }
-
-    function pauseAutoSpin() {
-      autoSpinPaused = true;
-      setTimeout(() => { autoSpinPaused = false; }, 2200);
+  
+    /**
+     * Builds a stylized 3D F1 car group using Three.js primitives
+     */
+    function buildF1Car(teamColorHex) {
+        const carGroup = new THREE.Group();
+        
+        // --- Materials ---
+        const paintMaterial = new THREE.MeshPhysicalMaterial({
+            color: new THREE.Color(teamColorHex),
+            metalness: 0.6,
+            roughness: 0.2,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.1
+        });
+  
+        const carbonMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0x111111,
+            metalness: 0.4,
+            roughness: 0.8,
+            clearcoat: 0.5,
+            clearcoatRoughness: 0.4
+        });
+  
+        const tireMaterial = new THREE.MeshStandardMaterial({
+            color: 0x1a1a1a,
+            roughness: 0.9,
+            metalness: 0.1
+        });
+  
+        const rimMaterial = new THREE.MeshStandardMaterial({
+            color: 0x050505,
+            roughness: 0.5,
+            metalness: 0.8
+        });
+  
+        const whiteDecalMaterial = new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            roughness: 0.4,
+            metalness: 0.1
+        });
+  
+        // --- Geometry Builders ---
+        const addMesh = (geom, mat, x, y, z, castShadow=true) => {
+            const mesh = new THREE.Mesh(geom, mat);
+            mesh.position.set(x, y, z);
+            mesh.castShadow = castShadow;
+            mesh.receiveShadow = true;
+            carGroup.add(mesh);
+            return mesh;
+        };
+  
+        // 1. Main Chassis / Monocoque
+        const chassisGeom = new THREE.BoxGeometry(0.6, 0.4, 3.5);
+        const chassis = addMesh(chassisGeom, paintMaterial, 0, 0.3, 0.2);
+        
+        // Tapered nose
+        const noseGeom = new THREE.CylinderGeometry(0.15, 0.3, 1.5, 4, 1, false, Math.PI/4);
+        noseGeom.rotateX(Math.PI / 2);
+        noseGeom.scale(1, 0.5, 1);
+        addMesh(noseGeom, paintMaterial, 0, 0.25, -2.1);
+  
+        // 2. Sidepods
+        const sidepodGeom = new THREE.BoxGeometry(1.6, 0.45, 1.8);
+        const sidepod = addMesh(sidepodGeom, paintMaterial, 0, 0.32, 0.5);
+        // angled sidepod intakes
+        const intakeGeom = new THREE.BoxGeometry(1.5, 0.3, 0.2);
+        addMesh(intakeGeom, carbonMaterial, 0, 0.3, -0.45);
+        
+        // 3. Engine Cover / Shark Fin
+        const engineCoverGeom = new THREE.BoxGeometry(0.4, 0.6, 1.5);
+        const engineCover = addMesh(engineCoverGeom, paintMaterial, 0, 0.7, 1.0);
+        
+        const sharkFinGeom = new THREE.BoxGeometry(0.05, 0.4, 0.8);
+        addMesh(sharkFinGeom, carbonMaterial, 0, 1.1, 1.2);
+  
+        // 4. Airbox / Roll hoop
+        const airboxGeom = new THREE.CylinderGeometry(0.15, 0.2, 0.4, 8);
+        airboxGeom.rotateX(Math.PI/2);
+        addMesh(airboxGeom, carbonMaterial, 0, 0.7, 0.3);
+  
+        // 5. Halo
+        const haloPillarGeom = new THREE.CylinderGeometry(0.03, 0.03, 0.3);
+        addMesh(haloPillarGeom, carbonMaterial, 0, 0.65, -0.2);
+        
+        const haloRingGeom = new THREE.TorusGeometry(0.3, 0.04, 8, 16, Math.PI);
+        const haloRing = addMesh(haloRingGeom, carbonMaterial, 0, 0.75, 0.1);
+        haloRing.rotation.x = Math.PI / 2 + 0.1;
+  
+        // 6. Front Wing
+        const fWingMainGeom = new THREE.BoxGeometry(2.0, 0.05, 0.4);
+        addMesh(fWingMainGeom, carbonMaterial, 0, 0.1, -2.8);
+        
+        const fWingFlapGeom = new THREE.BoxGeometry(1.9, 0.05, 0.2);
+        const flap = addMesh(fWingFlapGeom, paintMaterial, 0, 0.15, -2.7);
+        flap.rotation.x = -0.2;
+        
+        const endplateGeom = new THREE.BoxGeometry(0.05, 0.3, 0.6);
+        addMesh(endplateGeom, paintMaterial, -1.0, 0.2, -2.8);
+        addMesh(endplateGeom, paintMaterial, 1.0, 0.2, -2.8);
+  
+        // 7. Rear Wing
+        const rWingMainGeom = new THREE.BoxGeometry(1.5, 0.08, 0.3);
+        const rWing = addMesh(rWingMainGeom, paintMaterial, 0, 0.9, 2.0);
+        rWing.rotation.x = 0.2;
+        
+        const rWingFlapGeom = new THREE.BoxGeometry(1.5, 0.05, 0.2);
+        const rFlap = addMesh(rWingFlapGeom, carbonMaterial, 0, 1.05, 2.1);
+        rFlap.rotation.x = 0.4;
+  
+        const rEndplateGeom = new THREE.BoxGeometry(0.05, 0.7, 0.6);
+        addMesh(rEndplateGeom, carbonMaterial, -0.75, 0.7, 2.0);
+        addMesh(rEndplateGeom, carbonMaterial, 0.75, 0.7, 2.0);
+        
+        // Rear wing pillar
+        const rPillarGeom = new THREE.BoxGeometry(0.1, 0.6, 0.2);
+        addMesh(rPillarGeom, carbonMaterial, 0, 0.6, 1.8);
+  
+        // 8. Tires and Wheels
+        const createTire = (x, z, scale=1.0) => {
+            const tireGroup = new THREE.Group();
+            
+            // Tire rubber
+            const tire = new THREE.Mesh(new THREE.CylinderGeometry(0.35 * scale, 0.35 * scale, 0.35, 32), tireMaterial);
+            tire.rotation.z = Math.PI / 2;
+            tire.castShadow = true;
+            tireGroup.add(tire);
+            
+            // Rim cover
+            const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.22 * scale, 0.22 * scale, 0.36, 16), rimMaterial);
+            rim.rotation.z = Math.PI / 2;
+            tireGroup.add(rim);
+            
+            // Pirelli Stripe (P-Zero style)
+            const stripe = new THREE.Mesh(new THREE.CylinderGeometry(0.351 * scale, 0.351 * scale, 0.05, 32), whiteDecalMaterial);
+            stripe.rotation.z = Math.PI / 2;
+            tireGroup.add(stripe);
+  
+            tireGroup.position.set(x, 0.35 * scale, z);
+            carGroup.add(tireGroup);
+            
+            // Suspension links
+            const suspGeom = new THREE.CylinderGeometry(0.02, 0.02, Math.abs(x) - 0.2);
+            const susp = addMesh(suspGeom, carbonMaterial, x/2, 0.35 * scale, z);
+            susp.rotation.z = Math.PI / 2;
+        };
+  
+        // Front tires (slightly smaller)
+        createTire(-0.8, -1.8, 0.95);
+        createTire(0.8, -1.8, 0.95);
+        
+        // Rear tires
+        createTire(-0.85, 1.4, 1.05);
+        createTire(0.85, 1.4, 1.05);
+  
+        // 9. Floor / Diffuser
+        const floorGeom = new THREE.BoxGeometry(1.8, 0.05, 4.2);
+        addMesh(floorGeom, carbonMaterial, 0, 0.05, 0);
+  
+        // Center the whole group
+        carGroup.position.y = -0.3;
+        
+        return carGroup;
     }
-
-    startAutoSpin();
-
-    // ── Mouse ──────────────────────────────────────────────────────────────
-    viewer.addEventListener('mouseenter', () => {
-      indicator.style.opacity = '1';
-      angleLabel.style.opacity = '1';
+  
+    /**
+     * Initializes a 3D viewer in the given container
+     */
+    function init360Viewer(container, colorHex, label) {
+        // Ensure Three.js is loaded
+        if (typeof THREE === 'undefined') {
+            console.error("Three.js is not loaded! Cannot initialize 3D viewer.");
+            return;
+        }
+  
+        // Clean up previous content
+        container.innerHTML = '';
+        container.style.position = 'relative';
+        container.style.overflow = 'hidden';
+        container.style.cursor = 'grab';
+  
+        const width = container.clientWidth || 300;
+        const height = container.clientHeight || 200;
+  
+        // Scene setup
+        const scene = new THREE.Scene();
+        // Transparent background
+        scene.background = null;
+  
+        // Camera
+        const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+        camera.position.set(4, 2.5, 5);
+        camera.lookAt(0, 0, 0);
+  
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+        container.appendChild(renderer.domElement);
+  
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+  
+        const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
+        dirLight.position.set(5, 10, 5);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 1024;
+        dirLight.shadow.mapSize.height = 1024;
+        dirLight.shadow.camera.near = 0.5;
+        dirLight.shadow.camera.far = 25;
+        dirLight.shadow.camera.left = -5;
+        dirLight.shadow.camera.right = 5;
+        dirLight.shadow.camera.top = 5;
+        dirLight.shadow.camera.bottom = -5;
+        dirLight.shadow.bias = -0.001;
+        scene.add(dirLight);
+  
+        const rimLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        rimLight.position.set(-5, 5, -5);
+        scene.add(rimLight);
+  
+        // Add subtle ground shadow plane
+        const shadowPlane = new THREE.Mesh(
+            new THREE.PlaneGeometry(10, 10),
+            new THREE.ShadowMaterial({ opacity: 0.5 })
+        );
+        shadowPlane.rotation.x = -Math.PI / 2;
+        shadowPlane.position.y = -0.3;
+        shadowPlane.receiveShadow = true;
+        scene.add(shadowPlane);
+  
+        // Build the F1 Car
+        const car = buildF1Car(colorHex || '#e10600');
+        scene.add(car);
+  
+        // UI Indicator (Drag hint)
+        const indicator = document.createElement('div');
+        indicator.className = 'three-rotation-indicator';
+        indicator.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                <polyline points="16 6 22 6 22 12"/>
+            </svg>
+            <span>3D Drag</span>
+        `;
+        indicator.style.cssText = `
+            position:absolute; bottom:10px; right:12px;
+            background:rgba(0,0,0,0.55); backdrop-filter:blur(6px);
+            border:1px solid rgba(255,255,255,0.12);
+            border-radius:100px; padding:4px 10px;
+            font-size:11px; color:rgba(255,255,255,0.7);
+            font-family:'Inter',sans-serif;
+            pointer-events:none;
+            display:flex; align-items:center; gap:5px;
+            transition: opacity 0.3s ease;
+        `;
+        container.appendChild(indicator);
+  
+        const angleLabel = document.createElement('div');
+        angleLabel.style.cssText = `
+            position:absolute; top:10px; left:12px;
+            font-size:10px; font-family:'SF Mono','Fira Mono',monospace;
+            color:${colorHex}; letter-spacing:1.5px; text-transform:uppercase;
+            opacity:0; transition: opacity 0.3s ease;
+            pointer-events:none;
+        `;
+        angleLabel.textContent = "INTERACTIVE CAR";
+        container.appendChild(angleLabel);
+  
+        // Interaction Logic
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        let targetRotation = { x: 0, y: Math.PI / 4 }; // Initial angle
+        let currentRotation = { x: 0, y: Math.PI / 4 };
+        
+        car.rotation.y = currentRotation.y;
+  
+        const onPointerDown = (e) => {
+            isDragging = true;
+            container.style.cursor = 'grabbing';
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            previousMousePosition = { x: clientX, y: clientY };
+            e.stopPropagation();
+        };
+  
+        const onPointerMove = (e) => {
+            if (!isDragging) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            const deltaMove = {
+                x: clientX - previousMousePosition.x,
+                y: clientY - previousMousePosition.y
+            };
+            
+            targetRotation.y += deltaMove.x * 0.01;
+            targetRotation.x += deltaMove.y * 0.005;
+            
+            // Limit pitch rotation
+            targetRotation.x = Math.max(-0.2, Math.min(0.5, targetRotation.x));
+            
+            previousMousePosition = { x: clientX, y: clientY };
+        };
+  
+        const onPointerUp = () => {
+            isDragging = false;
+            container.style.cursor = 'grab';
+        };
+  
+        container.addEventListener('mousedown', onPointerDown);
+        window.addEventListener('mousemove', onPointerMove);
+        window.addEventListener('mouseup', onPointerUp);
+        
+        container.addEventListener('touchstart', onPointerDown, { passive: true });
+        window.addEventListener('touchmove', onPointerMove, { passive: false });
+        window.addEventListener('touchend', onPointerUp);
+        
+        container.addEventListener('mouseenter', () => {
+            indicator.style.opacity = '1';
+            angleLabel.style.opacity = '1';
+        });
+        container.addEventListener('mouseleave', () => {
+            indicator.style.opacity = '0.4';
+            angleLabel.style.opacity = '0';
+        });
+  
+        // Render Loop
+        let animationFrameId;
+        const clock = new THREE.Clock();
+  
+        const animate = () => {
+            animationFrameId = requestAnimationFrame(animate);
+            const delta = clock.getDelta();
+  
+            // Auto spin if not dragging
+            if (!isDragging) {
+                targetRotation.y -= 0.5 * delta; // slow spin
+                targetRotation.x += (0 - targetRotation.x) * 0.05; // ease pitch back to 0
+            }
+  
+            // Smooth rotation easing
+            currentRotation.y += (targetRotation.y - currentRotation.y) * 0.1;
+            currentRotation.x += (targetRotation.x - currentRotation.x) * 0.1;
+            
+            car.rotation.y = currentRotation.y;
+            car.rotation.z = currentRotation.x; // Map physical mouse Y to Car Z tilt so it tilts up/down
+            
+            renderer.render(scene, camera);
+        };
+  
+        animate();
+  
+        // Store context for cleanup
+        const viewerContext = {
+            renderer,
+            cleanup: () => {
+                cancelAnimationFrame(animationFrameId);
+                window.removeEventListener('mousemove', onPointerMove);
+                window.removeEventListener('mouseup', onPointerUp);
+                window.removeEventListener('touchmove', onPointerMove);
+                window.removeEventListener('touchend', onPointerUp);
+                renderer.dispose();
+            },
+            resize: () => {
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+                if (w > 0 && h > 0) {
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(w, h);
+                }
+            }
+        };
+  
+        // Ensure initial sizing handles 0-width edge cases by forcing a style update
+        setTimeout(viewerContext.resize, 50);
+  
+        viewers.set(container, viewerContext);
+        
+        // Add ResizeObserver to accurately track when container changes size or becomes visible
+        if (window.ResizeObserver) {
+            const ro = new ResizeObserver(() => viewerContext.resize());
+            ro.observe(container);
+            viewerContext.cleanup = () => {
+                ro.disconnect();
+                cancelAnimationFrame(animationFrameId);
+                window.removeEventListener('mousemove', onPointerMove);
+                window.removeEventListener('mouseup', onPointerUp);
+                window.removeEventListener('touchmove', onPointerMove);
+                window.removeEventListener('touchend', onPointerUp);
+                renderer.dispose();
+            };
+        }
+    }
+  
+    // Fallback for older browsers
+    window.addEventListener('resize', () => {
+        viewers.forEach(v => v.resize());
     });
-
-    viewer.addEventListener('mouseleave', () => {
-      indicator.style.opacity = '0.4';
-      angleLabel.style.opacity = '0';
-      isDragging = false;
-      viewer.style.cursor = 'grab';
-    });
-
-    viewer.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.clientX;
-      accumX = 0;
-      viewer.style.cursor = 'grabbing';
-      pauseAutoSpin();
-      e.preventDefault();
-      e.stopPropagation();
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const dx = e.clientX - startX;
-      accumX += dx;
-      startX = e.clientX;
-      // 1 frame every ~8px of drag
-      const frameDelta = Math.round(accumX / 8);
-      if (frameDelta !== 0) {
-        setFrame(currentFrame - frameDelta);
-        accumX -= frameDelta * 8;
-      }
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
-        viewer.style.cursor = 'grab';
-      }
-    });
-
-    // ── Touch ──────────────────────────────────────────────────────────────
-    viewer.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      startX = e.touches[0].clientX;
-      accumX = 0;
-      pauseAutoSpin();
-      e.stopPropagation();
-    }, { passive: true });
-
-    viewer.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      const dx = e.touches[0].clientX - startX;
-      accumX += dx;
-      startX = e.touches[0].clientX;
-      const frameDelta = Math.round(accumX / 8);
-      if (frameDelta !== 0) {
-        setFrame(currentFrame - frameDelta);
-        accumX -= frameDelta * 8;
-      }
-      e.preventDefault();
-    }, { passive: false });
-
-    viewer.addEventListener('touchend', () => { isDragging = false; });
-  }
-
-  // ─── Public API ───────────────────────────────────────────────────────────
-  window.Car360 = { init: init360Viewer };
-
-})();
+  
+    // ─── Public API ───────────────────────────────────────────────────────────
+    window.Car360 = { 
+        init: (container, colorHex, label) => {
+            // Cleanup existing if present
+            if (viewers.has(container)) {
+                viewers.get(container).cleanup();
+                viewers.delete(container);
+            }
+            init360Viewer(container, colorHex, label);
+        }
+    };
+  
+  })();
