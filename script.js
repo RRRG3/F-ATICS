@@ -230,8 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
         card.innerHTML = `
             ${newBadge}
             <div class="team-logo-badge">
-                <img src="${team.logo}" alt="${team.name} logo" class="team-logo" 
-                     onerror="this.style.display='none'">
+                <img src="${team.logo}" alt="${team.name} logo" class="team-logo"
+                     onerror="this.onerror=null;this.src=makeSVG('${team.name}','${team.color}','#fff')">
             </div>
             <div class="car-360-container">
             </div>
@@ -247,10 +247,18 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => openModal(team));
         teamGrid.appendChild(card);
         
-        // Initialize dynamic native 3D F1 car viewer
+        // Lazy-init 3D viewer — only when the card enters the viewport (saves ~11 Three.js canvases on load)
         const viewerContainer = card.querySelector('.car-360-container');
         if (window.Car360 && viewerContainer) {
-            Car360.init(viewerContainer, team.color, team.car);
+            const carObs = new IntersectionObserver((entries, obs) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        Car360.init(entry.target, team.color, team.car);
+                        obs.unobserve(entry.target);
+                    }
+                }
+            }, { rootMargin: '200px 0px' });
+            carObs.observe(viewerContainer);
         }
 
     });
@@ -260,8 +268,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const drivers = team.drivers.split(', ');
         modalBody.innerHTML = `
             <div class="team-modal-header">
-                <img src="${team.logo}" alt="${team.name} logo" class="modal-team-logo" 
-                     onerror="this.style.display='none'">
+                <img src="${team.logo}" alt="${team.name} logo" class="modal-team-logo"
+                     onerror="this.onerror=null;this.src=makeSVG('${team.name}','${team.color}','#fff')">
                 <h2>${team.name}</h2>
                 <p class="modal-car-name">${team.car}</p>
             </div>
@@ -275,19 +283,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="modal-image-card">
                     <h3>👤 ${drivers[0]}</h3>
                     <img src="${team.driver1Img}" alt="${drivers[0]}" loading="lazy" 
-                         onerror="this.src=makeSVG('${drivers[0]}','${team.color}','#fff')">
+                         onerror="this.onerror=null;this.src=makeSVG('${drivers[0]}','${team.color}','#fff')">
                 </div>
                 
                 <div class="modal-image-card">
                     <h3>👤 ${drivers[1]}</h3>
                     <img src="${team.driver2Img}" alt="${drivers[1]}" loading="lazy" 
-                         onerror="this.src=makeSVG('${drivers[1]}','${team.color}','#fff')">
+                         onerror="this.onerror=null;this.src=makeSVG('${drivers[1]}','${team.color}','#fff')">
                 </div>
                 
                 <div class="modal-image-card">
                     <h3>👔 Team Principal</h3>
                     <img src="${team.principalImg}" alt="${team.principal}" loading="lazy" 
-                         onerror="this.src=makeSVG('${team.principal}','${team.color}','#fff')">
+                         onerror="this.onerror=null;this.src=makeSVG('${team.principal}','${team.color}','#fff')">
                     <p class="principal-name">${team.principal}</p>
                 </div>
             </div>
@@ -368,9 +376,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    console.log('Loading 2026 driver standings...');
+    // Show fallback immediately so the table is never empty
     displayStandings(fallbackStandings);
-    console.log('✅ 2026 Driver standings loaded!');
+
+    // Silently upgrade to live Jolpica data (Ergast mirror) with 1-hour localStorage cache
+    (async function fetchLiveStandings() {
+        const CACHE_KEY = 'f1_driver_standings_2026';
+        const CACHE_TTL = 3_600_000; // 1 hour
+
+        // Serve from cache if fresh
+        try {
+            const raw = localStorage.getItem(CACHE_KEY);
+            if (raw) {
+                const { ts, data } = JSON.parse(raw);
+                if (Date.now() - ts < CACHE_TTL && data?.length) {
+                    displayStandings(data);
+                    return;
+                }
+            }
+        } catch (_) {}
+
+        // Fetch from Jolpica API
+        try {
+            const res = await fetch('https://api.jolpi.ca/ergast/f1/2026/driverStandings.json');
+            if (!res.ok) return;
+            const json = await res.json();
+            const list = json?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings;
+            if (!list?.length) return;
+
+            // Preserve flag emojis from fallback data (Jolpica doesn't include them)
+            const flagByNumber = {};
+            fallbackStandings.forEach(d => { flagByNumber[d.number] = d.flag; });
+
+            const live = list.map(entry => ({
+                position:    +entry.position,
+                driver:      `${entry.Driver.givenName} ${entry.Driver.familyName}`,
+                nationality: entry.Driver.nationality,
+                team:        entry.Constructors[0]?.name || '',
+                points:      +entry.points,
+                number:      +entry.Driver.permanentNumber,
+                flag:        flagByNumber[+entry.Driver.permanentNumber] || '',
+            }));
+
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: live }));
+            displayStandings(live);
+        } catch (_) {
+            // Silently stay on fallback data already shown
+        }
+    })();
 
 
     // Quiz - using external quiz data
@@ -487,31 +540,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadQuiz();
 
-    // Quiz Leaderboard
+    // Personal Best tracker — no prompt(), no fake global leaderboard.
+    // Stores up to 5 recent attempts chronologically so users can see progress.
     function updateLeaderboard() {
-        const leaderboard = JSON.parse(localStorage.getItem('f1QuizLeaderboard') || '[]');
+        const history = JSON.parse(localStorage.getItem('f1QuizHistory') || '[]');
         const leaderboardList = document.getElementById('leaderboard-list');
-        
-        if (leaderboard.length === 0) {
-            leaderboardList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No scores yet. Be the first!</p>';
+        if (!leaderboardList) return;
+
+        if (history.length === 0) {
+            leaderboardList.innerHTML = '<p style="text-align:center;color:var(--pk-muted,#8A8A9A);font-size:0.85rem;">Complete a quiz to see your scores here.</p>';
             return;
         }
-        
-        leaderboardList.innerHTML = leaderboard.slice(0, 5).map((entry, index) => `
-            <div class="leaderboard-item">
-                <span class="leaderboard-rank">${index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`}</span>
-                <span class="leaderboard-name">${entry.name}</span>
-                <span class="leaderboard-score">${entry.score}/${entry.total}</span>
-            </div>
-        `).join('');
+
+        // Sort by score descending for display, keep chronological for storage
+        const sorted = [...history].sort((a, b) => (b.score / b.total) - (a.score / a.total));
+        const best = sorted[0];
+
+        leaderboardList.innerHTML = sorted.slice(0, 5).map((entry, i) => {
+            const pct  = Math.round((entry.score / entry.total) * 100);
+            const date = new Date(entry.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+            const isBest = entry === best && i === 0;
+            return `
+            <div class="leaderboard-item" style="${isBest ? 'border-left:3px solid var(--pk-red,#E10600)' : ''}">
+                <span class="leaderboard-rank">${isBest ? '🏆' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`}</span>
+                <span class="leaderboard-name">${entry.score}/${entry.total} <span style="color:var(--pk-red,#E10600);font-weight:700">${pct}%</span></span>
+                <span class="leaderboard-score" style="font-size:0.75rem;color:var(--pk-muted,#8A8A9A)">${date}</span>
+            </div>`;
+        }).join('');
     }
 
     function saveScore(score, total) {
-        const name = prompt('Great job! Enter your name for the leaderboard:') || 'Anonymous';
-        const leaderboard = JSON.parse(localStorage.getItem('f1QuizLeaderboard') || '[]');
-        leaderboard.push({ name, score, total, date: new Date().toISOString() });
-        leaderboard.sort((a, b) => (b.score / b.total) - (a.score / a.total));
-        localStorage.setItem('f1QuizLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
+        const history = JSON.parse(localStorage.getItem('f1QuizHistory') || '[]');
+        history.unshift({ score, total, date: new Date().toISOString() });
+        // Keep last 10 attempts
+        localStorage.setItem('f1QuizHistory', JSON.stringify(history.slice(0, 10)));
         updateLeaderboard();
     }
 
@@ -908,7 +970,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.animationDelay = `${index * 0.03}s`;
         card.innerHTML = `
             <div class="circuit-card-image">
-                <img src="${circuit.layoutImage}" alt="${circuit.name}" loading="lazy" onerror="this.src=makeSVG('${circuit.name}','#1a1a1e','#e10600')">
+                <img src="${circuit.layoutImage}" alt="${circuit.name}" loading="lazy" onerror="this.onerror=null;this.src=makeSVG('${circuit.name}','#1a1a1e','#e10600')">
             </div>
             <div class="circuit-card-content">
                 <h3>${circuit.name}</h3>
@@ -986,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="circuit-modal-location">📍 ${circuit.location}</div>
             </div>
             
-            <img src="${circuit.layoutImage}" alt="${circuit.name} layout" class="circuit-layout-image" onerror="this.src=makeSVG('${circuit.name} Layout','#1a1a1e','#e10600')">
+            <img src="${circuit.layoutImage}" alt="${circuit.name} layout" class="circuit-layout-image" onerror="this.onerror=null;this.src=makeSVG('${circuit.name} Layout','#1a1a1e','#e10600')">
             
             <div class="circuit-modal-stats">
                 <div class="circuit-modal-stat">

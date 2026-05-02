@@ -7,10 +7,77 @@
     <title>F-ATICS | Ultimate F1 Fan Zone — 2026 Season</title>
     <meta name="description"
         content="The world-class F1 fan hub for 2026. 11 teams, 22 drivers, new Audi & Cadillac entrants, live countdown to the Australian GP, circuits, quiz, standings and more.">
-    <link rel="stylesheet" href="style.css?v=4">
-    <link rel="stylesheet" href="world-class.css?v=4">
-    <link rel="stylesheet" href="premium-design.css?v=4">
-    <link rel="stylesheet" href="parker-ai.css?v=4">
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://f-atics.vercel.app/">
+    <meta property="og:title"       content="F-ATICS | F1 2026 Fan Zone">
+    <meta property="og:description" content="AI race predictions, live telemetry, interactive circuits, team showcase and more — the ultimate 2026 F1 fan hub.">
+    <meta property="og:image"       content="https://f-atics.vercel.app/og-image.jpg">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name"   content="F-ATICS">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="F-ATICS | F1 2026 Fan Zone">
+    <meta name="twitter:description" content="AI race predictions, live telemetry, interactive circuits and more.">
+    <meta name="twitter:image"       content="https://f-atics.vercel.app/og-image.jpg">
+
+    <!-- Canonical + theme -->
+    <link rel="canonical" href="https://f-atics.vercel.app/">
+    <meta name="theme-color" content="#E10600">
+    <meta name="color-scheme" content="dark">
+
+    <!-- PWA manifest (added in later step) -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+
+    <link rel="stylesheet" href="styles.css?v=5">
+    <style>
+      /* Telemetry race-weekend banner */
+      .tele-weekend-banner {
+        border: 2px solid var(--border-color, #2a2a2a);
+        border-radius: 4px;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        background: var(--card-bg, #111);
+        box-shadow: 4px 4px 0 var(--border-color, #2a2a2a);
+      }
+      .tele-weekend-banner.is-live {
+        border-color: #E10600;
+        box-shadow: 4px 4px 0 #E10600;
+      }
+      .tele-weekend-banner-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
+      .tele-weekend-banner-body { flex: 1; }
+      .tele-weekend-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--pk-red, #E10600);
+        margin-bottom: 4px;
+      }
+      .tele-weekend-name {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 2px;
+      }
+      .tele-weekend-circuit {
+        font-size: 0.78rem;
+        color: rgba(255,255,255,0.5);
+        margin-bottom: 6px;
+      }
+      .tele-weekend-hint {
+        font-size: 0.8rem;
+        color: rgba(255,255,255,0.7);
+      }
+      .tele-weekend-hint strong { color: #fff; }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -360,7 +427,8 @@
 
             <!-- Quiz Leaderboard -->
             <div class="quiz-leaderboard">
-                <h3>🏆 Top Scores</h3>
+                <h3>🏆 Your Personal Best</h3>
+                <p style="text-align:center;font-size:0.8rem;color:var(--pk-muted,#8A8A9A);margin-bottom:1rem;">Scores are saved locally on this device.</p>
                 <div id="leaderboard-list" class="leaderboard-list">
                     <!-- Leaderboard will be inserted here -->
                 </div>
@@ -575,6 +643,9 @@
                 <p class="section-subtitle">Real-time OpenF1 session data and speed traces</p>
 
                 <div class="telemetry-wrapper">
+                    <!-- Race Weekend Awareness Banner -->
+                    <div id="tele-weekend-banner" class="tele-weekend-banner" aria-live="polite"></div>
+
                     <div class="telemetry-controls">
                         <div class="form-group tele-session-group">
                             <label>Session Status:</label>
@@ -692,6 +763,93 @@
 
     <!-- New modular system (ES6 modules) -->
     <script type="module" src="js/app-init.js?v=4"></script>
+
+    <!-- PWA service worker registration -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+    }
+    </script>
+
+    <!-- Umami analytics — privacy-first, no cookies, GDPR-compliant, no banner needed -->
+    <!-- Replace data-website-id with your Umami project ID after self-hosting or signing up at umami.is -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="REPLACE_WITH_YOUR_UMAMI_ID"></script>
+
+    <script>
+    // Telemetry — race weekend awareness banner
+    (function initTeleBanner() {
+        const banner = document.getElementById('tele-weekend-banner');
+        if (!banner || typeof raceCalendar === 'undefined') return;
+
+        const now   = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        let activeRace = null;
+        let nextRace   = null;
+
+        for (const race of raceCalendar) {
+            const raceDay     = new Date(race.date);          // Sunday
+            const weekendStart = new Date(raceDay);
+            weekendStart.setDate(raceDay.getDate() - 3);      // Thursday
+
+            if (today >= weekendStart && today <= raceDay) {
+                activeRace = { race, raceDay, weekendStart };
+                break;
+            }
+            if (today < weekendStart && !nextRace) {
+                nextRace = { race, raceDay, weekendStart };
+            }
+        }
+
+        function daysUntil(target) {
+            return Math.ceil((target - today) / 86400000);
+        }
+
+        if (activeRace) {
+            const { race, raceDay } = activeRace;
+            const isRaceDay = today.getTime() === raceDay.getTime();
+            banner.classList.add('is-live');
+            banner.innerHTML = `
+                <div class="tele-weekend-banner-icon">🔴</div>
+                <div class="tele-weekend-banner-body">
+                    <div class="tele-weekend-label">Live Race Weekend</div>
+                    <div class="tele-weekend-name">${race.flag} ${race.name}</div>
+                    <div class="tele-weekend-circuit">${race.circuit}</div>
+                    <div class="tele-weekend-hint">
+                        ${isRaceDay
+                            ? '<strong>Race day!</strong> Live telemetry should be active — click Connect below.'
+                            : 'Live telemetry is available during the session. Click <strong>Connect Live Stream</strong> to check.'}
+                    </div>
+                </div>`;
+        } else if (nextRace) {
+            const { race, weekendStart } = nextRace;
+            const days = daysUntil(weekendStart);
+            const label = days === 0 ? 'Weekend starts today'
+                        : days === 1 ? 'Weekend starts tomorrow'
+                        : `Weekend starts in ${days} day${days !== 1 ? 's' : ''}`;
+            banner.innerHTML = `
+                <div class="tele-weekend-banner-icon">⏱</div>
+                <div class="tele-weekend-banner-body">
+                    <div class="tele-weekend-label">Next Race Weekend</div>
+                    <div class="tele-weekend-name">${race.flag} ${race.name}</div>
+                    <div class="tele-weekend-circuit">${race.circuit}</div>
+                    <div class="tele-weekend-hint">
+                        Live telemetry is only available during race weekends — <strong>${label}</strong>.
+                    </div>
+                </div>`;
+        } else {
+            banner.innerHTML = `
+                <div class="tele-weekend-banner-icon">🏁</div>
+                <div class="tele-weekend-banner-body">
+                    <div class="tele-weekend-label">Season Complete</div>
+                    <div class="tele-weekend-name">2026 Season Finished</div>
+                    <div class="tele-weekend-hint">Live telemetry will return for the 2027 season.</div>
+                </div>`;
+        }
+    })();
+    </script>
 
     <!-- Predictor Controller — uses prediction-model.js global -->
     <script>
@@ -852,22 +1010,43 @@
                 dashboard.classList.add('active');
             });
 
-            // Initialize Chart.js Predicted Pace
+            // Build tyre degradation curves from actual model output.
+            // basePace reflects predicted finishing order; degradRate reflects
+            // driver/car consistency (higher Elo / momentum = flatter curve).
+            function buildDegradationSeries(d, points) {
+                const expPos  = d.expPos  ?? d.exp_pos  ?? 10;
+                const elo     = d.eloRating ?? (d.lstm_form != null ? 2200 + d.lstm_form * 600 : 2400);
+                const mom     = d.momentum ?? 50;
+                const basePace = 100 - (expPos - 1) * 1.8;
+                const eloN     = Math.min(1, Math.max(0, (elo - 2100) / 750));
+                const momN     = Math.min(1, Math.max(0, (mom - 30) / 70));
+                const degradRate = 0.18 - eloN * 0.08 - momN * 0.04;
+                const stintLen   = 25;
+                return Array.from({length: points}, (_, i) => {
+                    const lap     = i * 3;
+                    const stintLp = lap % stintLen;
+                    const deg     = degradRate * stintLp + (degradRate * 0.25 * stintLp * stintLp / stintLen);
+                    const micro   = Math.sin(i * 7.3 + expPos * 1.1) * 0.12; // deterministic micro-variation
+                    return Math.max(40, basePace - deg + micro);
+                });
+            }
+
+            // Initialize Chart.js Predicted Degradation
             const ctx = document.getElementById('pred-pace-chart');
             if (paceChartInstance) paceChartInstance.destroy();
-            
+
             const top5 = results.slice(0, 5);
-            const labels = Array.from({length: 20}, (_, i) => `L${i*2}`);
-            
+            const labels = Array.from({length: 20}, (_, i) => `L${i*3}`);
+
             paceChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: top5.map(d => ({
                         label: d.name,
-                        data: Array.from({length: 20}, () => 100 - (Math.random() * 15)),
+                        data: buildDegradationSeries(d, 20),
                         borderColor: teamColor(d.team),
-                        backgroundColor: teamColor(d.team) + '33',
+                        backgroundColor: teamColor(d.team) + '22',
                         tension: 0.4,
                         borderWidth: 2,
                         pointRadius: 0,
@@ -1084,9 +1263,6 @@
     })();
     </script>
 
-    <!-- Professional Integration - Temporarily disabled -->
-    <!-- <script type="module" src="js/professional-integration.js"></script> -->
-
     <!-- Team Modal Structure -->
     <div id="team-modal" class="modal">
         <div class="modal-overlay"></div>
@@ -1110,6 +1286,7 @@
     </div>
     
     <script src="js/theme-engine.js?v=4"></script>
+    <script type="module" src="js/router.js?v=5"></script>
 </body>
 
 </html>
