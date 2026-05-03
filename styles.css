@@ -7798,3 +7798,130 @@ span.pred-momentum { color: #aaa; }
     visibility: visible !important;
     transform: none !important;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   SKELETON SHIMMER LOADERS
+   ═══════════════════════════════════════════════════════════ */
+@keyframes f-shimmer {
+    0%   { background-position: -600px 0; }
+    100% { background-position:  600px 0; }
+}
+.skel {
+    background: linear-gradient(90deg,
+        rgba(255,255,255,0.04) 25%,
+        rgba(255,255,255,0.09) 50%,
+        rgba(255,255,255,0.04) 75%);
+    background-size: 1200px 100%;
+    animation: f-shimmer 1.6s infinite linear;
+    border-radius: 3px;
+    display: block;
+}
+/* Standings skeleton */
+.skel-row td { padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+.skel-pos    { width: 28px;  height: 14px; }
+.skel-driver { width: 160px; height: 14px; }
+.skel-nat    { width: 90px;  height: 14px; }
+.skel-team   { width: 130px; height: 14px; }
+.skel-pts    { width: 70px;  height: 14px; }
+/* Team card skeleton */
+.team-card.skel-card { pointer-events: none; display: flex; flex-direction: column; gap: 12px; padding: 24px; min-height: 280px; }
+.skel-logo-block  { height: 38px;  width: 90px;  }
+.skel-car-block   { height: 110px; width: 100%;  flex-shrink: 0; }
+.skel-title-block { height: 18px;  width: 72%;   }
+.skel-sub-block   { height: 13px;  width: 55%;   }
+.skel-info-block  { height: 11px;  width: 42%;   }
+
+/* ═══════════════════════════════════════════════════════════
+   PREDICTION SHARE BAR
+   ═══════════════════════════════════════════════════════════ */
+.pred-share-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+    align-items: center;
+}
+.pred-share-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-right: 4px;
+}
+.pred-share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border: 2px solid;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    font-family: inherit;
+    background: transparent;
+}
+.pred-share-btn.copy-btn {
+    color: #fff;
+    border-color: rgba(255,255,255,0.18);
+}
+.pred-share-btn.copy-btn:hover { border-color: var(--pk-red, #E10600); color: var(--pk-red, #E10600); }
+.pred-share-btn.x-share-btn {
+    color: #fff;
+    border-color: #333;
+    background: #000;
+}
+.pred-share-btn.x-share-btn:hover { border-color: #555; }
+/* Toast notification */
+.pred-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #111;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-left: 3px solid var(--pk-red, #E10600);
+    padding: 12px 22px;
+    border-radius: 4px;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.22s, transform 0.22s;
+    z-index: 9999;
+    pointer-events: none;
+    white-space: nowrap;
+}
+.pred-toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CIRCUIT TYPE BADGES (in modal)
+   ═══════════════════════════════════════════════════════════ */
+.circuit-meta-badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 16px; }
+.circuit-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid;
+}
+.badge-permanent { color: #4fc3f7; border-color: #4fc3f7; }
+.badge-street    { color: var(--pk-red, #E10600); border-color: var(--pk-red, #E10600); }
+.badge-semi      { color: #ffb74d; border-color: #ffb74d; }
+.badge-drs       { color: #81c784; border-color: #81c784; }
+.badge-speed     { color: #ce93d8; border-color: #ce93d8; }

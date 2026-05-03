@@ -331,12 +331,13 @@
                             </tr>
                         </thead>
                         <tbody id="standings-body">
-                            <tr>
-                                <td colspan="5" class="loading-cell">
-                                    <div class="loader"></div>
-                                    <span>Loading standings...</span>
-                                </td>
-                            </tr>
+                            <!-- Skeleton rows replaced by JS when standings load -->
+                            <tr class="skel-row"><td><div class="skel skel-pos"></div></td><td><div class="skel skel-driver"></div></td><td><div class="skel skel-nat"></div></td><td><div class="skel skel-team"></div></td><td><div class="skel skel-pts"></div></td></tr>
+                            <tr class="skel-row"><td><div class="skel skel-pos"></div></td><td><div class="skel skel-driver"></div></td><td><div class="skel skel-nat"></div></td><td><div class="skel skel-team"></div></td><td><div class="skel skel-pts"></div></td></tr>
+                            <tr class="skel-row"><td><div class="skel skel-pos"></div></td><td><div class="skel skel-driver"></div></td><td><div class="skel skel-nat"></div></td><td><div class="skel skel-team"></div></td><td><div class="skel skel-pts"></div></td></tr>
+                            <tr class="skel-row"><td><div class="skel skel-pos"></div></td><td><div class="skel skel-driver"></div></td><td><div class="skel skel-nat"></div></td><td><div class="skel skel-team"></div></td><td><div class="skel skel-pts"></div></td></tr>
+                            <tr class="skel-row"><td><div class="skel skel-pos"></div></td><td><div class="skel skel-driver"></div></td><td><div class="skel skel-nat"></div></td><td><div class="skel skel-team"></div></td><td><div class="skel skel-pts"></div></td></tr>
+                            <tr class="skel-row"><td><div class="skel skel-pos"></div></td><td><div class="skel skel-driver"></div></td><td><div class="skel skel-nat"></div></td><td><div class="skel skel-team"></div></td><td><div class="skel skel-pts"></div></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -484,7 +485,18 @@
                 <p class="section-subtitle">All 11 teams on the 2026 grid — including Audi &amp; Cadillac making their F1 debut!</p>
             </div>
             <div id="team-grid" class="team-grid">
-                <!-- Team cards will be dynamically inserted here -->
+                <!-- Skeleton cards — replaced by JS when team data renders -->
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
+                <div class="team-card skel-card" aria-hidden="true"><div class="skel skel-logo-block"></div><div class="skel skel-car-block"></div><div class="skel skel-title-block"></div><div class="skel skel-sub-block"></div><div class="skel skel-info-block"></div></div>
             </div>
         </section>
 

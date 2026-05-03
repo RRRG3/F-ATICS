@@ -222,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+    teamGrid.innerHTML = ''; // Clear skeleton cards
     teamsData.forEach((team, index) => {
         const card = document.createElement('div');
         card.classList.add('team-card');
@@ -869,9 +870,55 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    // Shared prediction share bar — injected after results render
+    function buildShareBar(top3, circuit, weather) {
+        const emoji = ['🥇', '🥈', '🥉'];
+        const shareText = `🏎️ F-ATICS AI Prediction — ${circuit || 'F1 2026'} ${weather === 'wet' ? '🌧️' : '☀️'}\n${top3.map((p, i) => `${emoji[i]} ${p.driver || p.driver} — ${p.winProbability || p.probability}% win probability`).join('\n')}\n\nTry your prediction: https://f-atics.vercel.app/#predictor`;
+        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+        return `
+            <div class="pred-share-bar">
+                <span class="pred-share-label">Share</span>
+                <button class="pred-share-btn copy-btn" data-share="${encodeURIComponent(shareText)}">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy Result
+                </button>
+                <a class="pred-share-btn x-share-btn" href="${tweetUrl}" target="_blank" rel="noopener noreferrer">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.258 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Share on X
+                </a>
+            </div>`;
+    }
+
+    // Toast helper
+    function showPredToast(msg) {
+        let toast = document.getElementById('pred-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'pred-toast';
+            toast.className = 'pred-toast';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = msg;
+        toast.classList.add('visible');
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => toast.classList.remove('visible'), 2800);
+    }
+
+    // Wire copy buttons via event delegation on the results container
+    predictionResults.addEventListener('click', (e) => {
+        const btn = e.target.closest('.copy-btn[data-share]');
+        if (!btn) return;
+        const text = decodeURIComponent(btn.dataset.share);
+        navigator.clipboard.writeText(text)
+            .then(() => showPredToast('✓ Prediction copied to clipboard'))
+            .catch(() => showPredToast('Copy failed — try long-pressing the text'));
+    });
+
     function displayPredictions(predictions) {
         const top3 = predictions.slice(0, 3);
         const rest = predictions.slice(3);
+        const circuit = document.getElementById('circuit-select')?.value || '';
+        const weather = document.getElementById('weather-select')?.value || 'dry';
 
         predictionResults.innerHTML = `
             <div class="prediction-podium">
@@ -897,6 +944,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `).join('')}
             </div>
+            ${buildShareBar(top3, circuit, weather)}
         `;
 
         // Animate bars
@@ -910,6 +958,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function displaySimulationResults(results) {
         const top3 = results.slice(0, 3);
         const rest = results.slice(3);
+        const circuit = document.getElementById('circuit-select')?.value || '';
 
         predictionResults.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
@@ -941,6 +990,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `).join('')}
             </div>
+            ${buildShareBar(top3.map(p => ({...p, winProbability: p.probability})), circuit, 'dry')}
         `;
     }
 
@@ -1088,14 +1138,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openCircuitModal(circuit) {
+        const typeBadgeClass = circuit.circuitType === 'Street' ? 'badge-street'
+                             : circuit.circuitType === 'Semi-Permanent' ? 'badge-semi'
+                             : 'badge-permanent';
         circuitModalBody.innerHTML = `
             <div class="circuit-modal-header">
                 <h2>${circuit.name}</h2>
                 <div class="circuit-modal-location">📍 ${circuit.location}</div>
+                <div class="circuit-meta-badges">
+                    ${circuit.circuitType ? `<span class="circuit-badge ${typeBadgeClass}">${circuit.circuitType}</span>` : ''}
+                    ${circuit.drsZones   ? `<span class="circuit-badge badge-drs">${circuit.drsZones} DRS Zone${circuit.drsZones !== 1 ? 's' : ''}</span>` : ''}
+                    ${circuit.topSpeed   ? `<span class="circuit-badge badge-speed">${circuit.topSpeed} top speed</span>` : ''}
+                </div>
             </div>
-            
+
             <img src="${circuit.layoutImage}" alt="${circuit.name} layout" class="circuit-layout-image" onerror="this.onerror=null;this.src=makeSVG('${circuit.name} Layout','#1a1a1e','#e10600')">
-            
+
             <div class="circuit-modal-stats">
                 <div class="circuit-modal-stat">
                     <div class="circuit-modal-stat-label">Length</div>
