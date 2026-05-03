@@ -78,6 +78,8 @@ const ThemeAndSoundEngine = (function() {
 
         // Close dropdown
         document.querySelector('.team-theme-selector').classList.remove('active');
+        const tb = document.getElementById('theme-toggle-btn');
+        if (tb) tb.setAttribute('aria-expanded', 'false');
         
         // Optional: Save to localStorage
         localStorage.setItem('pk_f1_theme', teamName);
@@ -109,12 +111,14 @@ const ThemeAndSoundEngine = (function() {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             playSound('click');
-            selector.classList.toggle('active');
+            const isOpen = selector.classList.toggle('active');
+            btn.setAttribute('aria-expanded', String(isOpen));
         });
 
         // Close when clicking outside
         document.addEventListener('click', () => {
             selector.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
         });
 
         // Wire up audio to specific interactions

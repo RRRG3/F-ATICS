@@ -264,6 +264,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    // Focus trap: cycle Tab/Shift-Tab within the modal
+    function trapFocus(modalEl, e) {
+        const focusable = Array.from(
+            modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+        ).filter(el => !el.disabled);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last  = focusable[focusable.length - 1];
+        if (e.key === 'Tab') {
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    }
+
+    let _trapHandler = null;
+    let _previousFocus = null;
+
     function openModal(team) {
         const drivers = team.drivers.split(', ');
         modalBody.innerHTML = `
@@ -301,24 +323,48 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         modal.style.display = 'block';
+        modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+
+        // Set title for aria-labelledby
+        const titleEl = modalBody.querySelector('h2');
+        if (titleEl) titleEl.id = 'team-modal-title';
 
         // Initialize 3D viewer in modal
         const modalCarContainer = modalBody.querySelector('.modal-car-360');
         if (window.Car360 && modalCarContainer) {
             Car360.init(modalCarContainer, team.color, team.car);
         }
+
+        // Store previous focus and move focus into modal
+        _previousFocus = document.activeElement;
+        const closeButton = modal.querySelector('.close-btn');
+        if (closeButton) closeButton.focus();
+
+        // Activate focus trap
+        _trapHandler = (e) => trapFocus(modal, e);
+        modal.addEventListener('keydown', _trapHandler);
     }
 
     function closeModal() {
         modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = 'auto';
+
+        // Remove focus trap and restore focus to the triggering element
+        if (_trapHandler) {
+            modal.removeEventListener('keydown', _trapHandler);
+            _trapHandler = null;
+        }
+        if (_previousFocus) {
+            _previousFocus.focus();
+            _previousFocus = null;
+        }
     }
 
     closeBtn.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', closeModal);
 
-    // Close modal on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.style.display === 'block') {
             closeModal();

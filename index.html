@@ -83,6 +83,16 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
+
+    <!-- Heavy CDN libs — defer so the browser downloads all of them in parallel
+         from the very first byte of the page, but executes them in order after parse. -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
 </head>
 
 <body>
@@ -165,7 +175,7 @@
                     <li><a href="#circuits"    class="nav-link pk-nav-link">Circuits</a></li>
                 </ul>
                 <div class="team-theme-selector">
-                    <button class="theme-btn" id="theme-toggle-btn" aria-label="Choose Your Team">
+                    <button class="theme-btn" id="theme-toggle-btn" aria-label="Choose team colour theme" aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-dropdown">
                         <span class="theme-color-dot" id="active-theme-dot"></span>
                         <span class="theme-name" id="active-theme-name">F-ATICS</span>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -441,15 +451,15 @@
                     </div>
                     <span id="quiz-counter" class="quiz-counter">Question 1 of 20</span>
                 </div>
-                <p id="question" class="quiz-question">Question text will go here.</p>
-                <div id="options" class="options-container">
+                <p id="question" class="quiz-question" role="heading" aria-level="3">Question text will go here.</p>
+                <div id="options" class="options-container" role="group" aria-labelledby="question">
                     <!-- Options will be dynamically inserted here -->
                 </div>
                 <div class="quiz-actions">
                     <button id="next-btn" class="btn btn-primary">Next Question</button>
                     <button id="restart-quiz" class="btn btn-secondary" style="display: none;">Restart Quiz</button>
                 </div>
-                <p id="result" class="quiz-result"></p>
+                <p id="result" class="quiz-result" aria-live="polite" aria-atomic="true"></p>
             </div>
 
             <!-- Social Share -->
@@ -717,20 +727,6 @@
         </div>
     </footer>
 
-    <!-- Three.js for 3D effects -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-    <!-- GSAP for advanced animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <!-- Lenis for smooth scroll -->
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
-    <!-- Vanilla Tilt for 3D card effects -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-    <!-- Chart.js for data visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Howler.js for immersive soundscape -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
-
     <!-- Data files -->
     <script src="quiz-data.js?v=4"></script>
     <script src="circuits-data.js?v=4"></script>
@@ -754,11 +750,10 @@
         window.addEventListener('load', hideLoader);
         setTimeout(hideLoader, 3000); // Fail-safe to prevent perpetual loading
     </script>
-    <script src="js/car-360.js?v=4"></script>
-    <script src="script.js?v=4"></script>
-
-    <script src="3d-effects.js?v=4"></script>
-    <script src="world-class-animations.js?v=4"></script>
+    <script defer src="js/car-360.js?v=4"></script>
+    <script defer src="script.js?v=4"></script>
+    <script defer src="3d-effects.js?v=4"></script>
+    <script defer src="world-class-animations.js?v=4"></script>
 
 
     <!-- New modular system (ES6 modules) -->
@@ -1264,10 +1259,10 @@
     </script>
 
     <!-- Team Modal Structure -->
-    <div id="team-modal" class="modal">
+    <div id="team-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="team-modal-title" aria-hidden="true">
         <div class="modal-overlay"></div>
         <div class="modal-content">
-            <button class="close-btn" aria-label="Close modal">&times;</button>
+            <button class="close-btn" aria-label="Close team modal">&times;</button>
             <div id="modal-body" class="modal-body">
                 <!-- Modal content will be dynamically inserted here -->
             </div>
@@ -1275,10 +1270,10 @@
     </div>
 
     <!-- Circuit Modal Structure -->
-    <div id="circuit-modal" class="modal">
+    <div id="circuit-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="circuit-modal-title" aria-hidden="true">
         <div class="modal-overlay"></div>
         <div class="modal-content circuit-modal-content">
-            <button class="close-btn" aria-label="Close modal">&times;</button>
+            <button class="close-btn" aria-label="Close circuit modal">&times;</button>
             <div id="circuit-modal-body" class="circuit-modal-body">
                 <!-- Circuit modal content will be dynamically inserted here -->
             </div>

@@ -31,58 +31,82 @@ class LiveTelemetryDashboard {
         if (this.isStreaming) {
             this.stopStream();
         } else {
-            // Play hover sound if we start
-            if (window.faticsAudio) {
-                window.faticsAudio.playHover();
-            }
+            if (window.faticsAudio) window.faticsAudio.playHover();
             await this.startStream();
         }
     }
 
+    _setStatus(text, type) {
+        if (!this.statusEl) return;
+        this.statusEl.innerText = text;
+        this.statusEl.className = `tele-status ${type}`;
+    }
+
+    _setBtnText(text) {
+        if (this.btnFetch) this.btnFetch.querySelector('.btn-text').innerText = text;
+    }
+
+    // Wraps a promise with a hard timeout — rejects if API doesn't respond in time
+    _withTimeout(promise, ms = 10000) {
+        return Promise.race([
+            promise,
+            new Promise((_, reject) =>
+                setTimeout(() => reject(new Error(`OpenF1 API timed out after ${ms / 1000}s`)), ms)
+            )
+        ]);
+    }
+
     async startStream() {
-        this.isStreaming = true;
-        this.btnFetch.querySelector('.btn-text').innerText = 'Disconnecting...';
-        this.statusEl.innerText = 'Connecting to OpenF1...';
-        this.statusEl.className = 'tele-status warning';
+        // Guard: prevent double-clicks
+        if (this.isConnecting) return;
+        this.isConnecting = true;
+
+        this._setBtnText('Connecting…');
+        this._setStatus('Connecting to OpenF1…', 'warning');
+        if (this.btnFetch) this.btnFetch.disabled = true;
 
         try {
-            // 1. Get Latest Session
-            this.currentSession = await this.api.getLatestSession();
-            
-            if (!this.currentSession) {
-                throw new Error("No recent session found.");
+            const session = await this._withTimeout(this.api.getLatestSession());
+
+            if (!session) {
+                throw new Error('No active session found. Live telemetry is only available during race weekends.');
             }
 
-            this.statusEl.innerText = `Connected: ${this.currentSession.circuit_short_name} (${this.currentSession.session_name})`;
-            this.statusEl.className = 'tele-status success';
-            this.btnFetch.querySelector('.btn-text').innerText = 'Stop Live Stream';
-            
-            // Show dashboard
-            this.dashboardGrid.style.display = 'grid';
-            
-            // 2. Initial Data Fetch
-            await this.refreshData();
+            this.currentSession = session;
+            this.isStreaming = true;
 
-            // 3. Start Polling
-            this.streamInterval = setInterval(() => this.refreshData(), 5000); // refresh every 5s
+            this._setStatus(`Connected: ${session.circuit_short_name} — ${session.session_name}`, 'success');
+            this._setBtnText('Stop Live Stream');
+            if (this.btnFetch) this.btnFetch.disabled = false;
+
+            this.dashboardGrid.style.display = 'grid';
+
+            await this.refreshData();
+            this.streamInterval = setInterval(() => this.refreshData(), 5000);
 
         } catch (error) {
-            console.error(error);
-            this.statusEl.innerText = 'Connection Failed';
-            this.statusEl.className = 'tele-status error';
-            this.stopStream();
+            const msg = error.message.includes('timed out')
+                ? 'Connection timed out — OpenF1 may be offline'
+                : (error.message.length < 80 ? error.message : 'Connection failed — try again during a race weekend');
+
+            this._setStatus(msg, 'error');
+            this._setBtnText('Connect Live Stream');
+            if (this.btnFetch) this.btnFetch.disabled = false;
+            this.isStreaming = false;
+            this.currentSession = null;
+        } finally {
+            this.isConnecting = false;
         }
     }
 
     stopStream() {
         this.isStreaming = false;
+        this.isConnecting = false;
         clearInterval(this.streamInterval);
         this.streamInterval = null;
-        if (this.btnFetch) this.btnFetch.querySelector('.btn-text').innerText = 'Connect Live Stream';
-        if (this.statusEl) {
-            this.statusEl.innerText = 'Disconnected';
-            this.statusEl.className = 'tele-status error';
-        }
+        this._setBtnText('Connect Live Stream');
+        if (this.btnFetch) this.btnFetch.disabled = false;
+        this._setStatus('Disconnected', 'error');
     }
 
     async refreshData() {
@@ -111,7 +135,8 @@ class LiveTelemetryDashboard {
                 this.simulateLapData();
             }
         } catch (e) {
-            console.error("Error fetching live data, failing over to simulation mode...", e);
+            // Non-fatal: show warning in status but keep the stream alive
+            this._setStatus(`Live feed interrupted — showing simulation (${new Date().toLocaleTimeString()})`, 'warning');
             this.simulateSpeedTrace();
             this.simulateLapData();
         }
