@@ -56,8 +56,6 @@ class F1FanZoneApp {
     }
 
     async init() {
-        console.log('🏎️ Initializing F1 Fan Zone...');
-        console.log('Features:', this.features);
 
         // Initialize core systems
         this.performanceMonitor = new PerformanceMonitor({
@@ -93,7 +91,6 @@ class F1FanZoneApp {
         this.startRenderLoop();
 
         this.isInitialized = true;
-        console.log('✅ F1 Fan Zone initialized successfully');
 
         // Dispatch ready event
         window.dispatchEvent(new CustomEvent('app:ready', {
@@ -102,21 +99,14 @@ class F1FanZoneApp {
     }
 
     async initWebGL() {
-        console.log('Initializing WebGL...');
         
         this.webglEngine = new WebGLEngine();
         this.isWebGLSupported = this.webglEngine.init();
 
         if (this.isWebGLSupported) {
-            // Create material library
             this.materialLibrary = new MaterialLibrary(this.webglEngine.deviceCapabilities);
-            
-            // Initialize scenes based on quality
             this.initScenes();
-            
-            console.log('✅ WebGL initialized');
         } else {
-            console.warn('WebGL initialization failed, using fallback');
             this.initFallbackExperience();
         }
     }
@@ -170,7 +160,6 @@ class F1FanZoneApp {
     }
 
     initFallbackExperience() {
-        console.log('Using CSS-only fallback experience');
         
         // Add class to body for CSS targeting
         document.body.classList.add('no-webgl');
@@ -209,7 +198,6 @@ class F1FanZoneApp {
 
     initAnimations() {
         if (this.features.reducedMotion) {
-            console.log('Reduced motion detected, disabling animations');
             return;
         }
 
@@ -240,7 +228,6 @@ class F1FanZoneApp {
     setupAdaptiveQuality() {
         const adaptiveQuality = new AdaptiveQuality(this.performanceMonitor, {
             onQualityChange: (quality, settings) => {
-                console.log(`Quality changed to: ${quality}`, settings);
                 
                 // Adjust WebGL settings if available
                 if (this.webglEngine && this.webglEngine.isInitialized) {

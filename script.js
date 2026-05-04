@@ -763,29 +763,54 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     function initNextRaceCountdown() {
         const now = new Date();
-        const nextRace = raceCalendar.find(r => new Date(r.date) > now);
-        if (!nextRace) return;
+        const todayStr = now.toDateString();
 
-        const nameEl = document.getElementById('next-race-name');
-        if (nameEl) nameEl.textContent = `Next: ${nextRace.name}`;
+        const setBoxes = (d, h, m, s) => {
+            const fmt = n => String(n).padStart(2, '0');
+            const ids = ['cd-days','cd-hours','cd-mins','cd-secs'];
+            const vals = [d, h, m, s];
+            ids.forEach((id, i) => { const el = document.getElementById(id); if (el) el.textContent = vals[i]; });
+        };
+
+        const setLabel = (text) => {
+            const el = document.querySelector('.countdown-label-hero');
+            if (el) el.textContent = text;
+        };
+
+        const setName = (text) => {
+            const el = document.getElementById('next-race-name');
+            if (el) el.textContent = text;
+        };
+
+        // Race day — show a "LIGHTS OUT" state instead of zeros
+        const raceToday = raceCalendar.find(r => new Date(r.date).toDateString() === todayStr);
+        if (raceToday) {
+            setName(`${raceToday.name} — Race Day!`);
+            setLabel('LIGHTS OUT');
+            setBoxes('🏎', '🏁', '00', '00');
+            return;
+        }
+
+        // Next upcoming race
+        const nextRace = raceCalendar.find(r => new Date(r.date) > now);
+        if (!nextRace) {
+            setName('2026 Season Complete');
+            setLabel('CHAMPIONS CROWNED');
+            setBoxes('—', '—', '—', '—');
+            return;
+        }
+
+        setName(`Next: ${nextRace.name}`);
 
         function updateCountdown() {
-            const target = new Date(nextRace.date);
-            const diff = target - new Date();
-            if (diff <= 0) return;
+            const diff = new Date(nextRace.date) - new Date();
+            if (diff <= 0) { initNextRaceCountdown(); return; }
             const d = Math.floor(diff / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
             const s = Math.floor((diff % 60000) / 1000);
             const fmt = n => String(n).padStart(2, '0');
-            const cdDays = document.getElementById('cd-days');
-            const cdHours = document.getElementById('cd-hours');
-            const cdMins = document.getElementById('cd-mins');
-            const cdSecs = document.getElementById('cd-secs');
-            if (cdDays) cdDays.textContent = d;
-            if (cdHours) cdHours.textContent = fmt(h);
-            if (cdMins) cdMins.textContent = fmt(m);
-            if (cdSecs) cdSecs.textContent = fmt(s);
+            setBoxes(d, fmt(h), fmt(m), fmt(s));
         }
         updateCountdown();
         setInterval(updateCountdown, 1000);

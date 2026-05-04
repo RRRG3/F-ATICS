@@ -29,9 +29,12 @@
     <meta name="theme-color" content="#E10600">
     <meta name="color-scheme" content="dark">
 
-    <!-- PWA manifest (added in later step) -->
+    <!-- PWA -->
     <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="/icons/icon.svg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="F-ATICS">
 
     <link rel="stylesheet" href="styles.css?v=6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -362,6 +365,7 @@
             </div>
 
             <div class="calendar-filters">
+                <label for="calendar-search" class="sr-only">Search races</label>
                 <input type="text" id="calendar-search" class="search-input" placeholder="🔍 Search races...">
                 <select id="calendar-filter" class="filter-select">
                     <option value="all">All Races</option>
@@ -488,6 +492,7 @@
             </div>
 
             <div class="circuits-filters">
+                <label for="circuit-search" class="sr-only">Search circuits</label>
                 <input type="text" id="circuit-search" class="search-input" placeholder="🔍 Search circuits...">
                 <select id="circuit-sort" class="filter-select">
                     <option value="calendar">Calendar Order</option>

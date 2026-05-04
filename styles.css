@@ -8109,3 +8109,51 @@ span.pred-momentum { color: #aaa; }
         justify-content: center;
     }
 }
+
+/* ── prefers-reduced-motion — WCAG 2.1 SC 2.3.3 ── */
+@media (prefers-reduced-motion: reduce) {
+    /* Kill all CSS animations and transitions globally */
+    *, *::before, *::after {
+        animation-duration:       0.01ms !important;
+        animation-iteration-count: 1     !important;
+        transition-duration:      0.01ms !important;
+        scroll-behavior:          auto   !important;
+    }
+
+    /* Stop parallax from moving */
+    .parallax-layer {
+        transform: none !important;
+    }
+
+    /* Freeze the shimmer skeleton */
+    @keyframes f-shimmer {
+        from, to { background-position: 0 0; }
+    }
+
+    /* Disable the page-transition wipe panels */
+    .wipe-panel {
+        transform: none !important;
+        opacity: 0 !important;
+    }
+
+    /* Flatten hover lifts to simple colour changes */
+    .team-card:hover,
+    .circuit-card:hover,
+    .calendar-card:hover,
+    .bento-card:hover,
+    .rule-card:hover,
+    .option:hover {
+        transform: none !important;
+    }
+
+    /* Disable the cursor trail canvas */
+    #flag-trail-canvas {
+        display: none !important;
+    }
+
+    /* Keep focus rings — never suppress those */
+    :focus-visible {
+        outline: 2px solid var(--pk-red, #E10600) !important;
+        outline-offset: 2px !important;
+    }
+}

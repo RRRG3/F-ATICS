@@ -27,7 +27,6 @@ export class AnimationController {
         }
 
         this.isInitialized = true;
-        console.log('✅ Animation Controller initialized');
     }
 
     initSmoothScroll() {
@@ -54,8 +53,6 @@ export class AnimationController {
         });
 
         this.gsap.ticker.lagSmoothing(0);
-
-        console.log('✅ Lenis smooth scroll initialized');
     }
 
     registerScrollAnimation(trigger, animation) {
