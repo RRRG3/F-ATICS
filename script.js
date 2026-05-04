@@ -17,11 +17,7 @@ function makeSVG(text, bg, fg) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🏎️ F1 Fan Zone - Script loaded!');
-    console.log('Quiz data loaded:', typeof quizData !== 'undefined' ? quizData.length + ' questions' : 'NOT LOADED');
-    console.log('Circuits data loaded:', typeof circuitsData !== 'undefined' ? circuitsData.length + ' circuits' : 'NOT LOADED');
-    console.log('Calendar data loaded:', typeof raceCalendar !== 'undefined' ? raceCalendar.length + ' races' : 'NOT LOADED');
-    
+
     // Smooth scroll for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -403,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const teamColor = teamColors2026[driver.team] || '#E10600';
             const driverFlag = driver.flag || '';
             const driverNum = driver.number ? `<span class="driver-num" style="color:${teamColor}">#${driver.number}</span>` : '';
-            
+
             let positionDisplay = driver.position;
             if (driver.position === 1) positionDisplay = '🥇 1';
             else if (driver.position === 2) positionDisplay = '🥈 2';
@@ -411,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const ptsPct = Math.max((driver.points / maxPts) * 100, 0);
             const ptsBar = `<div class="pts-bar-wrap"><div class="pts-bar" style="width:${ptsPct}%;background:${teamColor}"></div></div>`;
-            
+
             row.innerHTML = `
                 <td class="pos-col">${positionDisplay}</td>
                 <td class="driver-col">${driverFlag} ${driverNum} ${driver.driver}</td>
@@ -421,6 +417,13 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             standingsBody.appendChild(row);
         });
+
+        const allZero = standings.every(d => (d.points || 0) === 0);
+        if (allZero) {
+            const note = document.createElement('tr');
+            note.innerHTML = '<td colspan="5" class="standings-note">Points update live after each race weekend. Check back once the season is underway.</td>';
+            standingsBody.appendChild(note);
+        }
     }
 
     // Show fallback immediately so the table is never empty

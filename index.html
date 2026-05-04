@@ -33,51 +33,7 @@
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
-    <link rel="stylesheet" href="styles.css?v=5">
-    <style>
-      /* Telemetry race-weekend banner */
-      .tele-weekend-banner {
-        border: 2px solid var(--border-color, #2a2a2a);
-        border-radius: 4px;
-        padding: 16px 20px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: flex-start;
-        gap: 16px;
-        background: var(--card-bg, #111);
-        box-shadow: 4px 4px 0 var(--border-color, #2a2a2a);
-      }
-      .tele-weekend-banner.is-live {
-        border-color: #E10600;
-        box-shadow: 4px 4px 0 #E10600;
-      }
-      .tele-weekend-banner-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
-      .tele-weekend-banner-body { flex: 1; }
-      .tele-weekend-label {
-        font-size: 0.65rem;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--pk-red, #E10600);
-        margin-bottom: 4px;
-      }
-      .tele-weekend-name {
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: #fff;
-        margin-bottom: 2px;
-      }
-      .tele-weekend-circuit {
-        font-size: 0.78rem;
-        color: rgba(255,255,255,0.5);
-        margin-bottom: 6px;
-      }
-      .tele-weekend-hint {
-        font-size: 0.8rem;
-        color: rgba(255,255,255,0.7);
-      }
-      .tele-weekend-hint strong { color: #fff; }
-    </style>
+    <link rel="stylesheet" href="styles.css?v=6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -93,9 +49,33 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://f-atics.vercel.app/#website",
+          "url": "https://f-atics.vercel.app/",
+          "name": "F-ATICS",
+          "description": "The ultimate F1 2026 fan hub — AI race predictions, live telemetry, interactive circuits, team showcase and more."
+        },
+        {
+          "@type": "SportsOrganization",
+          "@id": "https://f-atics.vercel.app/#org",
+          "name": "F-ATICS",
+          "url": "https://f-atics.vercel.app/",
+          "sport": "Formula 1"
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
+    <a class="skip-nav" href="#main-content">Skip to main content</a>
+
     <!-- Topographic Background Pattern -->
     <div class="topo-background"></div>
     <div class="contour-lines"></div>
@@ -194,6 +174,7 @@
 
     <!-- World-Class Hero Section -->
     <div class="hero hero-world-class">
+        <h1 class="sr-only">F-ATICS — The Ultimate F1 2026 Fan Zone</h1>
         <!-- Floating Race Indicator / Next Race Countdown -->
         <div class="floating-race-indicator" id="next-race-indicator">
             <span class="race-flag">🏁</span>
@@ -235,7 +216,7 @@
         <div class="hero-glow"></div>
     </div>
 
-    <main class="main-content">
+    <main id="main-content" class="main-content">
         <!-- F1 Basics Section -->
         <section id="basics" class="section basics-section">
             <div class="section-header">
@@ -708,7 +689,8 @@
                                 LATEST LAP TIMES
                             </div>
                             <div class="tele-lap-data" id="tele-lap-data">
-                                <table class="tele-table">
+                                <div class="tele-lap-table-wrap">
+                                <table class="tele-table" id="tele-lap-table">
                                     <thead>
                                         <tr>
                                             <th>Lap</th>
@@ -722,6 +704,7 @@
                                         <!-- Injected by live-dashboard.js -->
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -731,11 +714,24 @@
 
     </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="footer-content">
-            <p>&copy; 2026 F-ATICS | F1 Fan Zone. All rights reserved.</p>
-            <p class="footer-note">2026 Season data. Not affiliated with Formula One Management or the FIA.</p>
-            <p class="footer-note">🆕 Welcome Audi Revolut F1 Team &amp; Cadillac F1 — the grid is 11 strong!</p>
+            <div class="footer-brand">
+                <span class="footer-logo">F-ATICS</span>
+                <p class="footer-tagline">The way you follow F1 is about to change.</p>
+            </div>
+            <nav class="footer-nav" aria-label="Footer navigation">
+                <a href="#basics">F1 Basics</a>
+                <a href="#tracker">Standings</a>
+                <a href="#calendar">Calendar</a>
+                <a href="#circuits">Circuits</a>
+                <a href="#quiz">Quiz</a>
+                <a href="#showcase">Teams</a>
+            </nav>
+            <div class="footer-meta">
+                <p class="footer-legal">&copy; 2026 F-ATICS. Not affiliated with Formula One Management or the FIA.</p>
+                <p class="footer-attribution">Data: <a href="https://jolpi.ca" target="_blank" rel="noopener">Jolpica</a> &middot; <a href="https://openf1.org" target="_blank" rel="noopener">OpenF1</a> &middot; <a href="https://www.fia.com" target="_blank" rel="noopener">FIA Calendar</a> &middot; 3D: <a href="https://sketchfab.com" target="_blank" rel="noopener">Sketchfab</a></p>
+            </div>
         </div>
     </footer>
 
