@@ -10,31 +10,30 @@ export class OpenF1API {
     }
 
     async fetch(endpoint, params = {}) {
-        // Construct URL with query parameters
         const url = new URL(`${this.baseUrl}${endpoint}`);
         Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-        
         const urlString = url.toString();
-        
-        // Simple caching to avoid spamming the API
-        if (this.cache.has(urlString)) {
-            return this.cache.get(urlString);
-        }
+
+        // Cache successful responses (and short-cache 404s so we don't spam)
+        if (this.cache.has(urlString)) return this.cache.get(urlString);
 
         try {
             const response = await fetch(urlString);
             if (!response.ok) {
+                // 404 == "no data for this query" — common on OpenF1, not a real error
+                if (response.status === 404) {
+                    this.cache.set(urlString, null);
+                    setTimeout(() => this.cache.delete(urlString), 60000);
+                    return null;
+                }
                 throw new Error(`OpenF1 API error: ${response.status} ${response.statusText}`);
             }
             const data = await response.json();
-            
-            // Cache successful responses for 10 seconds
             this.cache.set(urlString, data);
             setTimeout(() => this.cache.delete(urlString), 10000);
-            
             return data;
         } catch (error) {
-            console.error(`Error fetching from OpenF1 ${endpoint}:`, error);
+            // Silent fail — caller falls back to simulation
             return null;
         }
     }
@@ -47,17 +46,38 @@ export class OpenF1API {
     }
 
     /**
-     * Get the latest session specifically
+     * Get the most-recently-completed race session that ACTUALLY HAS DATA.
+     *
+     * OpenF1 pre-populates future-scheduled sessions, so sorting all "Race"
+     * sessions descending can pick a session that hasn't happened yet
+     * (no car_data / lap_data → 404). We filter to past sessions and then
+     * pre-flight each candidate against /laps until we find one that has
+     * real data — guarantees the dashboard always gets something usable.
      */
     async getLatestSession() {
-        // We fetch the most recent sessions and sort descending by date
-        // API supports filtering, e.g., year=2024
         const sessions = await this.fetch('/sessions', { session_name: 'Race' });
-        if (sessions && sessions.length > 0) {
-            // Sort by date descending to get the latest race
-            return sessions.sort((a, b) => new Date(b.date_start) - new Date(a.date_start))[0];
+        if (!sessions || !sessions.length) return null;
+
+        const now = Date.now();
+        const past = sessions
+            .filter(s => new Date(s.date_start).getTime() <= now)
+            .sort((a, b) => new Date(b.date_start) - new Date(a.date_start));
+
+        // Try the most recent past sessions in order until one has lap data.
+        // Cap at 4 attempts so we don't slow boot to a crawl.
+        for (const candidate of past.slice(0, 4)) {
+            const laps = await this.fetch('/laps', {
+                session_key: candidate.session_key,
+                driver_number: 1,
+            });
+            if (laps && laps.length > 0) return candidate;
         }
-        return null;
+
+        // No past races with data — return the closest upcoming one anyway
+        const future = sessions
+            .filter(s => new Date(s.date_start).getTime() > now)
+            .sort((a, b) => new Date(a.date_start) - new Date(b.date_start));
+        return past[0] || future[0] || null;
     }
 
     /**
@@ -70,13 +90,26 @@ export class OpenF1API {
     }
 
     /**
-     * Get high-frequency car telemetry (speed, rpm, gear, throttle, brake)
+     * Get high-frequency car telemetry (speed, rpm, gear, throttle, brake).
+     *
+     * A full race has 50k+ rows per driver — fetching all of them blocks
+     * the UI for many seconds. We cap to a `windowMinutes` slice anchored
+     * to `endDate`. For a live race pass no endDate (defaults to now).
+     * For a past replay pass the session's `date_end`.
      */
-    async getCarData(sessionKey, driverNumber) {
-        return this.fetch('/car_data', {
+    async getCarData(sessionKey, driverNumber, opts = {}) {
+        const windowMinutes = opts.windowMinutes ?? 5;
+        const end = opts.endDate ? new Date(opts.endDate) : new Date();
+        const params = {
             session_key: sessionKey,
-            driver_number: driverNumber
-        });
+            driver_number: driverNumber,
+        };
+        if (windowMinutes > 0) {
+            const start = new Date(end.getTime() - windowMinutes * 60 * 1000);
+            params['date>='] = start.toISOString();
+            params['date<=']  = end.toISOString();
+        }
+        return this.fetch(`/car_data`, params);
     }
 
     /**

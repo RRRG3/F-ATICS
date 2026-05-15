@@ -75,14 +75,24 @@ class LiveTelemetryDashboard {
             this.currentSession = session;
             this.isStreaming = true;
 
-            this._setStatus(`Connected: ${session.circuit_short_name} — ${session.session_name}`, 'success');
-            this._setBtnText('Stop Live Stream');
+            // Differentiate LIVE vs REPLAY status so the user knows which mode
+            const sessionEnd = session.date_end ? new Date(session.date_end) : null;
+            const isReplay = sessionEnd && sessionEnd.getTime() < Date.now();
+            const dateStr = session.date_start ? new Date(session.date_start).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '';
+
+            const statusText = isReplay
+                ? `[REPLAY] ${session.circuit_short_name} — ${session.session_name} · ${dateStr}`
+                : `[LIVE] ${session.circuit_short_name} — ${session.session_name}`;
+            this._setStatus(statusText, 'success');
+            this._setBtnText(isReplay ? 'Stop Replay' : 'Stop Live Stream');
             if (this.btnFetch) this.btnFetch.disabled = false;
 
             this.dashboardGrid.style.display = 'grid';
 
             await this.refreshData();
-            this.streamInterval = setInterval(() => this.refreshData(), 5000);
+            // Replays don't need 5s refresh — data is static. Poll once per minute as a heartbeat.
+            const pollMs = isReplay ? 60000 : 5000;
+            this.streamInterval = setInterval(() => this.refreshData(), pollMs);
 
         } catch (error) {
             const msg = error.message.includes('timed out')
@@ -111,31 +121,70 @@ class LiveTelemetryDashboard {
 
     async refreshData() {
         if (!this.currentSession || !this.isStreaming) return;
-        
+
         try {
             const sessionKey = this.currentSession.session_key;
             const driverNo = this.driverSelect.value;
-    
-            // Fetch concurrently
-            const [carData, lapData] = await Promise.all([
-                this.api.getCarData(sessionKey, driverNo),
-                this.api.getLaps(sessionKey, driverNo)
-            ]);
-    
-            // If API returns data, use it. Otherwise, use our ultra-realistic simulation engine
+
+            // 1. Laps first — small payload (~50 rows × ~200 bytes = 10KB).
+            const lapData = await this._withTimeout(
+                this.api.getLaps(sessionKey, driverNo), 8000
+            ).catch(() => null);
+
+            // If the session genuinely has no lap data for this driver
+            // (other driver), or 3 consecutive refreshes failed, stop
+            // polling and switch to pure simulation. Prevents the
+            // 1/min API hammering the user saw in the console.
+            if (!lapData) {
+                this._missCount = (this._missCount || 0) + 1;
+                if (this._missCount >= 3) {
+                    clearInterval(this.streamInterval);
+                    this.streamInterval = null;
+                    this._setStatus('No live data — showing simulation', 'warning');
+                }
+                this.simulateSpeedTrace();
+                this.simulateLapData();
+                return;
+            }
+            this._missCount = 0;
+
+            // 2. Use the last lap's start time to anchor a tight car_data
+            //    window. car_data for a full race is ~6MB; a 2-min slice is ~250KB.
+            let carOpts = { windowMinutes: 5 };
+            if (lapData && lapData.length > 0) {
+                const lastLap = lapData[lapData.length - 1];
+                const lapStartIso = lastLap.date_start;
+                if (lapStartIso) {
+                    const lapStart = new Date(lapStartIso);
+                    const endDate = new Date(lapStart.getTime() + (lastLap.lap_duration || 90) * 1000);
+                    carOpts = { endDate, windowMinutes: 2 };
+                }
+            } else {
+                // Fall back to session date_end for the window anchor
+                const sessionEnd = this.currentSession.date_end
+                    ? new Date(this.currentSession.date_end)
+                    : null;
+                if (sessionEnd && sessionEnd.getTime() < Date.now()) {
+                    carOpts = { endDate: sessionEnd, windowMinutes: 30 };
+                }
+            }
+
+            const carData = await this._withTimeout(
+                this.api.getCarData(sessionKey, driverNo, carOpts), 8000
+            ).catch(() => null);
+
+            // Render — use real data if present, otherwise fall back to sim
             if (carData && carData.length > 0) {
                 this.renderSpeedChart(carData);
             } else {
                 this.simulateSpeedTrace();
             }
-
             if (lapData && lapData.length > 0) {
                 this.renderLapData(lapData);
             } else {
                 this.simulateLapData();
             }
         } catch (e) {
-            // Non-fatal: show warning in status but keep the stream alive
             this._setStatus(`Live feed interrupted — showing simulation (${new Date().toLocaleTimeString()})`, 'warning');
             this.simulateSpeedTrace();
             this.simulateLapData();

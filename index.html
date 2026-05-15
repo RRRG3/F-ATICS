@@ -32,11 +32,18 @@
     <!-- PWA -->
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="/icons/icon.svg">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="F-ATICS">
 
     <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="design-system.css?v=1">
+
+    <!-- Pit Wall: editorial display + mono for data -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -45,10 +52,12 @@
 
     <!-- Heavy CDN libs — defer so the browser downloads all of them in parallel
          from the very first byte of the page, but executes them in order after parse. -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <!-- Three.js r148 (last build without UMD deprecation warning at r150+) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.148.0/three.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+    <!-- Lenis 1.1.x — proper UMD bundle (fixes "module is not defined") -->
+    <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
@@ -76,8 +85,21 @@
     </script>
 </head>
 
-<body>
+<body class="pw">
     <a class="skip-nav" href="#main-content">Skip to main content</a>
+
+    <!-- Top loading bar -->
+    <div class="lab-loader" aria-hidden="true"><div class="lab-loader__bar" id="lab-loader-bar"></div></div>
+
+    <!-- Page chrome — terminal corner readouts -->
+    <div class="lab-chrome lab-chrome--top">
+        <a href="#hero" class="lab-tag">[LAB] / <b>[01]</b> F-ATICS <em>/ 2026 SEASON</em></a>
+        <span class="lab-live"><span id="lab-coords" class="lab-coords">— · — · —</span> &nbsp;[LIVE]</span>
+    </div>
+    <div class="lab-chrome lab-chrome--bot">
+        <span><b>[F1 / 2026]</b> &nbsp;Real-time championship telemetry</span>
+        <span class="lab-clock"><span id="lab-clock">--:--:--</span> &nbsp;/ <span id="lab-scroll">00%</span></span>
+    </div>
 
     <!-- Topographic Background Pattern -->
     <div class="topo-background"></div>
@@ -140,84 +162,98 @@
         <div class="wipe-logo">F-ATICS</div>
     </div>
 
-    <!-- Floating Pill Navbar — Parker AI style -->
-    <header class="header pk-nav-pill">
-        <div class="pk-nav-inner">
-            <div class="logo pk-logo" id="logo-btn">
-                <span class="pk-logo-f1">F1</span>
-                <span class="pk-logo-name">F-ATICS</span>
-            </div>
-            <nav class="nav pk-nav">
-                <ul class="nav-list pk-nav-list">
-                    <li><a href="#basics"      class="nav-link pk-nav-link">Basics</a></li>
-                    <li><a href="#tracker"     class="nav-link pk-nav-link">Standings</a></li>
-                    <li><a href="#rule-changes" class="nav-link pk-nav-link pk-nav-link-new">2026 ✦</a></li>
-                    <li><a href="#calendar"    class="nav-link pk-nav-link">Calendar</a></li>
-                    <li><a href="#quiz"        class="nav-link pk-nav-link">Quiz</a></li>
-                    <li><a href="#showcase"    class="nav-link pk-nav-link">Teams</a></li>
-                    <li><a href="#circuits"    class="nav-link pk-nav-link">Circuits</a></li>
-                </ul>
-                <div class="team-theme-selector">
-                    <button class="theme-btn" id="theme-toggle-btn" aria-label="Choose team colour theme" aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-dropdown">
-                        <span class="theme-color-dot" id="active-theme-dot"></span>
-                        <span class="theme-name" id="active-theme-name">F-ATICS</span>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    </button>
-                    <div class="theme-dropdown" id="theme-dropdown">
-                        <!-- Themes injected by JS -->
-                    </div>
-                </div>
-            </nav>
-            <a href="#tracker" class="pk-cta-btn">View 2026 Grid →</a>
+    <!-- Pit Wall Nav — collapsed pill, 4 items + 1 CTA -->
+    <nav class="pw-nav" aria-label="Primary">
+        <a href="#hero" class="pw-nav__brand"><b>F</b>·ATICS</a>
+        <ul class="pw-nav__list">
+            <li><a href="#predictions" class="pw-nav__link">Predict</a></li>
+            <li><a href="#calendar"    class="pw-nav__link">Calendar</a></li>
+            <li><a href="#tracker"     class="pw-nav__link">Standings</a></li>
+            <li><a href="#showcase"    class="pw-nav__link">Grid</a></li>
+        </ul>
+        <a href="#predictions" class="pw-nav__cta">Predict podium →</a>
+    </nav>
+
+    <!-- Hidden legacy theme controls (kept so existing JS doesn't crash) -->
+    <div hidden aria-hidden="true">
+        <button id="theme-toggle-btn"><span id="active-theme-dot"></span><span id="active-theme-name">F-ATICS</span></button>
+        <div id="theme-dropdown"></div>
+    </div>
+
+    <!-- HERO — terminal-mono -->
+    <header class="pw-hero" id="hero">
+        <h1 class="sr-only">F-ATICS — The Ultimate F1 2026 Fan Zone</h1>
+        <div class="pw-hero__rule">
+            <b>[04]</b> &nbsp;F-ATICS &nbsp;/&nbsp; PIT WALL &nbsp;/&nbsp; 2026
+        </div>
+        <div class="pw-hero__h" aria-hidden="true">
+            <span class="pw-hero__h-line">F1 / 2026 /</span>
+            <span class="pw-hero__h-line"><span class="accent">11 TEAMS.</span></span>
+            <span class="pw-hero__h-line"><span class="dim">22 DRIVERS.</span></span>
+            <span class="pw-hero__h-line">ONE TITLE.</span>
+        </div>
+        <p class="pw-hero__sub">
+            <b>Real-time championship telemetry</b>, race-by-race AI predictions,
+            and live circuit data from every grand prix.
+            Built for the moment the lights go out.
+        </p>
+        <div class="pw-hero__cta">
+            <a href="#predictions" class="pw-btn">Predict the podium →</a>
+            <a href="#tracker" class="pw-btn pw-btn--ghost">See the grid</a>
+        </div>
+        <div class="pw-hero__readout">
+            <span>[STATUS] &nbsp;<b id="hero-status">CONNECTED</b></span>
+            <span>[ROUND] &nbsp;<b id="hero-round">--</b></span>
+            <span>[NEXT] &nbsp;<b id="hero-next">--</b></span>
+            <span>[SCROLL] &nbsp;<b id="hero-scroll">↓</b></span>
         </div>
     </header>
 
-    <!-- Lightweight Particle Background -->
-    <div class="particles-container" id="particles"></div>
-
-    <!-- World-Class Hero Section -->
-    <div class="hero hero-world-class">
-        <h1 class="sr-only">F-ATICS — The Ultimate F1 2026 Fan Zone</h1>
-        <!-- Floating Race Indicator / Next Race Countdown -->
-        <div class="floating-race-indicator" id="next-race-indicator">
-            <span class="race-flag">🏁</span>
-            <span class="race-name" id="next-race-name">2026 Season</span>
+    <!-- [DRIVE] — interactive WebGL moment placeholder -->
+    <section class="pw-drive" id="drive" aria-label="Interactive driving demo">
+        <div class="pw-drive__inner">
+            <div class="pw-drive__copy">
+                <h3>[ DRIVE ]</h3>
+                <p>An interactive 2026 chassis. Hold the keys, accelerate down the main straight, brake into the chicane. Real physics, low-poly, no marketing fluff.</p>
+                <div class="pw-drive__keys" aria-hidden="true">
+                    <span class="pw-drive__key">W</span>
+                    <span class="pw-drive__key">A</span>
+                    <span class="pw-drive__key">S</span>
+                    <span class="pw-drive__key">D</span>
+                </div>
+                <p style="font-size:11px;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;">[ Interactive / Tool ] &nbsp; coming online</p>
+            </div>
+            <div class="pw-drive__stage" id="drive-stage" aria-hidden="true"></div>
         </div>
+    </section>
 
-        <!-- Next Race Live Countdown -->
-        <div class="hero-countdown" id="hero-countdown">
-            <div class="countdown-label-hero">NEXT RACE COUNTDOWN</div>
-            <div class="countdown-boxes">
-                <div class="countdown-box"><span id="cd-days">--</span><label>DAYS</label></div>
-                <div class="countdown-box"><span id="cd-hours">--</span><label>HRS</label></div>
-                <div class="countdown-box"><span id="cd-mins">--</span><label>MIN</label></div>
-                <div class="countdown-box"><span id="cd-secs">--</span><label>SEC</label></div>
+    <!-- NOW BLOCK — live data strip -->
+    <section class="pw-now" id="now-block" data-loading="true" aria-label="Live F1 status">
+        <div class="pw-now__inner">
+            <div class="pw-now__cell">
+                <div class="pw-now__label"><span class="pw-now__live-dot"></span>Next session</div>
+                <div class="pw-now__countdown" id="now-countdown" aria-live="polite">
+                    <span id="cd-days">--</span><span class="sep">:</span><span id="cd-hours">--</span><span class="sep">:</span><span id="cd-mins">--</span><span class="sep">:</span><span id="cd-secs">--</span>
+                </div>
+                <div class="pw-now__race" id="now-race-name">— · —</div>
+            </div>
+            <div class="pw-now__cell">
+                <div class="pw-now__label">Leader</div>
+                <div class="pw-now__big" id="now-leader-name">—</div>
+                <div class="pw-now__small" id="now-leader-team">— · <span class="pw-now__delta">— pt</span></div>
+            </div>
+            <div class="pw-now__cell">
+                <div class="pw-now__label">Last race</div>
+                <div class="pw-now__big" id="now-last-race">—</div>
+                <div class="pw-now__small" id="now-last-result">Round — · Winner: —</div>
+            </div>
+            <div class="pw-now__cell">
+                <div class="pw-now__label">Teams · Drivers</div>
+                <div class="pw-now__big">11 · 22</div>
+                <div class="pw-now__small">Audi & Cadillac debut</div>
             </div>
         </div>
-
-        <!-- Mega Typography Hero — Parker AI editorial style -->
-        <div class="hero-text-container">
-            <div class="hero-mega-text">
-                <span class="text-reveal">The way you follow</span>
-            </div>
-            <div class="hero-mega-text" style="color: var(--pk-red, #E10600); -webkit-text-fill-color: var(--pk-red, #E10600);">
-                <span class="text-reveal serif-italic">F1</span>
-            </div>
-            <div class="hero-mega-text">
-                <span class="text-reveal">is about to change.</span>
-            </div>
-            <div class="hero-season-badge">2026 Season — 11 Teams · 22 Drivers · Audi &amp; Cadillac debut</div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator-world">
-            <div class="scroll-line"></div>
-            <span class="scroll-text">SCROLL</span>
-        </div>
-
-        <!-- Hero Glow Effect -->
-        <div class="hero-glow"></div>
-    </div>
+    </section>
 
     <main id="main-content" class="main-content">
         <!-- F1 Basics Section -->
@@ -763,27 +799,41 @@
         window.addEventListener('load', hideLoader);
         setTimeout(hideLoader, 3000); // Fail-safe to prevent perpetual loading
     </script>
-    <script defer src="js/car-360.js?v=4"></script>
     <script defer src="script.js?v=4"></script>
-    <script defer src="3d-effects.js?v=4"></script>
-    <script defer src="world-class-animations.js?v=4"></script>
+    <script defer src="js/lab-chrome.js?v=1"></script>
+    <!-- Legacy decorative scripts disabled in LAB design system:
+         3d-effects.js, world-class-animations.js, js/car-360.js, js/app-init.js,
+         js/animation-controller.js, js/asset-loader.js, js/performance-monitor.js,
+         js/webgl-engine.js, js/theme-engine.js — all retired. -->
 
 
-    <!-- New modular system (ES6 modules) -->
-    <script type="module" src="js/app-init.js?v=4"></script>
-
-    <!-- PWA service worker registration -->
+    <!-- PWA service worker registration — skipped on localhost so dev HMR
+         isn't fighting a cache-first SW. In dev we proactively unregister
+         any leftover SW so stale modules can't keep serving. -->
     <script>
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
+        const isDev = ['localhost', '127.0.0.1'].includes(location.hostname);
+        window.addEventListener('load', async () => {
+            if (isDev) {
+                // Tear down any SW from previous runs so old modules can't be served
+                const regs = await navigator.serviceWorker.getRegistrations().catch(() => []);
+                await Promise.all(regs.map(r => r.unregister()));
+                if (window.caches) {
+                    const keys = await caches.keys();
+                    await Promise.all(keys.map(k => caches.delete(k)));
+                }
+                return;
+            }
             navigator.serviceWorker.register('/sw.js').catch(() => {});
         });
     }
     </script>
 
     <!-- Umami analytics — privacy-first, no cookies, GDPR-compliant, no banner needed -->
-    <!-- Replace data-website-id with your Umami project ID after self-hosting or signing up at umami.is -->
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="REPLACE_WITH_YOUR_UMAMI_ID"></script>
+    <!-- Analytics disabled until a real Umami website ID is configured.
+         To enable, replace data-website-id and uncomment:
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_UMAMI_ID"></script>
+    -->
 
     <script>
     // Telemetry — race weekend awareness banner

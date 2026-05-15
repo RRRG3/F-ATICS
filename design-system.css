@@ -1,0 +1,1322 @@
+/* ================================================================
+   F-ATICS · LAB Design System
+   Inspired by lab.patrickheintzmann.com — terminal-brutalist mono.
+   Loaded AFTER styles.css so it wins the cascade.
+   ================================================================ */
+
+:root {
+    /* Colour — true black, hard contrast, one accent */
+    --bg:        #000;
+    --bg-2:      #050505;
+    --surface:   #0a0a0a;
+    --surface-2: #111;
+    --border:    rgba(255,255,255,0.10);
+    --border-hi: rgba(255,255,255,0.22);
+    --text:      #fff;
+    --text-2:    rgba(255,255,255,0.55);
+    --text-3:    rgba(255,255,255,0.32);
+    --text-4:    rgba(255,255,255,0.18);
+    --red:       #FF1F1F;
+    --red-glow:  rgba(255,31,31,0.18);
+    --live:      #00FF66;
+
+    /* Typography — mono only */
+    --font: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    /* Layout */
+    --container: 1320px;
+    --gutter:    clamp(20px, 4vw, 48px);
+    --section-y: clamp(80px, 14vw, 180px);
+
+    /* Chrome */
+    --chrome-pad: 16px;
+}
+
+/* ── Kill ALL decorative legacy noise ──────────────────────────── */
+.custom-cursor,
+.cursor-dot,
+.cursor-outline,
+#flag-trail-canvas,
+.particles-container,
+#particles,
+.topo-background,
+.contour-lines,
+.noise-overlay,
+.hero-glow,
+.fullscreen-nav,
+.menu-toggle,
+.page-transition-wipe,
+.scroll-indicator-world,
+.floating-race-indicator,
+.hero-countdown,
+.hero-text-container,
+.header.pk-nav-pill { display: none !important; }
+
+body { cursor: auto !important; }
+
+/* ── Base ──────────────────────────────────────────────────────── */
+html, body { background: var(--bg) !important; }
+
+body.pw {
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 13px;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    margin: 0;
+    padding: 0;
+}
+
+.pw ::selection { background: var(--red); color: #fff; }
+
+.pw a { color: var(--text); text-decoration: none; }
+.pw a:hover { color: var(--red); }
+
+/* ── Loading bar pinned to top ─────────────────────────────────── */
+.lab-loader {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    z-index: 2000;
+    background: rgba(255,255,255,0.06);
+    pointer-events: none;
+}
+.lab-loader__bar {
+    height: 100%;
+    width: 0%;
+    background: var(--red);
+    transition: width 0.2s linear;
+}
+
+/* ── Page chrome — fixed corner readouts ───────────────────────── */
+.lab-chrome {
+    position: fixed;
+    z-index: 1500;
+    font-family: var(--font);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    pointer-events: none;
+    padding: var(--chrome-pad);
+    background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+}
+.lab-chrome--top { top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: flex-start; }
+.lab-chrome--bot {
+    bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: flex-end;
+    background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+    padding-top: 40px;
+}
+.lab-chrome a { pointer-events: auto; }
+
+.lab-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text);
+}
+.lab-tag b { color: var(--red); font-weight: 500; }
+.lab-tag em { font-style: normal; color: var(--text-2); }
+
+.lab-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+}
+.lab-live::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--red-glow);
+    animation: lab-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes lab-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.3; transform: scale(0.8); }
+}
+
+@media (max-width: 720px) {
+    .lab-chrome { font-size: 10px; }
+    .lab-chrome--top .lab-coords,
+    .lab-chrome--bot .lab-clock { display: none; }
+}
+
+/* ── Nav — terminal pill ───────────────────────────────────────── */
+.pw-nav {
+    position: fixed;
+    top: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1400;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    padding: 4px;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-hi);
+    font-family: var(--font);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.pw-nav__brand {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 14px;
+    color: var(--text);
+    font-weight: 500;
+    border-right: 1px solid var(--border);
+    margin-right: 4px;
+    height: 28px;
+}
+.pw-nav__brand b { color: var(--red); margin-right: 2px; }
+.pw-nav__list { display: flex; gap: 0; list-style: none; margin: 0; padding: 0; }
+.pw-nav__link {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 12px;
+    color: var(--text-2);
+    transition: color 0.12s;
+}
+.pw-nav__link::before { content: '['; opacity: 0; transition: opacity 0.12s; margin-right: 2px; color: var(--red); }
+.pw-nav__link::after  { content: ']'; opacity: 0; transition: opacity 0.12s; margin-left: 2px; color: var(--red); }
+.pw-nav__link:hover,
+.pw-nav__link.is-active { color: var(--text); }
+.pw-nav__link:hover::before, .pw-nav__link:hover::after,
+.pw-nav__link.is-active::before, .pw-nav__link.is-active::after { opacity: 1; }
+
+.pw-nav__cta {
+    margin-left: 4px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 14px;
+    background: var(--red);
+    color: #fff;
+    font-weight: 500;
+    transition: background 0.12s;
+}
+.pw-nav__cta:hover { background: #fff; color: var(--red); }
+.pw-nav__cta::before { content: '['; margin-right: 4px; }
+.pw-nav__cta::after  { content: ']'; margin-left: 4px; }
+
+@media (max-width: 720px) {
+    .pw-nav { top: 48px; font-size: 10px; }
+    .pw-nav__list { display: none; }
+    .pw-nav__brand { padding: 0 10px; }
+    .pw-nav__cta { padding: 0 10px; }
+}
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+.pw-hero {
+    min-height: 100vh;
+    padding: 140px var(--gutter) 100px;
+    max-width: var(--container);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+.pw-hero__rule {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin-bottom: 56px;
+}
+.pw-hero__rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+.pw-hero__rule b { color: var(--red); font-weight: 500; }
+
+.pw-hero__h {
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 7vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--text);
+}
+.pw-hero__h-line { display: block; }
+.pw-hero__h-line .accent { color: var(--red); }
+.pw-hero__h-line .dim    { color: var(--text-3); }
+
+.pw-hero__sub {
+    margin-top: 48px;
+    max-width: 52ch;
+    color: var(--text-2);
+    font-size: 13px;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+}
+.pw-hero__sub b { color: var(--text); font-weight: 500; }
+
+.pw-hero__cta {
+    margin-top: 56px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.pw-hero__readout {
+    margin-top: 96px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.pw-hero__readout span { display: inline-flex; gap: 8px; }
+.pw-hero__readout span b { color: var(--text); font-weight: 500; }
+
+/* ── Buttons ───────────────────────────────────────────────────── */
+.pw-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 18px;
+    height: 40px;
+    background: var(--red);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--red);
+    transition: transform 0.12s, background 0.12s, color 0.12s;
+    cursor: pointer;
+}
+.pw-btn::before { content: '['; margin-right: 6px; }
+.pw-btn::after  { content: ']'; margin-left: 6px; }
+.pw-btn:hover { background: #fff; color: var(--red); transform: translateY(-1px); }
+
+.pw-btn--ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-hi);
+}
+.pw-btn--ghost:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+    transform: translateY(-1px);
+}
+
+/* ── Now Block ─────────────────────────────────────────────────── */
+.pw-now {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    padding: 36px var(--gutter);
+}
+.pw-now__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: clamp(20px, 3vw, 48px);
+}
+@media (max-width: 900px) {
+    .pw-now__inner { grid-template-columns: 1fr 1fr; }
+    .pw-now__cell:first-child { grid-column: span 2; }
+}
+
+.pw-now__cell { min-width: 0; border-left: 1px solid var(--border); padding-left: 16px; }
+.pw-now__cell:first-child { border-left: 0; padding-left: 0; }
+
+.pw-now__label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.pw-now__label::before { content: '['; color: var(--red); }
+.pw-now__label::after  { content: ']'; color: var(--red); }
+
+.pw-now__countdown {
+    font-family: var(--font);
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+.pw-now__countdown .sep { color: var(--text-3); margin: 0 2px; }
+.pw-now__race {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--text-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.pw-now__big {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+}
+.pw-now__small {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--text-2);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+}
+.pw-now__delta { color: var(--red); font-weight: 500; }
+
+/* ── Section primitives ────────────────────────────────────────── */
+.pw-section {
+    padding: var(--section-y) var(--gutter);
+    max-width: var(--container);
+    margin: 0 auto;
+    position: relative;
+}
+
+.pw-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin-bottom: 28px;
+}
+.pw-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--red); }
+.pw-eyebrow .pw-num { color: var(--red); font-weight: 500; }
+.pw-eyebrow .pw-num::before { content: '['; }
+.pw-eyebrow .pw-num::after  { content: ']'; }
+
+.pw-title {
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin: 0 0 24px;
+}
+.pw-title .accent { color: var(--red); }
+.pw-title .dim    { color: var(--text-3); }
+
+.pw-lede {
+    font-size: 13px;
+    color: var(--text-2);
+    max-width: 60ch;
+    margin: 0 0 56px;
+    line-height: 1.7;
+}
+
+/* ── Force the new mono+caps language on legacy sections ───────── */
+.pw .section,
+.pw section.section {
+    background: transparent !important;
+    font-family: var(--font) !important;
+}
+.pw .section-title,
+.pw h1, .pw h2, .pw h3 {
+    font-family: var(--font) !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase !important;
+}
+.pw .section-subtitle,
+.pw p, .pw li, .pw td, .pw th, .pw label, .pw button, .pw input, .pw select {
+    font-family: var(--font) !important;
+}
+
+.pw .countdown-time,
+.pw .countdown-value,
+.pw .points-col,
+.pw .pos-col,
+.pw .driver-num,
+.pw #cd-days, .pw #cd-hours, .pw #cd-mins, .pw #cd-secs {
+    font-family: var(--font) !important;
+    font-variant-numeric: tabular-nums !important;
+}
+
+/* ── Footer override ───────────────────────────────────────────── */
+.pw .footer {
+    background: var(--bg) !important;
+    border-top: 1px solid var(--border) !important;
+    color: var(--text-2) !important;
+}
+.pw .footer-logo {
+    font-family: var(--font) !important;
+    letter-spacing: 0.12em !important;
+    color: var(--red) !important;
+}
+.pw .footer a { color: var(--text-2); }
+.pw .footer a:hover { color: var(--red); }
+
+/* ── Reduced motion hardening ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .lab-live::before { animation: none !important; }
+    .pw-btn:hover,
+    .pw-btn--ghost:hover { transform: none !important; }
+}
+
+/* ── DRIVE section (preview tile for an interactive WebGL moment) ─ */
+.pw-drive {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    padding: 64px var(--gutter);
+}
+.pw-drive__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: clamp(24px, 4vw, 64px);
+    align-items: center;
+}
+@media (max-width: 820px) { .pw-drive__inner { grid-template-columns: 1fr; } }
+
+.pw-drive__copy { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+.pw-drive__copy h3 {
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 0 0 12px;
+}
+.pw-drive__keys { display: flex; gap: 6px; margin: 18px 0; }
+.pw-drive__key {
+    width: 28px; height: 28px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border-hi);
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.pw-drive__stage {
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border: 1px solid var(--border-hi);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+}
+.pw-drive__stage::before {
+    content: 'INTERACTIVE / TOOL';
+    position: absolute;
+    top: 12px; left: 12px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--red);
+}
+.pw-drive__stage::after {
+    content: '[ LOADING TELEMETRY... ]';
+    color: var(--text-3);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    animation: lab-blink 1.4s steps(2) infinite;
+}
+@keyframes lab-blink { 50% { opacity: 0.2; } }
+
+/* ============================================================
+   SECTION-LEVEL LAB PASS — apply terminal language everywhere
+   ============================================================ */
+
+/* ── Universal section header replacement ──────────────────────── */
+.pw .section { padding: var(--section-y) var(--gutter) !important; max-width: var(--container); margin: 0 auto !important; }
+.pw .section-header { margin-bottom: 56px !important; text-align: left !important; padding: 0 !important; }
+.pw .section-header .section-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem) !important;
+    color: var(--text) !important;
+    margin: 0 0 14px !important;
+    background: none !important;
+    -webkit-text-fill-color: var(--text) !important;
+}
+.pw .section-header .section-title::before {
+    content: attr(data-num) ' ';
+    color: var(--red);
+    font-weight: 500;
+}
+.pw .section-header .section-subtitle {
+    font-size: 12px !important;
+    color: var(--text-2) !important;
+    letter-spacing: 0.06em !important;
+    max-width: 60ch;
+    margin: 0 !important;
+    text-transform: none !important;
+}
+
+/* ── Underline rule under every section header ─────────────────── */
+.pw .section-header::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--red);
+    margin-top: 20px;
+}
+
+/* ── Cards (bento, team, circuit, calendar, rule, stat) ────────── */
+.pw .bento-card,
+.pw .team-card,
+.pw .circuit-card,
+.pw .calendar-card,
+.pw .rule-card,
+.pw .stat-item,
+.pw .pred-results,
+.pw .pred-controls,
+.pw .quiz-container,
+.pw .telemetry-card,
+.pw .tele-card,
+.pw #live-telemetry .card,
+.pw .table-container {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transition: border-color 0.15s, transform 0.15s !important;
+}
+.pw .bento-card:hover,
+.pw .team-card:hover,
+.pw .circuit-card:hover,
+.pw .calendar-card:hover,
+.pw .rule-card:hover,
+.pw .stat-item:hover {
+    border-color: var(--border-hi) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: none !important;
+}
+
+/* Card titles */
+.pw .bento-title,
+.pw .rule-title,
+.pw .team-card h3,
+.pw .circuit-card h3,
+.pw .calendar-card h3,
+.pw .card-title {
+    font-family: var(--font) !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: -0.01em !important;
+    color: var(--text) !important;
+    font-size: 14px !important;
+}
+
+/* Card body text */
+.pw .bento-text,
+.pw .rule-desc,
+.pw .card-text,
+.pw .team-card p,
+.pw .circuit-card p,
+.pw .calendar-card p {
+    font-size: 12px !important;
+    color: var(--text-2) !important;
+    line-height: 1.6 !important;
+}
+
+/* Kill emoji blast — keep icons subtle */
+.pw .bento-icon,
+.pw .rule-icon,
+.pw .toggle-icon {
+    font-size: 1.2rem !important;
+    opacity: 0.6 !important;
+}
+
+/* ── Buttons — make legacy buttons LAB-bracket ─────────────────── */
+.pw .btn,
+.pw .btn-primary,
+.pw .btn-secondary,
+.pw .primary-button,
+.pw .pred-run-btn,
+.pw .toggle-btn,
+.pw .filter-select,
+.pw .pred-select,
+.pw .theme-select,
+.pw select,
+.pw input,
+.pw .search-input {
+    font-family: var(--font) !important;
+    font-size: 11px !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    border-radius: 0 !important;
+    border: 1px solid var(--border-hi) !important;
+    background: transparent !important;
+    color: var(--text) !important;
+}
+.pw .btn-primary,
+.pw .primary-button,
+.pw .pred-run-btn {
+    background: var(--red) !important;
+    border-color: var(--red) !important;
+    color: #fff !important;
+    height: 40px !important;
+    padding: 0 18px !important;
+}
+.pw .btn-primary:hover,
+.pw .primary-button:hover,
+.pw .pred-run-btn:hover {
+    background: #fff !important;
+    color: var(--red) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Bracket the LAB buttons */
+.pw .btn-primary::before,
+.pw .primary-button::before,
+.pw .pred-run-btn::before { content: '['; margin-right: 6px; }
+.pw .btn-primary::after,
+.pw .primary-button::after,
+.pw .pred-run-btn::after { content: ']'; margin-left: 6px; }
+
+/* Toggle-btn active state */
+.pw .toggle-btn { height: 32px !important; padding: 0 14px !important; }
+.pw .toggle-btn.active { background: var(--red) !important; color: #fff !important; border-color: var(--red) !important; }
+
+/* Search inputs */
+.pw input.search-input,
+.pw input[type="text"],
+.pw select {
+    height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 12px !important;
+    text-transform: none !important;
+    letter-spacing: 0.04em !important;
+}
+
+/* ── Standings table — terminal rows ───────────────────────────── */
+.pw .standings-table,
+.pw .tele-table {
+    width: 100%;
+    border: 1px solid var(--border) !important;
+    border-collapse: collapse !important;
+    background: var(--bg) !important;
+    font-family: var(--font) !important;
+    font-size: 12px !important;
+}
+.pw .standings-table thead,
+.pw .tele-table thead {
+    background: var(--surface) !important;
+    border-bottom: 1px solid var(--border-hi) !important;
+}
+.pw .standings-table th,
+.pw .tele-table th {
+    text-align: left !important;
+    padding: 14px 16px !important;
+    color: var(--text-3) !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    border: 0 !important;
+}
+.pw .standings-table td,
+.pw .tele-table td {
+    padding: 14px 16px !important;
+    border-top: 1px solid var(--border) !important;
+    color: var(--text) !important;
+    font-variant-numeric: tabular-nums !important;
+    font-size: 12px !important;
+}
+.pw .standings-table tr:hover td,
+.pw .tele-table tr:hover td { background: rgba(255,255,255,0.02) !important; }
+
+.pw .pos-col { color: var(--red) !important; font-weight: 500 !important; }
+.pw .standings-table .driver-num { color: var(--red) !important; font-weight: 500 !important; }
+.pw .points-col { color: var(--text) !important; font-weight: 500 !important; }
+.pw .pts-bar-wrap { display: inline-block !important; width: 80px !important; height: 2px !important; background: var(--border) !important; margin-left: 8px !important; vertical-align: middle !important; }
+.pw .pts-bar { background: var(--red) !important; height: 100% !important; }
+.pw .team-dot { display: inline-block; width: 8px; height: 8px; border-radius: 0 !important; margin-right: 8px; vertical-align: middle; }
+
+.pw .standings-note {
+    text-align: center !important;
+    color: var(--text-3) !important;
+    font-style: normal !important;
+    font-size: 11px !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 28px !important;
+}
+
+/* ── Predictions card ──────────────────────────────────────────── */
+.pw .ai-predictor-section,
+.pw #predictions {
+    background: var(--bg) !important;
+}
+.pw .pred-controls,
+.pw .pred-results {
+    padding: 24px !important;
+    margin-bottom: 16px !important;
+}
+.pw .pred-results h3,
+.pw .ai-card-title {
+    font-size: 12px !important;
+    letter-spacing: 0.14em !important;
+    color: var(--text-3) !important;
+    margin: 0 0 16px !important;
+}
+
+/* ── Telemetry section ─────────────────────────────────────────── */
+.pw .telemetry-section,
+.pw #live-telemetry { background: var(--bg) !important; }
+.pw .tele-status {
+    font-family: var(--font) !important;
+    font-size: 11px !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+}
+.pw .tele-status.success { color: var(--live) !important; }
+.pw .tele-status.error   { color: var(--red) !important; }
+.pw .tele-status.warning { color: #ffb74d !important; }
+
+/* ── Calendar grid ─────────────────────────────────────────────── */
+.pw .calendar-card {
+    padding: 20px !important;
+    position: relative;
+}
+.pw .calendar-card .round-number,
+.pw .calendar-card .race-round {
+    font-size: 10px !important;
+    color: var(--red) !important;
+    letter-spacing: 0.16em !important;
+}
+.pw .calendar-card .race-date,
+.pw .calendar-card .countdown-time {
+    font-family: var(--font) !important;
+    font-size: 12px !important;
+    color: var(--text-2) !important;
+    font-variant-numeric: tabular-nums !important;
+}
+
+/* ── Quiz ──────────────────────────────────────────────────────── */
+.pw .quiz-container {
+    padding: 32px !important;
+}
+.pw .quiz-question,
+.pw .quiz-question-text,
+.pw #question {
+    font-family: var(--font) !important;
+    font-size: 1.1rem !important;
+    line-height: 1.4 !important;
+    color: var(--text) !important;
+    text-transform: none !important;
+    letter-spacing: -0.01em !important;
+}
+.pw .option,
+.pw .quiz-option {
+    background: transparent !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 0 !important;
+    color: var(--text) !important;
+    font-family: var(--font) !important;
+    font-size: 12px !important;
+    text-transform: none !important;
+    letter-spacing: 0.02em !important;
+    padding: 14px 18px !important;
+    transition: border-color 0.12s, background 0.12s !important;
+}
+.pw .option::before,
+.pw .quiz-option::before {
+    content: '[ ] ';
+    color: var(--text-3);
+    margin-right: 6px;
+}
+.pw .option:hover,
+.pw .quiz-option:hover { border-color: var(--border-hi) !important; background: rgba(255,255,255,0.02) !important; }
+.pw .option.correct,
+.pw .quiz-option.correct { border-color: var(--live) !important; color: var(--live) !important; }
+.pw .option.correct::before,
+.pw .quiz-option.correct::before { content: '[✓] '; color: var(--live); }
+.pw .option.wrong,
+.pw .quiz-option.wrong { border-color: var(--red) !important; color: var(--red) !important; }
+.pw .option.wrong::before,
+.pw .quiz-option.wrong::before { content: '[×] '; color: var(--red); }
+
+.pw .quiz-progress,
+.pw .quiz-progress-bar {
+    background: rgba(255,255,255,0.05) !important;
+    border-radius: 0 !important;
+    height: 2px !important;
+}
+.pw .quiz-progress-fill { background: var(--red) !important; border-radius: 0 !important; }
+
+/* ── Modal — terminal sheet ────────────────────────────────────── */
+.pw .modal {
+    background: rgba(0,0,0,0.9) !important;
+    backdrop-filter: blur(8px);
+}
+.pw .modal-content {
+    background: var(--bg-2) !important;
+    border: 1px solid var(--border-hi) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-family: var(--font) !important;
+}
+.pw .modal-content h2,
+.pw .modal-content h3 {
+    font-family: var(--font) !important;
+    text-transform: uppercase !important;
+    letter-spacing: -0.01em !important;
+}
+.pw .close-btn {
+    background: transparent !important;
+    border: 1px solid var(--border-hi) !important;
+    border-radius: 0 !important;
+    color: var(--text) !important;
+    width: 36px !important;
+    height: 36px !important;
+}
+.pw .close-btn:hover { background: var(--red) !important; border-color: var(--red) !important; }
+
+/* ── Rule changes section ──────────────────────────────────────── */
+.pw .rule-card {
+    padding: 24px !important;
+}
+.pw .rule-card .rule-title {
+    margin-top: 12px !important;
+}
+
+/* ── Footer — terminal style ───────────────────────────────────── */
+.pw .footer {
+    padding: 60px var(--gutter) 80px !important;
+    font-family: var(--font) !important;
+    font-size: 11px !important;
+}
+.pw .footer-content {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 32px !important;
+    max-width: var(--container) !important;
+}
+@media (max-width: 720px) {
+    .pw .footer-content { grid-template-columns: 1fr !important; text-align: left !important; }
+}
+.pw .footer-logo {
+    font-size: 14px !important;
+}
+.pw .footer-tagline,
+.pw .footer-legal,
+.pw .footer-attribution {
+    color: var(--text-3) !important;
+    font-style: normal !important;
+    letter-spacing: 0.04em !important;
+    text-transform: none !important;
+    font-size: 11px !important;
+}
+.pw .footer-nav { justify-content: flex-start !important; }
+.pw .footer-nav a {
+    color: var(--text-2) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.12em !important;
+    font-size: 11px !important;
+}
+.pw .footer-nav a::before { content: '['; color: var(--red); margin-right: 4px; }
+.pw .footer-nav a::after  { content: ']'; color: var(--red); margin-left: 4px; }
+
+/* ── Skip nav refresh ──────────────────────────────────────────── */
+.pw .skip-nav { font-family: var(--font) !important; border-radius: 0 !important; background: var(--red) !important; }
+
+/* ── Hide leftover legacy chrome ───────────────────────────────── */
+.pw .pk-logo,
+.pw .pk-nav,
+.pw .pk-nav-inner,
+.pw .pk-cta-btn,
+.pw .hero,
+.pw .hero-world-class,
+.pw .loader-content,
+.pw .page-loader { display: none !important; }
+
+/* ── Section ID anchors — offset so corner chrome doesn't cover ── */
+.pw section[id], .pw .section[id], .pw header[id] {
+    scroll-margin-top: 120px;
+}
+
+/* ── DRIVE — canvas takes over once mounted ────────────────────── */
+.pw-drive__stage { background: #000 !important; }
+/* Use an explicit class for broad browser support (Firefox <121, older Safari) */
+.pw-drive__stage.is-loaded::after { display: none !important; content: none !important; }
+.pw-drive__stage.is-loaded::before { z-index: 2; }
+/* Fallback for browsers that support :has() */
+.pw-drive__stage:has(canvas)::after { display: none !important; content: none !important; }
+.pw-drive__stage:has(canvas)::before { z-index: 2; }
+.pw-drive__stage canvas { outline: none; cursor: crosshair; display: block; }
+.pw-drive__stage canvas:focus-visible { outline: 1px solid var(--red); outline-offset: -1px; }
+
+/* ============================================================
+   LAB TEAM CARDS — driver portraits + LAB chrome
+   ============================================================ */
+.pw .lab-team-card {
+    position: relative;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.15s, transform 0.15s !important;
+    cursor: pointer;
+}
+.pw .lab-team-card:hover {
+    border-color: var(--team-color, var(--red-glow)) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Head row: [01] index + NEW badge + team logo */
+.pw .lab-team-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+    text-transform: uppercase;
+}
+.pw .lab-team-card__index {
+    color: var(--red);
+    font-weight: 500;
+}
+.pw .lab-team-card__new {
+    color: var(--red);
+    margin-left: auto;
+    margin-right: 12px;
+    border: 1px solid var(--red);
+    padding: 2px 6px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+}
+.pw .lab-team-card__logo {
+    height: 22px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+}
+
+/* Driver portraits — side by side, monochrome with hover colour reveal */
+.pw .lab-team-card__drivers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+}
+.pw .lab-team-card__portrait {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--bg-2);
+    overflow: hidden;
+}
+.pw .lab-team-card__portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    filter: grayscale(1) contrast(1.05);
+    transition: filter 0.25s, transform 0.4s ease;
+}
+.pw .lab-team-card:hover .lab-team-card__portrait img {
+    filter: grayscale(0) contrast(1);
+    transform: scale(1.03);
+}
+
+/* Team-colour rule between portraits and body */
+.pw .lab-team-card__color-bar {
+    height: 2px;
+    background: var(--team-color, var(--red));
+    opacity: 0.9;
+}
+
+/* Body: name, car, roster */
+.pw .lab-team-card__body {
+    padding: 18px 18px 22px;
+}
+.pw .lab-team-card__name {
+    font-family: var(--font) !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase !important;
+    color: var(--text) !important;
+    margin: 0 0 4px !important;
+    line-height: 1.2 !important;
+}
+.pw .lab-team-card__car {
+    font-family: var(--font);
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+.pw .lab-team-card__roster {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+}
+.pw .lab-team-card__roster li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 4px 0;
+    font-size: 12px;
+    color: var(--text-2);
+    font-family: var(--font);
+}
+.pw .lab-team-card__roster .lab-team-card__num {
+    color: var(--red);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    min-width: 38px;
+    flex-shrink: 0;
+}
+.pw .lab-team-card__pu {
+    margin-top: 6px;
+    padding-top: 10px !important;
+    border-top: 1px solid var(--border);
+    color: var(--text-3) !important;
+}
+
+/* Force the grid container into a tidy responsive grid */
+.pw #team-grid,
+.pw .team-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+}
+
+/* ============================================================
+   LAB CIRCUIT CARDS — radar map + telemetry stats
+   ============================================================ */
+.pw #circuits-grid,
+.pw .circuits-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 20px !important;
+}
+
+.pw .lab-circuit-card {
+    position: relative;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s !important;
+    cursor: pointer;
+}
+.pw .lab-circuit-card:hover {
+    border-color: var(--red) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 0 1px var(--red-glow) inset !important;
+}
+
+/* Header strip — round + type badge */
+.pw .lab-circuit-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+.pw .lab-circuit-card__index {
+    color: var(--red);
+    font-weight: 500;
+}
+.pw .lab-circuit-card__type {
+    color: var(--text-3);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    border: 1px solid var(--border-hi);
+    padding: 2px 6px;
+}
+.pw .lab-circuit-card__type[data-type="STREET"] {
+    color: var(--red);
+    border-color: var(--red);
+}
+.pw .lab-circuit-card__type[data-type="PERMANENT"] {
+    color: #4fc3f7;
+    border-color: rgba(79, 195, 247, 0.5);
+}
+.pw .lab-circuit-card__type[data-type="SEMI-PERMANENT"] {
+    color: #ffb74d;
+    border-color: rgba(255, 183, 77, 0.5);
+}
+
+/* Track map — radar/CAD aesthetic. Invert the formula1.com black-on-light map
+   to white-on-black, with subtle grid backdrop. */
+.pw .lab-circuit-card__map {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background:
+        repeating-linear-gradient(90deg, transparent 0 23px, rgba(255,255,255,0.04) 23px 24px),
+        repeating-linear-gradient(0deg,  transparent 0 23px, rgba(255,255,255,0.04) 23px 24px),
+        var(--bg);
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+}
+.pw .lab-circuit-card__map::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
+}
+.pw .lab-circuit-card__map::after {
+    content: '[ LAYOUT / VECTOR ]';
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: 9px;
+    color: var(--text-3);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+.pw .lab-circuit-card__map img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 18px 14px 14px;
+    /* Convert dark-on-light map to white-on-black */
+    filter: invert(1) brightness(1.3) contrast(1.1);
+    transition: filter 0.3s, transform 0.4s ease;
+}
+.pw .lab-circuit-card:hover .lab-circuit-card__map img {
+    /* Make the outline glow red on hover */
+    filter: invert(1) brightness(1.3) contrast(1.1) sepia(1) hue-rotate(-50deg) saturate(8);
+    transform: scale(1.03);
+}
+
+/* Body — name + location + stats grid + record */
+.pw .lab-circuit-card__body {
+    padding: 18px 18px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.pw .lab-circuit-card__name {
+    font-family: var(--font) !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase !important;
+    color: var(--text) !important;
+    margin: 0 !important;
+    line-height: 1.25 !important;
+}
+.pw .lab-circuit-card__loc {
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: -8px;
+}
+
+/* 2-column key-value stat grid */
+.pw .lab-circuit-card__stats {
+    list-style: none;
+    padding: 12px 0 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 18px;
+}
+.pw .lab-circuit-card__stats li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-2);
+    font-family: var(--font);
+    font-variant-numeric: tabular-nums;
+}
+.pw .lab-circuit-card__stats li span {
+    color: var(--red);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    min-width: 36px;
+    flex-shrink: 0;
+}
+
+/* Lap record row */
+.pw .lab-circuit-card__record {
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: var(--font);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+}
+.pw .lab-circuit-card__record-label {
+    color: var(--red);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+}
+.pw .lab-circuit-card__record-time {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+}
+.pw .lab-circuit-card__record-who {
+    color: var(--text-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-left: auto;
+}
+

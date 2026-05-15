@@ -1,17 +1,15 @@
 // F-ATICS Service Worker — app-shell caching strategy
-const CACHE_NAME = 'f-atics-v1';
+// IMPORTANT: bump CACHE_NAME whenever JS/CSS shape changes so cached
+// copies of stale modules don't keep getting served.
+const CACHE_NAME = 'f-atics-v3-lab';
 
-// Core app shell: cached on install, served from cache-first
+// Core app shell: cached on install. Note: JS modules are NOT cached here
+// because they evolve rapidly during development. They go through the
+// network-first path below.
 const APP_SHELL = [
   '/',
   '/index.html',
   '/styles.css',
-  '/script.js',
-  '/quiz-data.js',
-  '/circuits-data.js',
-  '/race-calendar-data.js',
-  '/prediction-model.js',
-  '/js/router.js',
   '/manifest.json',
 ];
 
@@ -33,15 +31,15 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// ── Fetch: network-first for API calls, cache-first for assets ─
+// ── Fetch routing ─────────────────────────────────────────────
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Pass through cross-origin requests (CDN scripts, APIs)
+  // Pass through cross-origin (CDN, APIs)
   if (url.origin !== self.location.origin) return;
 
-  // Network-first for HTML navigation (always get fresh page)
+  // Network-first for HTML navigation
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(() => caches.match('/index.html'))
@@ -49,7 +47,24 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Cache-first for everything else (assets, data files)
+  // Network-first for JS modules — prevents stale code from
+  // sticking around after a deploy / hot-reload.
+  if (request.url.endsWith('.js') || request.url.endsWith('.mjs')) {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // Cache-first for static assets (CSS, images, fonts, data files)
   event.respondWith(
     caches.match(request).then(cached => {
       if (cached) return cached;

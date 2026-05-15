@@ -335,7 +335,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Removed magnetic buttons for better performance
 
-    console.log('🏎️ F1 Fan Zone - 3D Effects Loaded!');
 });
 
 

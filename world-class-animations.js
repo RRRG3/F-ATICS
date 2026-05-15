@@ -2,7 +2,6 @@
 // Inspired by landonorris.com
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🏎️ World-Class Animations Initializing...');
 
     // ===== LENIS SMOOTH SCROLL =====
     let lenis;
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Expose globally for other scripts to jump
             window.lenis = lenis;
-            console.log('✅ Lenis Smooth Scroll Initialized & Synced with GSAP');
         } else {
             console.warn('Lenis library not loaded! ScrollTrigger might fail to sync.');
         }
@@ -174,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        console.log('✅ GSAP scroll animations initialized');
     }
 
     // ===== 3D CARD TILT EFFECT =====
@@ -200,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        console.log('✅ 3D card effects initialized');
     }
 
     // ===== MAGNETIC BUTTONS =====
@@ -221,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        console.log('✅ Magnetic buttons initialized');
     }
 
     // ===== FULLSCREEN NAVIGATION =====
@@ -260,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        console.log('✅ Fullscreen navigation initialized');
     }
 
     // ===== SCROLL PROGRESS INDICATOR =====
@@ -295,7 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
             bar.style.width = `${progress}%`;
         });
 
-        console.log('✅ Scroll progress indicator initialized');
     }
 
     // ===== INTERSECTION OBSERVER FOR REVEAL =====
@@ -323,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
             observer.observe(el);
         });
 
-        console.log('✅ Reveal observer initialized');
     }
 
     // ===== DYNAMIC GLOW EFFECT =====
@@ -441,7 +433,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         
-        console.log('✅ GSAP Zero-Refresh Transitions initialized');
     }
 
     // ===== HERO TEXT ANIMATION =====
@@ -458,7 +449,6 @@ document.addEventListener('DOMContentLoaded', () => {
             accentText.style.animation = 'glowPulse 3s ease-in-out infinite';
         }
 
-        console.log('✅ Hero animation initialized');
     }
 
     // ===== PREMIUM PAGE LOADER =====
@@ -548,7 +538,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        console.log('✅ Enhanced cursor initialized');
     }
 
     // ===== ADD CSS KEYFRAMES DYNAMICALLY =====
@@ -622,7 +611,6 @@ document.addEventListener('DOMContentLoaded', () => {
             initScrollAnimations();
         }, 100);
 
-        console.log('🏎️ World-Class Animations Loaded!');
     }
 
     // Start initialization

@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/mclaren.png",
             driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/norris.jpg",
             driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/piastri.jpg",
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/AndreaStella.jpg",
+            principalImg: makeSVG('Andrea Stella', '#FF8700', '#fff'),
             fallbackImg: makeSVG('McLaren MCL40', '#FF8700', '#fff')
         },
         {
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/ferrari.png",
             driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/leclerc.jpg",
             driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/hamilton.jpg",
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/FredericVasseur.jpg",
+            principalImg: makeSVG('Frédéric Vasseur', '#DC0000', '#fff'),
             fallbackImg: makeSVG('Ferrari SF-26', '#DC0000', '#fff')
         },
         {
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/red%20bull.png",
             driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/verstappen.jpg",
             driver2Img: makeSVG('Isack Hadjar', '#0600EF', '#fff'),
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/ChristianHorner.jpg",
+            principalImg: makeSVG('Laurent Mekies', '#0600EF', '#fff'),
             fallbackImg: makeSVG('Red Bull RB22', '#0600EF', '#fff')
         },
         {
@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
             sketchfabId: "0ffecbff3b814d308f30abba8b5fd8e7", // W16 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/mercedes.png",
             driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/russell.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/antonelli.jpg",
-            principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/TotoWolff.jpg",
+            driver2Img: makeSVG('Kimi Antonelli #12', '#00D2BE', '#fff'),
+            principalImg: makeSVG('Toto Wolff', '#00D2BE', '#fff'),
             fallbackImg: makeSVG('Mercedes W17', '#00D2BE', '#fff')
         },
         {
@@ -221,43 +221,57 @@ document.addEventListener('DOMContentLoaded', () => {
     teamGrid.innerHTML = ''; // Clear skeleton cards
     teamsData.forEach((team, index) => {
         const card = document.createElement('div');
-        card.classList.add('team-card');
+        card.classList.add('team-card', 'lab-team-card');
         card.style.animationDelay = `${index * 0.05}s`;
-        const newBadge = team.isNew ? `<div class="team-new-badge">🆕 NEW TEAM 2026</div>` : '';
+        card.style.setProperty('--team-color', team.color);
+
+        const drivers = team.drivers.split(',').map(d => d.trim());
+        const newBadge = team.isNew ? `<span class="lab-team-card__new">[NEW]</span>` : '';
+
+        // Build a name → number lookup for the bracketed [##] prefix
+        const numFor = (name) => {
+            if (typeof driverStandings2026 === 'undefined') return '--';
+            const d = driverStandings2026.find(x =>
+                x.driver.split(' ').pop().toLowerCase() === name.split(' ').pop().toLowerCase()
+            );
+            return d ? String(d.number).padStart(2, '0') : '--';
+        };
+
+        const shortName = (full) => {
+            const parts = full.split(' ');
+            return parts.length > 1 ? `${parts[0][0]}. ${parts.slice(1).join(' ')}` : full;
+        };
+
         card.innerHTML = `
-            ${newBadge}
-            <div class="team-logo-badge">
-                <img src="${team.logo}" alt="${team.name} logo" class="team-logo"
+            <div class="lab-team-card__head">
+                <span class="lab-team-card__index">[${String(index + 1).padStart(2, '0')}]</span>
+                ${newBadge}
+                <img src="${team.logo}" alt="${team.name} logo" class="lab-team-card__logo"
                      onerror="this.onerror=null;this.src=makeSVG('${team.name}','${team.color}','#fff')">
             </div>
-            <div class="car-360-container">
-            </div>
-            <div class="team-card-content">
-                <h3>${team.name}</h3>
-                <p class="team-car-name">${team.car}</p>
-                <div class="team-quick-info">
-                    <span class="team-drivers">👥 ${team.drivers.split(',')[0]} &amp; ${team.drivers.split(',')[1]}</span>
-                    ${team.engine ? `<span class="team-engine">⚡ ${team.engine}</span>` : ''}
+            <div class="lab-team-card__drivers" aria-hidden="true">
+                <div class="lab-team-card__portrait">
+                    <img src="${team.driver1Img}" alt="${drivers[0]}" loading="lazy"
+                         onerror="this.onerror=null;this.src='${team.fallbackImg}'">
                 </div>
+                <div class="lab-team-card__portrait">
+                    <img src="${team.driver2Img}" alt="${drivers[1]}" loading="lazy"
+                         onerror="this.onerror=null;this.src='${team.fallbackImg}'">
+                </div>
+            </div>
+            <div class="lab-team-card__color-bar"></div>
+            <div class="lab-team-card__body">
+                <h3 class="lab-team-card__name">${team.name}</h3>
+                <div class="lab-team-card__car">${team.car}</div>
+                <ul class="lab-team-card__roster">
+                    <li><span class="lab-team-card__num">[${numFor(drivers[0])}]</span> ${shortName(drivers[0])}</li>
+                    <li><span class="lab-team-card__num">[${numFor(drivers[1])}]</span> ${shortName(drivers[1])}</li>
+                    ${team.engine ? `<li class="lab-team-card__pu"><span class="lab-team-card__num">[PU]</span> ${team.engine}</li>` : ''}
+                </ul>
             </div>
         `;
         card.addEventListener('click', () => openModal(team));
         teamGrid.appendChild(card);
-        
-        // Lazy-init 3D viewer — only when the card enters the viewport (saves ~11 Three.js canvases on load)
-        const viewerContainer = card.querySelector('.car-360-container');
-        if (window.Car360 && viewerContainer) {
-            const carObs = new IntersectionObserver((entries, obs) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) {
-                        Car360.init(entry.target, team.color, team.car);
-                        obs.unobserve(entry.target);
-                    }
-                }
-            }, { rootMargin: '200px 0px' });
-            carObs.observe(viewerContainer);
-        }
-
     });
 
 
@@ -667,18 +681,21 @@ document.addEventListener('DOMContentLoaded', () => {
         saveScore(score, shuffledQuiz.length);
     };
 
-    // Standings Toggle
+    // Standings Toggle — handles both "drivers"→driver-standings and "driver"→driver-standings
     const standingsToggleBtns = document.querySelectorAll('.toggle-btn');
     standingsToggleBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const standingsType = btn.dataset.standings;
+            const raw = btn.dataset.standings || '';
             standingsToggleBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
+
             document.querySelectorAll('.standings-view').forEach(view => {
                 view.classList.remove('active');
             });
-            document.getElementById(`${standingsType}-standings`).classList.add('active');
+            // Try both forms ("drivers-standings" and "driver-standings")
+            const target = document.getElementById(`${raw}-standings`)
+                        || document.getElementById(`${raw.replace(/s$/, '')}-standings`);
+            if (target) target.classList.add('active');
         });
     });
 
@@ -775,11 +792,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const setLabel = (text) => {
             const el = document.querySelector('.countdown-label-hero');
             if (el) el.textContent = text;
+            const labelEl = document.querySelector('#now-block .pw-now__label');
+            // first label only — "Next session" / "LIGHTS OUT"
+            if (labelEl && labelEl.dataset.dynamic !== 'no') {
+                labelEl.lastChild && (labelEl.lastChild.textContent = text === 'NEXT RACE COUNTDOWN' ? 'Next session' : text);
+            }
         };
 
         const setName = (text) => {
-            const el = document.getElementById('next-race-name');
-            if (el) el.textContent = text;
+            ['next-race-name', 'hero-next-race', 'now-race-name'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text.replace(/^Next:\s*/, '');
+            });
         };
 
         // Race day — show a "LIGHTS OUT" state instead of zeros
@@ -816,6 +840,50 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateCountdown, 1000);
     }
     initNextRaceCountdown();
+
+    // ============================================================
+    // NOW BLOCK — populate Leader + Last Race cells
+    // ============================================================
+    function initNowBlock() {
+        const nowEl = document.getElementById('now-block');
+        if (!nowEl) return;
+
+        // Leader — pulled from current standings (live or fallback)
+        const standings = (typeof driverStandings2026 !== 'undefined') ? driverStandings2026 : [];
+        const leader = standings.find(d => d.position === 1) || standings[0];
+        if (leader) {
+            const nameEl = document.getElementById('now-leader-name');
+            const teamEl = document.getElementById('now-leader-team');
+            if (nameEl) nameEl.textContent = leader.driver || '—';
+            if (teamEl) {
+                teamEl.innerHTML = `${leader.team || '—'} · <span class="pw-now__delta">${leader.points ?? 0} pt</span>`;
+            }
+        }
+
+        // Last race — most recent past round
+        if (typeof raceCalendar !== 'undefined') {
+            const now = new Date();
+            const past = raceCalendar.filter(r => new Date(r.date) < now);
+            const last = past[past.length - 1];
+            if (last) {
+                const lastEl = document.getElementById('now-last-race');
+                const resultEl = document.getElementById('now-last-result');
+                if (lastEl) lastEl.textContent = last.country || last.name;
+                if (resultEl) resultEl.textContent = `Round ${last.round} · ${last.flag || ''} ${last.name}`;
+            } else {
+                const lastEl = document.getElementById('now-last-race');
+                const resultEl = document.getElementById('now-last-result');
+                if (lastEl) lastEl.textContent = 'Pre-season';
+                if (resultEl) resultEl.textContent = 'Round 1 ahead';
+            }
+        }
+
+        nowEl.setAttribute('data-loading', 'false');
+    }
+    initNowBlock();
+    // Refresh after live standings arrive (1s + a longer recheck)
+    setTimeout(initNowBlock, 1500);
+    setTimeout(initNowBlock, 6000);
 
     // ============================================================
     // 2026 RULE CHANGES SECTION
@@ -1088,39 +1156,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderCircuits(circuits) {
         circuitsGrid.innerHTML = '';
+
+        // Build a circuit-name → calendar-entry lookup for round / flag
+        const calLookup = (typeof raceCalendar !== 'undefined')
+            ? Object.fromEntries(raceCalendar.map(r => [r.circuit, r]))
+            : {};
+
+        // Strip the year + driver from lapRecord: "1:31.447 - Pedro de la Rosa (2005)"
+        const splitRecord = (rec) => {
+            if (!rec) return { time: '—', who: '—' };
+            const [time, rest] = rec.split(/\s*[-—]\s*/, 2);
+            return { time: (time || '').trim(), who: (rest || '').trim() };
+        };
+
         circuits.forEach((circuit, index) => {
-        const card = document.createElement('div');
-        card.classList.add('circuit-card');
-        card.style.animationDelay = `${index * 0.03}s`;
-        card.innerHTML = `
-            <div class="circuit-card-image">
-                <img src="${circuit.layoutImage}" alt="${circuit.name}" loading="lazy" onerror="this.onerror=null;this.src=makeSVG('${circuit.name}','#1a1a1e','#e10600')">
-            </div>
-            <div class="circuit-card-content">
-                <h3>${circuit.name}</h3>
-                <div class="circuit-card-location">
-                    📍 ${circuit.location}
+            const card = document.createElement('div');
+            card.classList.add('circuit-card', 'lab-circuit-card');
+            card.style.animationDelay = `${index * 0.02}s`;
+
+            const cal = calLookup[circuit.name];
+            const round = cal ? `R${String(cal.round).padStart(2, '0')}` : `[${String(index + 1).padStart(2, '0')}]`;
+            const flag = cal ? cal.flag : '';
+            const type = (circuit.circuitType || 'Permanent').toUpperCase();
+            const drs = circuit.drsZones != null ? circuit.drsZones : '—';
+            const top = circuit.topSpeed || '—';
+            const rec = splitRecord(circuit.lapRecord);
+
+            card.innerHTML = `
+                <div class="lab-circuit-card__head">
+                    <span class="lab-circuit-card__index">${round}</span>
+                    <span class="lab-circuit-card__type" data-type="${type}">[${type}]</span>
                 </div>
-                <div class="circuit-card-stats">
-                    <div class="circuit-stat">
-                        <span class="circuit-stat-label">Length</span>
-                        <span class="circuit-stat-value">${circuit.length}</span>
-                    </div>
-                    <div class="circuit-stat">
-                        <span class="circuit-stat-label">Laps</span>
-                        <span class="circuit-stat-value">${circuit.laps}</span>
-                    </div>
-                    <div class="circuit-stat">
-                        <span class="circuit-stat-label">First GP</span>
-                        <span class="circuit-stat-value">${circuit.firstGP}</span>
-                    </div>
-                    <div class="circuit-stat">
-                        <span class="circuit-stat-label">Corners</span>
-                        <span class="circuit-stat-value">${circuit.corners}</span>
+                <div class="lab-circuit-card__map">
+                    <img src="${circuit.layoutImage}" alt="${circuit.name} track layout" loading="lazy"
+                         onerror="this.onerror=null;this.src=makeSVG('${circuit.name}','#000','#FF1F1F')">
+                </div>
+                <div class="lab-circuit-card__body">
+                    <h3 class="lab-circuit-card__name">${flag ? flag + ' ' : ''}${circuit.name}</h3>
+                    <div class="lab-circuit-card__loc">${circuit.location}</div>
+                    <ul class="lab-circuit-card__stats">
+                        <li><span>[LEN]</span> ${circuit.length}</li>
+                        <li><span>[LAP]</span> ${circuit.laps}</li>
+                        <li><span>[COR]</span> ${circuit.corners}</li>
+                        <li><span>[DRS]</span> ${drs}</li>
+                        <li><span>[TOP]</span> ${top}</li>
+                        <li><span>[GP1]</span> ${circuit.firstGP}</li>
+                    </ul>
+                    <div class="lab-circuit-card__record">
+                        <span class="lab-circuit-card__record-label">[REC]</span>
+                        <span class="lab-circuit-card__record-time">${rec.time}</span>
+                        <span class="lab-circuit-card__record-who">${rec.who}</span>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
             card.addEventListener('click', () => openCircuitModal(circuit));
             circuitsGrid.appendChild(card);
         });
