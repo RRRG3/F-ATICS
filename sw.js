@@ -1,7 +1,7 @@
 // F-ATICS Service Worker — app-shell caching strategy
 // IMPORTANT: bump CACHE_NAME whenever JS/CSS shape changes so cached
 // copies of stale modules don't keep getting served.
-const CACHE_NAME = 'f-atics-v3-lab';
+const CACHE_NAME = 'f-atics-v4-lab';
 
 // Core app shell: cached on install. Note: JS modules are NOT cached here
 // because they evolve rapidly during development. They go through the

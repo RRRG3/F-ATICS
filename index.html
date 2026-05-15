@@ -38,7 +38,7 @@
     <meta name="apple-mobile-web-app-title" content="F-ATICS">
 
     <link rel="stylesheet" href="styles.css?v=6">
-    <link rel="stylesheet" href="design-system.css?v=1">
+    <link rel="stylesheet" href="design-system.css?v=2">
 
     <!-- Pit Wall: editorial display + mono for data -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,7 +94,7 @@
     <!-- Page chrome — terminal corner readouts -->
     <div class="lab-chrome lab-chrome--top">
         <a href="#hero" class="lab-tag">[LAB] / <b>[01]</b> F-ATICS <em>/ 2026 SEASON</em></a>
-        <span class="lab-live"><span id="lab-coords" class="lab-coords">— · — · —</span> &nbsp;[LIVE]</span>
+        <span class="lab-live"><span id="lab-coords" class="lab-coords">— · — · —</span> &nbsp;<span id="lab-live-status" class="lab-badge lab-badge--offline">OFFLINE</span></span>
     </div>
     <div class="lab-chrome lab-chrome--bot">
         <span><b>[F1 / 2026]</b> &nbsp;Real-time championship telemetry</span>
@@ -328,12 +328,12 @@
             </div>
 
             <!-- Standings Toggle -->
-            <div class="standings-toggle">
-                <button class="toggle-btn active" data-standings="drivers">
-                    <span class="toggle-icon">👤</span> Drivers
+            <div class="standings-toggle" role="tablist" aria-label="Standings view">
+                <button class="toggle-btn active" data-standings="drivers" role="tab" aria-selected="true" aria-controls="driver-standings">
+                    <span class="toggle-icon" aria-hidden="true">👤</span> Drivers
                 </button>
-                <button class="toggle-btn" data-standings="constructors">
-                    <span class="toggle-icon">🏎️</span> Constructors
+                <button class="toggle-btn" data-standings="constructors" role="tab" aria-selected="false" aria-controls="constructor-standings">
+                    <span class="toggle-icon" aria-hidden="true">🏎️</span> Constructors
                 </button>
             </div>
 
@@ -402,15 +402,16 @@
 
             <div class="calendar-filters">
                 <label for="calendar-search" class="sr-only">Search races</label>
-                <input type="text" id="calendar-search" class="search-input" placeholder="🔍 Search races...">
-                <select id="calendar-filter" class="filter-select">
-                    <option value="all">All Races</option>
-                    <option value="upcoming">Upcoming</option>
-                    <option value="completed">Completed</option>
+                <input type="text" id="calendar-search" class="search-input" placeholder="[SEARCH] race / circuit / country" aria-label="Search races">
+                <label for="calendar-filter" class="sr-only">Filter races by status</label>
+                <select id="calendar-filter" class="filter-select" aria-label="Filter races by status">
+                    <option value="all">[ ALL RACES ]</option>
+                    <option value="upcoming">[ UPCOMING ]</option>
+                    <option value="completed">[ COMPLETED ]</option>
                 </select>
             </div>
 
-            <div id="calendar-grid" class="calendar-grid">
+            <div id="calendar-grid" class="calendar-grid" aria-live="polite" aria-label="Race calendar">
                 <!-- Calendar cards will be inserted here -->
             </div>
         </section>
@@ -529,12 +530,13 @@
 
             <div class="circuits-filters">
                 <label for="circuit-search" class="sr-only">Search circuits</label>
-                <input type="text" id="circuit-search" class="search-input" placeholder="🔍 Search circuits...">
-                <select id="circuit-sort" class="filter-select">
-                    <option value="calendar">Calendar Order</option>
-                    <option value="length-desc">Longest First</option>
-                    <option value="length-asc">Shortest First</option>
-                    <option value="name">Alphabetical</option>
+                <input type="text" id="circuit-search" class="search-input" placeholder="[SEARCH] circuit / country" aria-label="Search circuits">
+                <label for="circuit-sort" class="sr-only">Sort circuits</label>
+                <select id="circuit-sort" class="filter-select" aria-label="Sort circuits">
+                    <option value="calendar">[ CALENDAR ORDER ]</option>
+                    <option value="length-desc">[ LONGEST FIRST ]</option>
+                    <option value="length-asc">[ SHORTEST FIRST ]</option>
+                    <option value="name">[ ALPHABETICAL ]</option>
                 </select>
             </div>
 
@@ -799,8 +801,8 @@
         window.addEventListener('load', hideLoader);
         setTimeout(hideLoader, 3000); // Fail-safe to prevent perpetual loading
     </script>
-    <script defer src="script.js?v=4"></script>
-    <script defer src="js/lab-chrome.js?v=1"></script>
+    <script defer src="script.js?v=5"></script>
+    <script defer src="js/lab-chrome.js?v=2"></script>
     <!-- Legacy decorative scripts disabled in LAB design system:
          3d-effects.js, world-class-animations.js, js/car-360.js, js/app-init.js,
          js/animation-controller.js, js/asset-loader.js, js/performance-monitor.js,

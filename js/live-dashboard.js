@@ -369,17 +369,21 @@ class LiveTelemetryDashboard {
 
     renderLapData(lapData) {
         if (!this.lapTbody || !lapData.length) return;
-        
+
         this.lapTbody.innerHTML = '';
-        
+
         // Get the last 5 valid laps
         const recentLaps = lapData
             .filter(l => l.lap_duration != null)
             .slice(-5)
             .reverse();
-            
+
         if (recentLaps.length === 0) {
-            this.lapTbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 1rem;">No valid lap times yet</td></tr>';
+            this.lapTbody.innerHTML = `
+                <tr><td colspan="5" style="text-align:center; padding: 1.5rem; font-family: var(--font); font-size: 11px; color: var(--text-3); letter-spacing: 0.16em; text-transform: uppercase;">
+                    [ NO VALID LAPS YET ] · WAITING FOR DRIVER ON TRACK
+                </td></tr>
+            `;
             return;
         }
 

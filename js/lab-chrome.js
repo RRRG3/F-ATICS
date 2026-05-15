@@ -105,6 +105,77 @@
         el.setAttribute('data-num', `[${String(i + 2).padStart(2, '0')}]`);
     });
 
+    // ── Status badge propagation ─────────────────────────────────
+    // Mirror the telemetry-section live status into:
+    //   • #hero-status (hero readout)
+    //   • #lab-live-status (top-right corner chrome)
+    // Tracks whether feed is LIVE / REPLAY / OFFLINE.
+    (function mirrorStatus() {
+        const src = document.getElementById('tele-session-status');
+        const heroStatus = document.getElementById('hero-status');
+        const cornerStatus = document.getElementById('lab-live-status');
+        if (!heroStatus && !cornerStatus) return;
+
+        function classify(text) {
+            const t = (text || '').toLowerCase();
+            if (t.includes('[live]') || (t.includes('connected') && !t.includes('disconnected'))) return 'LIVE';
+            if (t.includes('[replay]') || t.includes('replay')) return 'REPLAY';
+            if (t.includes('simulation')) return 'SIM';
+            if (t.includes('connecting')) return 'CONNECTING';
+            return 'OFFLINE';
+        }
+
+        function paint(label) {
+            const cls = label === 'LIVE' ? 'lab-badge--live'
+                      : label === 'REPLAY' ? 'lab-badge--replay'
+                      : label === 'SIM' ? 'lab-badge--replay'
+                      : 'lab-badge--offline';
+            if (heroStatus) {
+                heroStatus.textContent = label;
+                heroStatus.style.color = (label === 'LIVE') ? 'var(--red)'
+                                       : (label === 'REPLAY' || label === 'SIM') ? '#FFC700'
+                                       : 'var(--text-3)';
+            }
+            if (cornerStatus) {
+                cornerStatus.textContent = label;
+                cornerStatus.className = `lab-badge ${cls}`;
+            }
+        }
+
+        // Initial paint based on current src text, or OFFLINE
+        paint(src ? classify(src.textContent) : 'OFFLINE');
+
+        // Watch for changes via MutationObserver (telemetry updates the status text)
+        if (src && 'MutationObserver' in window) {
+            const obs = new MutationObserver(() => paint(classify(src.textContent)));
+            obs.observe(src, { childList: true, characterData: true, subtree: true });
+        }
+    })();
+
+    // ── Calendar status banner — show "RACE WEEK" / "RACE DAY" near hero ──
+    (function calendarStatus() {
+        if (typeof raceCalendar === 'undefined') return;
+        const banner = document.getElementById('tele-weekend-banner');
+        if (!banner) return;
+        const now = new Date();
+        const todayStr = now.toDateString();
+        const raceToday = raceCalendar.find(r => new Date(r.date).toDateString() === todayStr);
+        if (raceToday) {
+            banner.innerHTML = `[ RACE DAY ] · ${raceToday.name.toUpperCase()} · ${raceToday.circuit.toUpperCase()} — TELEMETRY ACTIVE`;
+            return;
+        }
+        const upcoming = raceCalendar.find(r => new Date(r.date) > now);
+        if (upcoming) {
+            const ms = new Date(upcoming.date) - now;
+            const days = Math.ceil(ms / 86400000);
+            if (days <= 7) {
+                banner.innerHTML = `[ RACE WEEK ] · ${upcoming.name.toUpperCase()} IN ${days}D — STREAM AVAILABLE`;
+            } else {
+                banner.innerHTML = `[ OFF-WEEK ] · NEXT: ${upcoming.name.toUpperCase()} IN ${days}D — REPLAY MODE ONLY`;
+            }
+        }
+    })();
+
     // ── [DRIVE] — minimal 2D top-down WASD car ───────────────────
     initDrive();
     function initDrive() {
@@ -125,6 +196,17 @@
         // Add class so the [ LOADING TELEMETRY... ] placeholder hides reliably
         // (broader compatibility than `:has(canvas)` which Firefox <121 lacks).
         stage.classList.add('is-loaded');
+
+        // Floating WASD keyboard hint (auto-hides once user starts driving)
+        const kbdHint = document.createElement('div');
+        kbdHint.className = 'pw-drive__kbd-hint';
+        kbdHint.innerHTML = `
+            <span><kbd>W</kbd> ACCEL</span>
+            <span><kbd>A</kbd>/<kbd>D</kbd> STEER</span>
+            <span><kbd>S</kbd> BRAKE</span>
+            <span><kbd>CLICK</kbd> FOCUS</span>
+        `;
+        stage.appendChild(kbdHint);
 
         // HUD
         const hud = document.createElement('div');
@@ -185,10 +267,20 @@
         cvs.addEventListener('click', () => cvs.focus());
 
         const KEYMAP = { w:1, arrowup:1, s:2, arrowdown:2, a:3, arrowleft:3, d:4, arrowright:4 };
+        let hintFaded = false;
         window.addEventListener('keydown', (e) => {
             if (!focused) return;
             const k = KEYMAP[e.key.toLowerCase()];
-            if (k) { keys[k] = true; e.preventDefault(); }
+            if (k) {
+                keys[k] = true;
+                e.preventDefault();
+                // Fade the WASD hint once user starts driving
+                if (!hintFaded && kbdHint) {
+                    kbdHint.style.transition = 'opacity 0.6s';
+                    kbdHint.style.opacity = '0.15';
+                    hintFaded = true;
+                }
+            }
         });
         window.addEventListener('keyup', (e) => {
             const k = KEYMAP[e.key.toLowerCase()];

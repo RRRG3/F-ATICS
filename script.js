@@ -412,12 +412,14 @@ document.addEventListener('DOMContentLoaded', () => {
             row.style.animationDelay = `${index * 0.03}s`;
             const teamColor = teamColors2026[driver.team] || '#E10600';
             const driverFlag = driver.flag || '';
-            const driverNum = driver.number ? `<span class="driver-num" style="color:${teamColor}">#${driver.number}</span>` : '';
+            const driverNum = driver.number ? `<span class="driver-num" style="color:${teamColor}">${String(driver.number).padStart(2,'0')}</span>` : '';
 
-            let positionDisplay = driver.position;
-            if (driver.position === 1) positionDisplay = '🥇 1';
-            else if (driver.position === 2) positionDisplay = '🥈 2';
-            else if (driver.position === 3) positionDisplay = '🥉 3';
+            // LAB position display — mono brackets, podium highlight in red
+            const posPad = String(driver.position).padStart(2, '0');
+            const isPodium = driver.position <= 3;
+            const positionDisplay = isPodium
+                ? `<span style="color:var(--red);font-weight:500">[${posPad}]</span>`
+                : `[${posPad}]`;
 
             const ptsPct = Math.max((driver.points / maxPts) * 100, 0);
             const ptsBar = `<div class="pts-bar-wrap"><div class="pts-bar" style="width:${ptsPct}%;background:${teamColor}"></div></div>`;
@@ -686,8 +688,12 @@ document.addEventListener('DOMContentLoaded', () => {
     standingsToggleBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const raw = btn.dataset.standings || '';
-            standingsToggleBtns.forEach(b => b.classList.remove('active'));
+            standingsToggleBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
 
             document.querySelectorAll('.standings-view').forEach(view => {
                 view.classList.remove('active');
@@ -701,22 +707,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Constructor Standings
     const constructorBody = document.getElementById('constructor-body');
+    const maxConstructorPts = Math.max(...constructorStandings.map(t => t.points || 0), 1);
     constructorStandings.forEach((team, index) => {
         const row = document.createElement('tr');
         row.style.animationDelay = `${index * 0.03}s`;
-        
-        let positionDisplay = team.position;
-        if (team.position === 1) positionDisplay = '🥇 1';
-        else if (team.position === 2) positionDisplay = '🥈 2';
-        else if (team.position === 3) positionDisplay = '🥉 3';
-        
+
+        const posPad = String(team.position).padStart(2, '0');
+        const isPodium = team.position <= 3;
+        const positionDisplay = isPodium
+            ? `<span style="color:var(--red);font-weight:500">[${posPad}]</span>`
+            : `[${posPad}]`;
+
+        const ptsPct = Math.max((team.points / maxConstructorPts) * 100, 0);
+        const ptsBar = `<div class="pts-bar-wrap"><div class="pts-bar" style="width:${ptsPct}%;background:${team.color || '#E10600'}"></div></div>`;
+
         row.innerHTML = `
             <td class="pos-col">${positionDisplay}</td>
             <td class="team-col">
-                <span style="display: inline-block; width: 4px; height: 20px; background: ${team.color}; margin-right: 0.5rem; border-radius: 2px;"></span>
+                <span class="team-dot" style="background: ${team.color}"></span>
                 ${team.team}
             </td>
-            <td class="points-col">${team.points}</td>
+            <td class="points-col">${team.points} ${ptsBar}</td>
         `;
         constructorBody.appendChild(row);
     });
@@ -729,43 +740,76 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderCalendar(races = raceCalendar) {
         calendarGrid.innerHTML = '';
         const now = new Date();
-        
+
+        // Empty state — no races match filters
+        if (!races || races.length === 0) {
+            calendarGrid.style.border = 'none';
+            calendarGrid.innerHTML = `
+                <div class="lab-empty" style="grid-column:1/-1">
+                    <span class="lab-empty__tag">NO RESULTS</span>
+                    <h3 class="lab-empty__title">NO RACES MATCH YOUR QUERY</h3>
+                    <p class="lab-empty__sub">Try a different circuit name or clear the filter.</p>
+                </div>
+            `;
+            return;
+        }
+        calendarGrid.style.border = '';
+
+        // Find the next upcoming race so we can flag it [NEXT]
+        const nextRaceIdx = races.findIndex(r => new Date(r.date) > now);
+
         races.forEach((race, index) => {
             const raceDate = new Date(race.date);
             const isUpcoming = raceDate > now;
             const isCompleted = raceDate < now;
-            
+            const isToday = raceDate.toDateString() === now.toDateString();
+            const isNext = index === nextRaceIdx;
+
             const card = document.createElement('div');
             card.classList.add('calendar-card');
             if (isCompleted) card.classList.add('completed');
             if (isUpcoming) card.classList.add('upcoming');
             card.style.animationDelay = `${index * 0.05}s`;
-            
+
+            // Status badge — [LIVE] / [NEXT] / [DONE]
+            let statusBadge = '';
+            if (isToday)         statusBadge = '<span class="cal-status cal-status--live">LIVE</span>';
+            else if (isNext)     statusBadge = '<span class="cal-status cal-status--next">NEXT</span>';
+            else if (isCompleted) statusBadge = '<span class="cal-status cal-status--done">DONE</span>';
+
             let countdownHTML = '';
             if (isUpcoming) {
                 const timeDiff = raceDate - now;
                 const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
                 countdownHTML = `
                     <div class="calendar-countdown">
-                        <div class="countdown-label">Countdown</div>
-                        <div class="countdown-time">${days} day${days !== 1 ? 's' : ''}</div>
+                        <div class="countdown-label">T-MINUS</div>
+                        <div class="countdown-time">${days}d</div>
+                    </div>
+                `;
+            } else if (isCompleted) {
+                countdownHTML = `
+                    <div class="calendar-countdown">
+                        <div class="countdown-label">STATUS</div>
+                        <div class="countdown-time" style="color:var(--text-3);font-size:11px">ARCHIVED</div>
                     </div>
                 `;
             }
 
-            const sprintBadge = race.isSprint ? `<span class="cal-badge cal-badge-sprint">⚡ Sprint</span>` : '';
-            const debutBadge = race.isDebut ? `<span class="cal-badge cal-badge-debut">🆕 Debut</span>` : '';
-            
+            const sprintBadge = race.isSprint ? `<span class="cal-badge cal-badge-sprint">SPRINT</span>` : '';
+            const debutBadge = race.isDebut ? `<span class="cal-badge cal-badge-debut">DEBUT</span>` : '';
+
             card.innerHTML = `
+                ${statusBadge}
                 <div class="calendar-card-header">
-                    <span class="calendar-round">Round ${race.round}</span>
+                    <span class="calendar-round">${String(race.round).padStart(2, '0')}</span>
                     <span class="calendar-flag">${race.flag}</span>
                 </div>
-                <h3>${race.name}</h3>
+                <h3>${race.name.replace(/\s*Grand Prix\s*/i, '').replace(/\s*GP\s*/i, '')}</h3>
                 <div class="calendar-badges">${sprintBadge}${debutBadge}</div>
-                <div class="calendar-circuit">📍 ${race.circuit}</div>
+                <div class="calendar-circuit">${race.circuit}</div>
                 <div class="calendar-date">
-                    📅 ${new Date(race.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    ${new Date(race.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase()}
                 </div>
                 ${countdownHTML}
             `;
@@ -1156,6 +1200,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderCircuits(circuits) {
         circuitsGrid.innerHTML = '';
+
+        // Empty state — no circuits match
+        if (!circuits || circuits.length === 0) {
+            circuitsGrid.innerHTML = `
+                <div class="lab-empty" style="grid-column:1/-1">
+                    <span class="lab-empty__tag">NO RESULTS</span>
+                    <h3 class="lab-empty__title">NO CIRCUITS MATCH YOUR QUERY</h3>
+                    <p class="lab-empty__sub">Try a different search term or clear the filter.</p>
+                </div>
+            `;
+            return;
+        }
 
         // Build a circuit-name → calendar-entry lookup for round / flag
         const calLookup = (typeof raceCalendar !== 'undefined')
