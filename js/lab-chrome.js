@@ -176,238 +176,121 @@
         }
     })();
 
-    // ── [DRIVE] — minimal 2D top-down WASD car ───────────────────
+    // ── [DRIVE] — Real 3D F1 car (Sketchfab embed + team swap chips) ──
     initDrive();
     function initDrive() {
         const stage = document.getElementById('drive-stage');
         if (!stage) return;
 
-        // Respect reduced-motion: render a static frame, skip the sim loop
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // 2026 grid → Sketchfab model IDs (real models already used elsewhere)
+        const CARS = [
+            { team: 'McLaren',      model: 'MCL40',   pu: 'Mercedes',        color: '#FF8700', id: '902384ddbec64d86b608881bf44e366f' },
+            { team: 'Ferrari',      model: 'SF-26',   pu: 'Ferrari',         color: '#DC0000', id: 'f5f6391749814819a60546f57b10b5f9' },
+            { team: 'Red Bull',     model: 'RB22',    pu: 'Ford / RBPT',     color: '#0600EF', id: '621f884d9aee4efdaa54309e6b08bdd1' },
+            { team: 'Mercedes',     model: 'W17',     pu: 'Mercedes',        color: '#00D2BE', id: '0ffecbff3b814d308f30abba8b5fd8e7' },
+            { team: 'Aston Martin', model: 'AMR26',   pu: 'Honda',           color: '#006F62', id: '6eb43dd1b0f6404e90ff8f0a87162636' },
+            { team: 'Alpine',       model: 'A526',    pu: 'Mercedes',        color: '#FF69B4', id: '33c7b240d04f480da57183ccb6fc5ea8' },
+            { team: 'Williams',     model: 'FW48',    pu: 'Mercedes',        color: '#005AFF', id: 'a7b48019a6ce43a7ab93cd01efda9739' },
+            { team: 'Racing Bulls', model: 'VCARB03', pu: 'Ford / RBPT',     color: '#4E5D9F', id: 'a5927538612642f697650a2dcf67fdde' },
+            { team: 'Haas',         model: 'VF-26',   pu: 'Ferrari',         color: '#B6BABD', id: 'b211ec88d4884ffbb7c4133054d1bd2d' },
+            { team: 'Audi',         model: 'A26',     pu: 'Audi (NEW PU)',   color: '#C0C0C0', id: '39d08c4788e244de870dd4b9540d8bda' },
+            { team: 'Cadillac',     model: 'C26',     pu: 'Ferrari',         color: '#CC0033', id: '05965d76f34048fc94b8189442acbd95' },
+        ];
 
-        // Build canvas
+        // Build markup — iframe + HUD + team chip rail
         stage.innerHTML = '';
         stage.style.position = 'relative';
-        const cvs = document.createElement('canvas');
-        cvs.style.cssText = 'width:100%;height:100%;display:block;';
-        cvs.tabIndex = 0;
-        cvs.setAttribute('aria-label', 'Interactive WASD driving demo');
-        stage.appendChild(cvs);
-        // Add class so the [ LOADING TELEMETRY... ] placeholder hides reliably
-        // (broader compatibility than `:has(canvas)` which Firefox <121 lacks).
         stage.classList.add('is-loaded');
 
-        // Floating WASD keyboard hint (auto-hides once user starts driving)
-        const kbdHint = document.createElement('div');
-        kbdHint.className = 'pw-drive__kbd-hint';
-        kbdHint.innerHTML = `
-            <span><kbd>W</kbd> ACCEL</span>
-            <span><kbd>A</kbd>/<kbd>D</kbd> STEER</span>
-            <span><kbd>S</kbd> BRAKE</span>
-            <span><kbd>CLICK</kbd> FOCUS</span>
-        `;
-        stage.appendChild(kbdHint);
+        // Sketchfab iframe — autospin, no UI, transparent, dark theme
+        const iframe = document.createElement('iframe');
+        iframe.title = '3D F1 car viewer';
+        iframe.allow = 'autoplay; fullscreen; xr-spatial-tracking';
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('mozallowfullscreen', 'true');
+        iframe.setAttribute('webkitallowfullscreen', 'true');
+        iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;display:block;';
+        stage.appendChild(iframe);
 
-        // HUD
+        // HUD top: [TEAM] / [MODEL] / [PU] + interaction hint
         const hud = document.createElement('div');
         hud.style.cssText = `
-            position:absolute; bottom:12px; left:12px; right:12px;
-            display:flex; justify-content:space-between;
+            position:absolute; top:12px; left:12px; right:12px;
+            display:flex; gap:18px; flex-wrap:wrap;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; letter-spacing: 0.12em;
+            font-size: 11px; letter-spacing: 0.14em;
             text-transform: uppercase; color: rgba(255,255,255,0.55);
-            pointer-events: none;
+            pointer-events: none; z-index:2;
         `;
         hud.innerHTML = `
-            <span>[SPEED] <b style="color:#fff" id="drive-speed">000</b> KM/H</span>
-            <span>[RPM] <b style="color:#fff" id="drive-rpm">0000</b></span>
-            <span>[GEAR] <b style="color:#fff" id="drive-gear">N</b></span>
-            <span>[X / Y] <b style="color:#fff" id="drive-coords">+0000 / +0000</b></span>
+            <span>[TEAM] <b style="color:#fff" id="drive-team">McLaren</b></span>
+            <span>[MODEL] <b style="color:#fff" id="drive-model">MCL40</b></span>
+            <span>[PU] <b style="color:#fff" id="drive-pu">Mercedes</b></span>
+            <span style="margin-left:auto; color:#FF1F1F">[ DRAG · ROTATE · ZOOM ]</span>
         `;
         stage.appendChild(hud);
 
-        // Hint
-        const hint = document.createElement('div');
-        hint.style.cssText = `
-            position:absolute; top:12px; right:12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px; letter-spacing: 0.18em;
-            color: #FF1F1F;
-            pointer-events: none;
+        // Team-chip rail at bottom — click to swap car
+        const chipRail = document.createElement('div');
+        chipRail.setAttribute('role', 'tablist');
+        chipRail.setAttribute('aria-label', 'Select F1 team car');
+        chipRail.style.cssText = `
+            position:absolute; bottom:12px; left:12px; right:12px;
+            display:flex; gap:6px; flex-wrap:wrap; z-index:2;
+            background: linear-gradient(0deg, rgba(0,0,0,0.85), transparent);
+            padding: 8px;
         `;
-        hint.textContent = '[ CLICK / WASD ]';
-        stage.appendChild(hint);
+        const teamEl  = hud.querySelector('#drive-team');
+        const modelEl = hud.querySelector('#drive-model');
+        const puEl    = hud.querySelector('#drive-pu');
 
-        const ctx = cvs.getContext('2d');
-        let W = 0, H = 0;
-        const resize = () => {
-            const dpr = window.devicePixelRatio || 1;
-            const r = cvs.getBoundingClientRect();
-            W = r.width; H = r.height;
-            cvs.width  = W * dpr;
-            cvs.height = H * dpr;
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const idleStyle = 'background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.55);padding:5px 9px;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:0;transition:all 0.15s;';
+        const makeActiveStyle = (c) => `background:${c};border:1px solid ${c};color:#000;padding:5px 9px;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:0;font-weight:500;`;
+
+        const loadCar = (car) => {
+            const params = new URLSearchParams({
+                autospin: '0.3', autostart: '1', ui_theme: 'dark', transparent: '1',
+                ui_controls: '0', ui_infos: '0', ui_inspector: '0', ui_stop: '0',
+                ui_watermark_link: '0', ui_watermark: '0', ui_help: '0', ui_settings: '0',
+                ui_fullscreen: '0', ui_annotations: '0', ui_loading: '0', ui_hint: '0', dnt: '1'
+            });
+            iframe.src = `https://sketchfab.com/models/${car.id}/embed?${params}`;
+            teamEl.textContent  = car.team;
+            modelEl.textContent = car.model;
+            puEl.textContent    = car.pu;
+            chipRail.querySelectorAll('.drive-chip').forEach(c => {
+                const on = c.dataset.team === car.team;
+                c.classList.toggle('is-active', on);
+                c.setAttribute('aria-selected', on ? 'true' : 'false');
+                c.style.cssText = on ? c._activeStyle : c._idleStyle;
+            });
         };
-        resize();
-        new ResizeObserver(resize).observe(stage);
 
-        // Car state — world coordinates
-        const car = {
-            x: 0, y: 0,
-            vx: 0, vy: 0,
-            heading: 0,         // radians
-            speed: 0,           // km/h equivalent for HUD
-            steerInput: 0,
-        };
-        const keys = Object.create(null);
-        let focused = false;
-
-        cvs.addEventListener('focus', () => { focused = true; });
-        cvs.addEventListener('blur', () => { focused = false; for (const k in keys) keys[k] = false; });
-        cvs.addEventListener('click', () => cvs.focus());
-
-        const KEYMAP = { w:1, arrowup:1, s:2, arrowdown:2, a:3, arrowleft:3, d:4, arrowright:4 };
-        let hintFaded = false;
-        window.addEventListener('keydown', (e) => {
-            if (!focused) return;
-            const k = KEYMAP[e.key.toLowerCase()];
-            if (k) {
-                keys[k] = true;
-                e.preventDefault();
-                // Fade the WASD hint once user starts driving
-                if (!hintFaded && kbdHint) {
-                    kbdHint.style.transition = 'opacity 0.6s';
-                    kbdHint.style.opacity = '0.15';
-                    hintFaded = true;
+        CARS.forEach((car, i) => {
+            const chip = document.createElement('button');
+            chip.className = 'drive-chip';
+            chip.dataset.team = car.team;
+            chip.setAttribute('role', 'tab');
+            chip._idleStyle   = idleStyle;
+            chip._activeStyle = makeActiveStyle(car.color);
+            chip.style.cssText = idleStyle;
+            chip.textContent = `[${String(i + 1).padStart(2, '0')}] ${car.team}`;
+            chip.addEventListener('mouseenter', () => {
+                if (!chip.classList.contains('is-active')) {
+                    chip.style.borderColor = car.color;
+                    chip.style.color = '#fff';
                 }
-            }
+            });
+            chip.addEventListener('mouseleave', () => {
+                if (!chip.classList.contains('is-active')) chip.style.cssText = idleStyle;
+            });
+            chip.addEventListener('click', () => loadCar(car));
+            chipRail.appendChild(chip);
         });
-        window.addEventListener('keyup', (e) => {
-            const k = KEYMAP[e.key.toLowerCase()];
-            if (k) keys[k] = false;
-        });
+        stage.appendChild(chipRail);
 
-        // Sim loop
-        const speedEl  = hud.querySelector('#drive-speed');
-        const rpmEl    = hud.querySelector('#drive-rpm');
-        const gearEl   = hud.querySelector('#drive-gear');
-        const coordsEl2 = hud.querySelector('#drive-coords');
-
-        let last = performance.now();
-        function tick(now) {
-            const dt = Math.min((now - last) / 1000, 0.05);
-            last = now;
-
-            // Inputs
-            const throttle = keys[1] ? 1 : 0;
-            const brake    = keys[2] ? 1 : 0;
-            const left     = keys[3] ? 1 : 0;
-            const right    = keys[4] ? 1 : 0;
-
-            // Longitudinal
-            const ACC = 220;
-            const BRK = 360;
-            const DRAG = 0.6;
-            const ROLL = 14;
-            const fwd = throttle * ACC - brake * BRK;
-            // velocity along heading
-            let v = Math.hypot(car.vx, car.vy);
-            // Direction sign relative to heading
-            const dot = car.vx * Math.cos(car.heading) + car.vy * Math.sin(car.heading);
-            const dir = dot < 0 ? -1 : 1;
-            v = v * dir;
-            v += fwd * dt;
-            v -= Math.sign(v) * (ROLL + Math.abs(v) * DRAG) * dt;
-            if (Math.abs(v) < 0.5 && fwd === 0) v = 0;
-
-            // Steering — only effective when moving
-            const STEER = 1.6;
-            const grip = Math.min(1, Math.abs(v) / 30);
-            car.heading += (right - left) * STEER * grip * dt;
-
-            car.vx = Math.cos(car.heading) * v;
-            car.vy = Math.sin(car.heading) * v;
-            car.x += car.vx * dt;
-            car.y += car.vy * dt;
-
-            // World wrap
-            const FIELD = 600;
-            if (car.x >  FIELD) car.x = -FIELD;
-            if (car.x < -FIELD) car.x =  FIELD;
-            if (car.y >  FIELD) car.y = -FIELD;
-            if (car.y < -FIELD) car.y =  FIELD;
-
-            // HUD
-            car.speed = Math.round(Math.abs(v) * 3.6);  // m/s → km/h-ish for show
-            speedEl.textContent = String(car.speed).padStart(3, '0');
-            rpmEl.textContent   = String(Math.round(2400 + Math.abs(v) * 220)).padStart(4, '0');
-            gearEl.textContent  = v === 0 ? 'N' : (v < 0 ? 'R' : String(Math.min(8, 1 + Math.floor(Math.abs(v) / 18))));
-            const sx = (n) => (n >= 0 ? '+' : '-') + String(Math.abs(Math.round(n))).padStart(4, '0');
-            coordsEl2.textContent = `${sx(car.x)} / ${sx(car.y)}`;
-
-            // Render
-            ctx.clearRect(0, 0, W, H);
-            // Camera centred on car
-            const cx = W / 2, cy = H / 2;
-            ctx.save();
-            ctx.translate(cx - car.x, cy - car.y);
-
-            // Grid
-            ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-            ctx.lineWidth = 1;
-            const G = 40;
-            const x0 = Math.floor((car.x - W) / G) * G;
-            const y0 = Math.floor((car.y - H) / G) * G;
-            for (let x = x0; x < car.x + W; x += G) {
-                ctx.beginPath(); ctx.moveTo(x, car.y - H); ctx.lineTo(x, car.y + H); ctx.stroke();
-            }
-            for (let y = y0; y < car.y + H; y += G) {
-                ctx.beginPath(); ctx.moveTo(car.x - W, y); ctx.lineTo(car.x + W, y); ctx.stroke();
-            }
-
-            // Track loop (simple oval reference)
-            ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-            ctx.lineWidth = 60;
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 360, 220, 0, 0, Math.PI * 2);
-            ctx.stroke();
-            // Centre line
-            ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-            ctx.lineWidth = 1;
-            ctx.setLineDash([10, 12]);
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 360, 220, 0, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Origin marker
-            ctx.fillStyle = '#FF1F1F';
-            ctx.fillRect(-3, -3, 6, 6);
-            ctx.font = '10px JetBrains Mono, monospace';
-            ctx.fillStyle = 'rgba(255,31,31,0.7)';
-            ctx.fillText('[ START ]', 10, 4);
-            ctx.restore();
-
-            // Car — rotated rectangle
-            ctx.save();
-            ctx.translate(cx, cy);
-            ctx.rotate(car.heading);
-            ctx.fillStyle = '#FF1F1F';
-            ctx.fillRect(-14, -5, 28, 10);
-            // nose
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(10, -2, 6, 4);
-            // wheels
-            ctx.fillStyle = '#000';
-            ctx.fillRect(-12, -7, 6, 3);
-            ctx.fillRect(-12,  4, 6, 3);
-            ctx.fillRect(  6, -7, 6, 3);
-            ctx.fillRect(  6,  4, 6, 3);
-            ctx.restore();
-
-            if (!reduceMotion) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
+        // Boot with McLaren MCL40
+        loadCar(CARS[0]);
     }
 
     // ── Active nav highlight on scroll ──────────────────────────
