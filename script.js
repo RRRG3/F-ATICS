@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             row.innerHTML = `
                 <td class="pos-col">${positionDisplay}</td>
-                <td class="driver-col">${driverFlag} ${driverNum} ${driver.driver}</td>
+                <td class="driver-col">${driverFlag} ${driverNum} <span data-driver="${driver.driver}">${driver.driver}</span></td>
                 <td class="nationality-col">${driver.nationality}</td>
                 <td class="team-col"><span class="team-dot" style="background:${teamColor}"></span>${driver.team}</td>
                 <td class="points-col">${driver.points} ${ptsBar}</td>
