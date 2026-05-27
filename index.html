@@ -38,7 +38,7 @@
     <meta name="apple-mobile-web-app-title" content="F-ATICS">
 
     <link rel="stylesheet" href="styles.css?v=6">
-    <link rel="stylesheet" href="design-system.css?v=2">
+    <link rel="stylesheet" href="design-system.css?v=14">
 
     <!-- Pit Wall: editorial display + mono for data -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -209,21 +209,15 @@
         </div>
     </header>
 
-    <!-- [DRIVE] — interactive WebGL moment placeholder -->
-    <section class="pw-drive" id="drive" aria-label="Interactive driving demo">
+    <!-- [DRIVE] — Real 3D F1 car viewer (Sketchfab embed) -->
+    <section class="pw-drive" id="drive" aria-label="3D F1 car viewer">
         <div class="pw-drive__inner">
             <div class="pw-drive__copy">
                 <h3>[ DRIVE ]</h3>
-                <p>An interactive 2026 chassis. Hold the keys, accelerate down the main straight, brake into the chicane. Real physics, low-poly, no marketing fluff.</p>
-                <div class="pw-drive__keys" aria-hidden="true">
-                    <span class="pw-drive__key">W</span>
-                    <span class="pw-drive__key">A</span>
-                    <span class="pw-drive__key">S</span>
-                    <span class="pw-drive__key">D</span>
-                </div>
-                <p style="font-size:11px;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;">[ Interactive / Tool ] &nbsp; coming online</p>
+                <p>Every 2026 chassis, fully rigged in 3D. Drag to rotate, scroll to zoom — switch teams from the rail below the stage. Real models, no placeholders.</p>
+                <p style="font-size:11px;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;margin-top:18px;">[ 11 TEAMS · 2026 SPEC · SKETCHFAB ]</p>
             </div>
-            <div class="pw-drive__stage" id="drive-stage" aria-hidden="true"></div>
+            <div class="pw-drive__stage" id="drive-stage" aria-label="Interactive 3D F1 car"></div>
         </div>
     </section>
 
@@ -676,6 +670,339 @@
                     </div>
                 </div>
 
+                <!-- ── WALKING-FORWARD BACKTEST (true OOS over 2014-2024) ── -->
+                <div class="pred-walkforward" id="pred-walkforward">
+                    <div class="pred-walkforward__head">
+                        <span class="pred-walkforward__title">[ WALKING-FORWARD BACKTEST · 2014–2024 · TRUE OUT-OF-SAMPLE ]</span>
+                        <div class="pred-walkforward__btns">
+                            <button id="run-walkforward" class="pred-walkforward__btn" type="button">RUN BACKTEST</button>
+                            <button id="train-weights" class="pred-walkforward__btn pred-walkforward__btn--ghost" type="button">TRAIN MODEL</button>
+                        </div>
+                    </div>
+                    <div class="pred-walkforward__learned" id="pwf-learned" style="display:none">
+                        <div class="pred-walkforward__chart-label">[ MODEL TRAINING / COORDINATE-DESCENT · 60% TRAIN · 40% TEST ]</div>
+                        <table id="pwf-learned-table">
+                            <thead><tr><th>[METRIC]</th><th>[DEFAULT]</th><th>[LEARNED]</th><th>[Δ]</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="pred-walkforward__progress" id="pwf-progress">
+                        <div class="pred-walkforward__bar"><div class="pred-walkforward__fill" id="pwf-fill"></div></div>
+                        <span id="pwf-msg" class="pred-walkforward__msg">Press [RUN BACKTEST] to fetch 11 seasons of historical race data and evaluate the model.</span>
+                    </div>
+                    <div class="pred-walkforward__body" id="pwf-body" style="display:none">
+                        <div class="pred-walkforward__metrics">
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[RACES]</div>
+                                <div class="pred-cal-stat__val" id="wf-races">—</div>
+                                <div class="pred-cal-stat__hint">historical races scored</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[TOP-1 HIT]</div>
+                                <div class="pred-cal-stat__val" id="wf-top1">—</div>
+                                <div class="pred-cal-stat__hint">winner predicted correctly</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[TOP-3 HIT]</div>
+                                <div class="pred-cal-stat__val" id="wf-top3">—</div>
+                                <div class="pred-cal-stat__hint">winner in top-3</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[BRIER]</div>
+                                <div class="pred-cal-stat__val" id="wf-brier">—</div>
+                                <div class="pred-cal-stat__hint">probability calibration</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[ROI · BOOK]</div>
+                                <div class="pred-cal-stat__val" id="wf-roi">—</div>
+                                <div class="pred-cal-stat__hint">flat $1/race at –10% margin</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[ROI · EDGE]</div>
+                                <div class="pred-cal-stat__val" id="wf-roi-edge">—</div>
+                                <div class="pred-cal-stat__hint">only bet model P&gt;40%</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[MAX DD]</div>
+                                <div class="pred-cal-stat__val" id="wf-dd">—</div>
+                                <div class="pred-cal-stat__hint">peak-to-trough loss</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[SHARPE]</div>
+                                <div class="pred-cal-stat__val" id="wf-sharpe">—</div>
+                                <div class="pred-cal-stat__hint">risk-adjusted return</div>
+                            </div>
+                        </div>
+
+                        <div class="pred-walkforward__chart-wrap">
+                            <div class="pred-walkforward__chart-label">[ EQUITY CURVE · $1 BANKROLL · FLAT BET TOP PICK / RACE ]</div>
+                            <canvas id="wf-equity-chart" height="180"></canvas>
+                            <div class="pred-walkforward__chart-legend">
+                                <span><span class="pwf-dot" style="background:var(--red)"></span>SPORTSBOOK (–10% margin)</span>
+                                <span><span class="pwf-dot" style="background:#FFC700"></span>EDGE-ONLY (P&gt;40%)</span>
+                                <span><span class="pwf-dot" style="background:rgba(255,255,255,0.4)"></span>BREAK-EVEN</span>
+                            </div>
+                        </div>
+
+                        <div class="pred-walkforward__season-table">
+                            <div class="pred-walkforward__chart-label">[ PER-SEASON BREAKDOWN ]</div>
+                            <table id="wf-season-table">
+                                <thead><tr>
+                                    <th>[SEASON]</th><th>[RACES]</th><th>[TOP-1]</th><th>[TOP-3]</th><th>[BRIER]</th>
+                                </tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── GBT MODEL TRAINING + EVALUATION ── -->
+                <div class="pred-gbt" id="pred-gbt">
+                    <div class="pred-walkforward__head">
+                        <span class="pred-walkforward__title">[ GRADIENT-BOOSTED TREES · NON-LINEAR MODEL ]</span>
+                        <button id="train-gbt" class="pred-walkforward__btn" type="button">TRAIN GBT</button>
+                    </div>
+                    <div class="pred-walkforward__progress" id="pgbt-progress">
+                        <div class="pred-walkforward__bar"><div class="pred-walkforward__fill" id="pgbt-fill"></div></div>
+                        <span id="pgbt-msg" class="pred-walkforward__msg">Press [TRAIN GBT] to fit a non-linear gradient-boosted-tree ensemble on historical races. Compares against the linear coordinate-descent baseline.</span>
+                    </div>
+                    <div class="pred-gbt__body" id="pgbt-body" style="display:none">
+                        <div class="pred-walkforward__metrics">
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[ARCHITECTURE]</div>
+                                <div class="pred-cal-stat__val" id="gbt-arch">—</div>
+                                <div class="pred-cal-stat__hint">trees · depth · learning rate</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[BRIER · TEST]</div>
+                                <div class="pred-cal-stat__val" id="gbt-brier">—</div>
+                                <div class="pred-cal-stat__hint">vs linear baseline</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[TOP-1 · TEST]</div>
+                                <div class="pred-cal-stat__val" id="gbt-top1">—</div>
+                                <div class="pred-cal-stat__hint">winner picked</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[TOP-3 · TEST]</div>
+                                <div class="pred-cal-stat__val" id="gbt-top3">—</div>
+                                <div class="pred-cal-stat__hint">winner in top-3</div>
+                            </div>
+                        </div>
+                        <div class="pred-walkforward__chart-wrap">
+                            <div class="pred-walkforward__chart-label">[ FEATURE IMPORTANCE · SPLIT USAGE ]</div>
+                            <div id="gbt-importance" class="gbt-importance"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── OPENF1 LAP-DATA INGESTION ── -->
+                <div class="pred-openf1" id="pred-openf1">
+                    <div class="pred-walkforward__head">
+                        <span class="pred-walkforward__title">[ OPENF1 · LAP-LEVEL TELEMETRY · 2023–2024 ]</span>
+                        <button id="load-openf1" class="pred-walkforward__btn pred-walkforward__btn--ghost" type="button">LOAD LAP DATA</button>
+                    </div>
+                    <div class="pred-walkforward__progress" id="pof-progress">
+                        <div class="pred-walkforward__bar"><div class="pred-walkforward__fill" id="pof-fill"></div></div>
+                        <span id="pof-msg" class="pred-walkforward__msg">Pulls per-lap timing from OpenF1 — race pace, tire degradation slope, sector consistency, ultimate pace. The data F1 quant desks actually use.</span>
+                    </div>
+                    <div class="pred-openf1__body" id="pof-body" style="display:none">
+                        <div class="pred-walkforward__metrics">
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[SESSIONS]</div>
+                                <div class="pred-cal-stat__val" id="of-sessions">—</div>
+                                <div class="pred-cal-stat__hint">race sessions ingested</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[DRIVERS]</div>
+                                <div class="pred-cal-stat__val" id="of-drivers">—</div>
+                                <div class="pred-cal-stat__hint">with lap-feature vectors</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[FEATURES]</div>
+                                <div class="pred-cal-stat__val" id="of-features">—</div>
+                                <div class="pred-cal-stat__hint">(driver × session) rows</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[CACHE]</div>
+                                <div class="pred-cal-stat__val" id="of-cache">IndexedDB</div>
+                                <div class="pred-cal-stat__hint">subsequent loads instant</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── BAYESIAN WEEKEND PRIOR UPDATER ── -->
+                <div class="pred-bayesian" id="pred-bayesian">
+                    <div class="pred-walkforward__head">
+                        <span class="pred-walkforward__title">[ BAYESIAN WEEKEND · LIVE PRIOR UPDATE ]</span>
+                        <button id="simulate-weekend" class="pred-walkforward__btn pred-walkforward__btn--ghost" type="button">SIMULATE WEEKEND</button>
+                    </div>
+                    <div class="pred-walkforward__progress">
+                        <span class="pred-walkforward__msg">Each completed session (FP1 → FP2 → FP3 → Q1 → Q2 → Q3) updates win probabilities. Practice less informative than quali. Models the same prior-evolution F1 betting desks track in real time.</span>
+                    </div>
+                    <div class="pred-bayesian__body" id="pbw-body" style="display:none">
+                        <div class="pred-bayesian__timeline" id="pbw-timeline"></div>
+                        <div class="pred-walkforward__chart-wrap" style="border-top:1px solid var(--border);padding-top:14px;">
+                            <div class="pred-walkforward__chart-label">[ POSTERIOR EVOLUTION · TOP-5 ]</div>
+                            <table class="pbw-table" id="pbw-table">
+                                <thead><tr><th>[DRIVER]</th><th>[PRIOR]</th><th>[POST-FP] </th><th>[POST-Q]</th><th>[Δ]</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── MODEL CALIBRATION DASHBOARD (visible at top) ── -->
+                <div class="pred-calibration" id="pred-calibration">
+                    <div class="pred-calibration__head">
+                        <span class="pred-calibration__title">[ MODEL CALIBRATION / BACKTEST ]</span>
+                        <button id="rerun-backtest" class="pred-calibration__rerun" type="button">RE-RUN</button>
+                    </div>
+                    <div class="pred-calibration__grid">
+                        <div class="pred-cal-stat">
+                            <div class="pred-cal-stat__label">[BRIER]</div>
+                            <div class="pred-cal-stat__val" id="cal-brier">—</div>
+                            <div class="pred-cal-stat__hint">target ≤ 0.04 · lower = sharper</div>
+                        </div>
+                        <div class="pred-cal-stat">
+                            <div class="pred-cal-stat__label">[LOG-LOSS]</div>
+                            <div class="pred-cal-stat__val" id="cal-logloss">—</div>
+                            <div class="pred-cal-stat__hint">penalises overconfidence</div>
+                        </div>
+                        <div class="pred-cal-stat">
+                            <div class="pred-cal-stat__label">[TOP-1 HIT]</div>
+                            <div class="pred-cal-stat__val" id="cal-top1">—</div>
+                            <div class="pred-cal-stat__hint">winner picked correctly</div>
+                        </div>
+                        <div class="pred-cal-stat">
+                            <div class="pred-cal-stat__label">[TOP-3 HIT]</div>
+                            <div class="pred-cal-stat__val" id="cal-top3">—</div>
+                            <div class="pred-cal-stat__hint">winner in top-3 prediction</div>
+                        </div>
+                        <div class="pred-cal-stat">
+                            <div class="pred-cal-stat__label">[TOP-5 HIT]</div>
+                            <div class="pred-cal-stat__val" id="cal-top5">—</div>
+                            <div class="pred-cal-stat__hint">winner in top-5 prediction</div>
+                        </div>
+                        <div class="pred-cal-stat">
+                            <div class="pred-cal-stat__label">[SAMPLE]</div>
+                            <div class="pred-cal-stat__val" id="cal-sample">—</div>
+                            <div class="pred-cal-stat__hint">races × sims per race</div>
+                        </div>
+                    </div>
+                    <div class="pred-calibration__methodology">
+                        Dual-Monte-Carlo backtest. Each iteration samples a "ground truth" race outcome, then scores the model's probability vector against it using Brier, log-loss, and top-K hit rate — same calibration metrics used by quantitative trading desks.
+                        <span id="pred-data-source" class="pred-calibration__source">[DATA] hardcoded form</span>
+                    </div>
+                </div>
+
+                <!-- ── BOOKMAKER ODDS / VALUE-BET INPUT ── -->
+                <div class="pred-bookmaker" id="pred-bookmaker" style="display:none">
+                    <div class="pred-bookmaker__head">[ VALUE-BET FINDER · paste bookmaker decimal odds for the top driver ]</div>
+                    <div class="pred-bookmaker__row">
+                        <label for="bookmaker-driver" class="pred-bookmaker__label">DRIVER</label>
+                        <select id="bookmaker-driver" class="pred-select pred-bookmaker__select"></select>
+                        <label for="bookmaker-odds" class="pred-bookmaker__label">DEC. ODDS</label>
+                        <input id="bookmaker-odds" type="number" step="0.01" min="1.01" placeholder="e.g. 2.50" class="pred-bookmaker__input">
+                        <div id="bookmaker-result" class="pred-bookmaker__result">— Run a prediction first.</div>
+                    </div>
+                </div>
+
+                <!-- ── DATA SOURCE STATUS · empirical priors ── -->
+                <div class="pred-priors" id="pred-priors">
+                    <div class="pred-walkforward__head">
+                        <span class="pred-walkforward__title">[ DATA SOURCE · MODEL PRIORS ]</span>
+                        <button id="bootstrap-priors" class="pred-walkforward__btn" type="button">BOOTSTRAP FROM REAL DATA</button>
+                    </div>
+                    <div class="pred-walkforward__progress" id="pps-progress">
+                        <div class="pred-walkforward__bar"><div class="pred-walkforward__fill" id="pps-fill"></div></div>
+                        <span id="pps-msg" class="pred-walkforward__msg">Press [BOOTSTRAP FROM REAL DATA] to replace every hardcoded prior with values computed from 11 seasons of real F1 race results. The model becomes fully data-driven.</span>
+                    </div>
+                    <div class="pred-priors__body" id="pps-body" style="display:none">
+                        <div class="pred-walkforward__metrics">
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[DRIVERS]</div>
+                                <div class="pred-cal-stat__val" id="pps-drivers">—</div>
+                                <div class="pred-cal-stat__hint">empirical / total</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[TEAMS]</div>
+                                <div class="pred-cal-stat__val" id="pps-teams">—</div>
+                                <div class="pred-cal-stat__hint">empirical / total</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[CIRCUITS]</div>
+                                <div class="pred-cal-stat__val" id="pps-circuits">—</div>
+                                <div class="pred-cal-stat__hint">factors recomputed</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[AFFINITIES]</div>
+                                <div class="pred-cal-stat__val" id="pps-affinities">—</div>
+                                <div class="pred-cal-stat__hint">driver-circuit edges</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[DNF RATES]</div>
+                                <div class="pred-cal-stat__val" id="pps-dnf">—</div>
+                                <div class="pred-cal-stat__hint">per-circuit base rates</div>
+                            </div>
+                            <div class="pred-cal-stat">
+                                <div class="pred-cal-stat__label">[SOURCE]</div>
+                                <div class="pred-cal-stat__val" id="pps-source" style="font-size:14px">—</div>
+                                <div class="pred-cal-stat__hint">historical races used</div>
+                            </div>
+                        </div>
+                        <div class="pred-walkforward__methodology" style="padding:10px 14px;font-size:10px;color:var(--text-3);letter-spacing:0.06em;line-height:1.5;border-top:1px solid var(--border);">
+                            Every prior in the prediction model — driver pace/consistency/quali, team car stats, circuit factors, DNF rates, driver-team mapping — was computed directly from real race results. Hardcoded values are no longer in use.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── TEAM PACE OVERRIDE (user adjusts model priors) ── -->
+                <div class="pred-paceoverride" id="pred-paceoverride">
+                    <div class="pred-walkforward__head">
+                        <span class="pred-walkforward__title">[ TEAM PACE OVERRIDE · YOUR 2026 INTUITION ]</span>
+                        <div class="pred-walkforward__btns">
+                            <button id="apply-pace-override" class="pred-walkforward__btn pred-walkforward__btn--ghost" type="button">APPLY &amp; RE-RUN</button>
+                            <button id="reset-pace-override" class="pred-walkforward__btn pred-walkforward__btn--ghost" type="button">RESET</button>
+                        </div>
+                    </div>
+                    <div class="pred-paceoverride__msg">
+                        Slide each team ±10 to override the model's static pre-season priors. Negative = slower this year, positive = faster. Apply triggers a fresh prediction + constructor projection using your inputs.
+                    </div>
+                    <div class="pred-paceoverride__grid" id="pace-override-grid">
+                        <!-- Sliders auto-populated -->
+                    </div>
+                </div>
+
+                <!-- ── CONSTRUCTOR (WCC) PROJECTION ── -->
+                <div class="pred-constructor" id="pred-constructor">
+                    <div class="pred-constructor__head">
+                        <span class="pred-constructor__title">[ CONSTRUCTORS' CHAMPIONSHIP · SEASON PROJECTION ]</span>
+                        <button id="run-constructor" class="pred-walkforward__btn pred-walkforward__btn--ghost" type="button">PROJECT WCC</button>
+                    </div>
+                    <div class="pred-constructor__msg" id="pcc-msg">
+                        Projects end-of-season points by Monte-Carlo simulating every remaining race. Plackett-Luce sampling, F1 point system, 3,000 sims with 10% per-race "unknown-unknowns" noise (aero updates, weather, injuries).
+                    </div>
+                    <div class="pred-constructor__ytd" id="pcc-ytd">
+                        <div class="pred-walkforward__chart-label">[ CURRENT YTD POINTS · anchor projection to reality ]</div>
+                        <div class="pred-constructor__ytd-grid" id="pcc-ytd-grid">
+                            <!-- Inputs auto-populated from the prediction model's team list -->
+                        </div>
+                        <div class="pred-constructor__ytd-hint">Leave blank to assume 0pts each. Better: type today's actual 2026 constructor points to anchor the projection.</div>
+                    </div>
+                    <div class="pred-constructor__results" id="pcc-results" style="display:none">
+                        <table id="pcc-table">
+                            <thead><tr>
+                                <th>[POS]</th><th>[CONSTRUCTOR]</th><th>[YTD]</th>
+                                <th>[PROJ MEAN]</th><th>[P10–P90 BAND]</th>
+                                <th>[P CHAMPION]</th><th>[P TOP-3]</th>
+                            </tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <!-- ── Results Table (Hidden until simulation completes) ── -->
                 <div class="pred-results-area" id="prediction-results" style="display:none"></div>
 
@@ -782,7 +1109,18 @@
     <script src="quiz-data.js?v=4"></script>
     <script src="circuits-data.js?v=4"></script>
     <script src="race-calendar-data.js?v=4"></script>
-    <script src="prediction-model.js?v=4"></script>
+    <script src="js/predictor-metrics.js?v=1"></script>
+    <script src="prediction-model.js?v=7"></script>
+    <script defer src="js/empirical-features.js?v=1"></script>
+    <script defer src="js/historical-dataset.js?v=1"></script>
+    <script defer src="js/empirical-priors.js?v=1"></script>
+    <script defer src="js/walk-forward-backtest.js?v=2"></script>
+    <script defer src="js/constructor-predictor.js?v=1"></script>
+    <script defer src="js/driver-detail.js?v=1"></script>
+    <script defer src="js/gbt.js?v=1"></script>
+    <script defer src="js/openf1-features.js?v=1"></script>
+    <script defer src="js/bayesian-weekend.js?v=1"></script>
+    <script defer src="js/pwa-install.js?v=1"></script>
     
     <!-- Phase 8: Live Telemetry Modules -->
     <script type="module" src="js/telemetry-api.js?v=4"></script>
@@ -802,7 +1140,7 @@
         setTimeout(hideLoader, 3000); // Fail-safe to prevent perpetual loading
     </script>
     <script defer src="script.js?v=5"></script>
-    <script defer src="js/lab-chrome.js?v=2"></script>
+    <script defer src="js/lab-chrome.js?v=3"></script>
     <!-- Legacy decorative scripts disabled in LAB design system:
          3d-effects.js, world-class-animations.js, js/car-360.js, js/app-init.js,
          js/animation-controller.js, js/asset-loader.js, js/performance-monitor.js,
@@ -983,12 +1321,12 @@
                     <div class="pred-result-sim">5,000 simulations</div>
                 </div>
                 <div class="pred-result-cols">
-                    <span>Driver</span>
-                    <span>Win %</span>
-                    <span>Podium %</span>
-                    <span>Top 10 %</span>
-                    <span>Momentum</span>
-                    <span>Elo</span>
+                    <span>[DRIVER]</span>
+                    <span>[WIN %]</span>
+                    <span>[POLE %]</span>
+                    <span>[PODIUM %]</span>
+                    <span>[DNF %]</span>
+                    <span>[FAIR ODDS]</span>
                 </div>
                 <div class="pred-result-list">
             `;
@@ -1002,27 +1340,28 @@
                     <div class="pred-row-driver">
                         <div class="pred-driver-bar" style="width:${barW}%;background:${color}22;border-left:3px solid ${color}"></div>
                         <div class="pred-driver-info">
-                            <span class="pred-driver-name">${d.name}</span>
+                            <span class="pred-driver-name" data-driver="${d.name}">${d.name}</span>
                             <span class="pred-driver-team" style="color:${color}">${d.team}</span>
                         </div>
                     </div>
                     <div class="pred-stat pred-stat-win">
                         <span class="pred-stat-val" style="color:${color}">${d.winPct}%</span>
+                        <span class="pred-stat-ci" style="color:rgba(255,255,255,0.4);font-size:9px;letter-spacing:0.06em;display:block;margin-top:2px">±${d.winCi != null ? d.winCi : '—'}</span>
                         <div class="pred-mini-bar"><div style="width:${d.winPct}%;background:${color}"></div></div>
+                    </div>
+                    <div class="pred-stat">
+                        <span class="pred-stat-val">${d.polePct != null ? d.polePct + '%' : '—'}</span>
+                        <div class="pred-mini-bar"><div style="width:${d.polePct || 0}%;background:#888"></div></div>
                     </div>
                     <div class="pred-stat">
                         <span class="pred-stat-val">${d.podiumPct}%</span>
                         <div class="pred-mini-bar"><div style="width:${d.podiumPct}%;background:#888"></div></div>
                     </div>
                     <div class="pred-stat">
-                        <span class="pred-stat-val">${d.top10Pct}%</span>
-                        <div class="pred-mini-bar"><div style="width:${Math.min(d.top10Pct,100)}%;background:#555"></div></div>
+                        <span class="pred-stat-val" style="color:${(d.dnfPct||0) > 15 ? '#FFC700' : 'rgba(255,255,255,0.6)'}">${d.dnfPct != null ? d.dnfPct + '%' : '—'}</span>
                     </div>
                     <div class="pred-stat">
-                        <span class="pred-stat-val pred-momentum">${d.momentum >= 60 ? '▲' : d.momentum <= 40 ? '▼' : '●'} ${d.momentum}</span>
-                    </div>
-                    <div class="pred-stat">
-                        <span class="pred-stat-val pred-elo">${d.eloRating}</span>
+                        <span class="pred-stat-val" style="color:#fff;font-variant-numeric:tabular-nums;font-weight:500">${d.impliedOdds != null && d.impliedOdds < 999 ? d.impliedOdds.toFixed(2) : '—'}</span>
                     </div>
                 </div>`;
             });
@@ -1306,6 +1645,98 @@
         }
 
 
+        // ── Calibration dashboard ────────────────────────────────────────
+        let _lastPredictions = null;
+
+        function paintCalibration(r) {
+            if (!r) return;
+            const set = (id, val, suffix='') => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = val + suffix;
+            };
+            const colour = (id, mean, target, lowerIsBetter) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const good = lowerIsBetter ? mean <= target : mean >= target;
+                el.style.color = good ? 'var(--red, #FF1F1F)' : 'rgba(255,255,255,0.5)';
+            };
+            set('cal-brier',   r.brier.mean.toFixed(3));
+            set('cal-logloss', r.logLoss.mean.toFixed(2));
+            set('cal-top1',    r.top1HitPct.mean, '%');
+            set('cal-top3',    r.top3HitPct.mean, '%');
+            set('cal-top5',    r.top5HitPct.mean, '%');
+            set('cal-sample',  `${r.races} × ${r.simsPerRace}`);
+            colour('cal-brier',   r.brier.mean,        r.brier.target,        true);
+            colour('cal-logloss', r.logLoss.mean,      r.logLoss.target,      true);
+            colour('cal-top1',    r.top1HitPct.mean,   r.top1HitPct.target,   false);
+            colour('cal-top3',    r.top3HitPct.mean,   r.top3HitPct.target,   false);
+            colour('cal-top5',    r.top5HitPct.mean,   r.top5HitPct.target,   false);
+        }
+
+        function runBacktestAsync(races=25, sims=1200) {
+            if (!window.predictionModel || !window.PredictorMetrics) return;
+            // Defer to next tick so the UI stays responsive
+            setTimeout(() => {
+                const t0 = performance.now();
+                const r = window.predictionModel.runBacktest(races, sims);
+                const dt = ((performance.now() - t0) / 1000).toFixed(2);
+                if (r) {
+                    paintCalibration(r);
+                    console.info(`[backtest] ${races} races × ${sims} sims in ${dt}s — Brier ${r.brier.mean.toFixed(3)}, Top-3 ${r.top3HitPct.mean}%`);
+                }
+            }, 30);
+        }
+
+        // ── Value-bet evaluator ──────────────────────────────────────────
+        function populateBookmakerDrivers(predictions) {
+            const sel = document.getElementById('bookmaker-driver');
+            if (!sel) return;
+            sel.innerHTML = '';
+            predictions.slice(0, 10).forEach(p => {
+                const o = document.createElement('option');
+                o.value = p.name;
+                o.textContent = `${p.name} · model ${p.winPct}%`;
+                sel.appendChild(o);
+            });
+        }
+
+        function evaluateValueBet() {
+            if (!_lastPredictions) return;
+            const sel = document.getElementById('bookmaker-driver');
+            const inp = document.getElementById('bookmaker-odds');
+            const out = document.getElementById('bookmaker-result');
+            if (!sel || !inp || !out) return;
+            const odds = parseFloat(inp.value);
+            if (!odds || odds <= 1) {
+                out.innerHTML = '<span class="pred-bookmaker__hint">Enter decimal odds &gt; 1.00 to evaluate.</span>';
+                return;
+            }
+            const bet = window.predictionModel.evaluateBet(sel.value, odds, _lastPredictions);
+            if (!bet) { out.textContent = '—'; return; }
+            const edgeColor = bet.isValueBet ? 'var(--red)' : 'rgba(255,255,255,0.4)';
+            const flag = bet.isValueBet
+                ? `<span style="color:var(--red); font-weight:500;">[+EV BET]</span>`
+                : `<span style="color:rgba(255,255,255,0.4);">[NO EDGE]</span>`;
+            out.innerHTML = `
+                ${flag}
+                <span class="pred-bookmaker__kv">[MODEL FAIR] <b>${bet.modelFairOdds}</b></span>
+                <span class="pred-bookmaker__kv">[EDGE] <b style="color:${edgeColor}">${bet.edgePct > 0 ? '+' : ''}${bet.edgePct}%</b></span>
+                <span class="pred-bookmaker__kv">[KELLY] <b style="color:${edgeColor}">${bet.kellyPct}%</b> of bankroll</span>
+                <span class="pred-bookmaker__kv">[EV] <b>${(bet.ev * 100).toFixed(1)}¢ per $1</b></span>
+            `;
+        }
+
+        // Hook the predictor's renderResults to also populate the value-bet UI
+        const _origRender = renderResults;
+        renderResults = function (data, circuit, weather) {
+            _origRender(data, circuit, weather);
+            _lastPredictions = data;
+            populateBookmakerDrivers(data);
+            const bookmaker = document.getElementById('pred-bookmaker');
+            if (bookmaker) bookmaker.style.display = '';
+            evaluateValueBet();
+        };
+
         function boot() {
             populate();
             const btn = document.getElementById('predict-btn');
@@ -1313,6 +1744,716 @@
 
             const sel = document.getElementById('circuit-select');
             if (sel) sel.addEventListener('change', () => showMeta(sel.value));
+
+            // Wait for empirical data to load (or fail) before running backtest
+            // so the calibration reflects the real data the model will use.
+            const initialBacktest = () => runBacktestAsync(25, 1200);
+            let backtestKicked = false;
+            window.addEventListener('empirical-features-ready', (e) => {
+                const src = e.detail;
+                const el = document.getElementById('pred-data-source');
+                if (el && src) {
+                    el.textContent = `[DATA] ${src.source} · ${src.season} season · ${src.driversWithEmpirical}/${src.totalDrivers} drivers empirical`;
+                    el.style.color = 'var(--red)';
+                }
+                if (!backtestKicked) { backtestKicked = true; initialBacktest(); }
+            });
+            // Fallback if empirical never resolves within 3s — run with hardcoded
+            setTimeout(() => { if (!backtestKicked) { backtestKicked = true; initialBacktest(); } }, 3000);
+
+            const rerun = document.getElementById('rerun-backtest');
+            if (rerun) rerun.addEventListener('click', () => {
+                rerun.textContent = 'RUNNING…';
+                rerun.disabled = true;
+                setTimeout(() => {
+                    runBacktestAsync(40, 1500);
+                    setTimeout(() => { rerun.textContent = 'RE-RUN'; rerun.disabled = false; }, 1200);
+                }, 30);
+            });
+
+            // Value-bet wiring
+            const bookSel = document.getElementById('bookmaker-driver');
+            const bookInp = document.getElementById('bookmaker-odds');
+            if (bookSel) bookSel.addEventListener('change', evaluateValueBet);
+            if (bookInp) bookInp.addEventListener('input', evaluateValueBet);
+
+            // ── Walking-forward backtest button ─────────────────────
+            const wfBtn = document.getElementById('run-walkforward');
+            if (wfBtn) wfBtn.addEventListener('click', runWalkForward);
+            const trainBtn = document.getElementById('train-weights');
+            if (trainBtn) trainBtn.addEventListener('click', trainModel);
+
+            const ccBtn = document.getElementById('run-constructor');
+            if (ccBtn) ccBtn.addEventListener('click', runConstructorProjection);
+            // Populate YTD inputs + pace-override sliders once predictionModel is available
+            const tryPopulate = () => {
+                if (window.predictionModel) {
+                    populateYtdInputs();
+                    populatePaceOverride();
+                } else setTimeout(tryPopulate, 200);
+            };
+            tryPopulate();
+
+            const applyBtn = document.getElementById('apply-pace-override');
+            const resetBtn = document.getElementById('reset-pace-override');
+            if (applyBtn) applyBtn.addEventListener('click', applyPaceOverride);
+            if (resetBtn) resetBtn.addEventListener('click', resetPaceOverride);
+
+            // Empirical-priors bootstrap
+            const ppsBtn = document.getElementById('bootstrap-priors');
+            if (ppsBtn) ppsBtn.addEventListener('click', bootstrapEmpiricalPriors);
+        }
+
+        // ── Empirical priors: replace ALL hardcoded values with computed ones ──
+        async function bootstrapEmpiricalPriors() {
+            if (!window.EmpiricalPriors) {
+                alert('EmpiricalPriors module not loaded.');
+                return;
+            }
+            const btn = document.getElementById('bootstrap-priors');
+            const fill = document.getElementById('pps-fill');
+            const msg = document.getElementById('pps-msg');
+            const body = document.getElementById('pps-body');
+            btn.disabled = true;
+            btn.textContent = 'BOOTSTRAPPING…';
+            try {
+                const result = await window.EmpiricalPriors.bootstrap({
+                    onProgress: (pct, m) => {
+                        if (fill) fill.style.width = pct + '%';
+                        if (msg) msg.textContent = `[BOOTSTRAP] ${pct}% · ${m}`;
+                    }
+                });
+                if (!result) {
+                    msg.textContent = '[ERROR] Bootstrap failed — see console.';
+                    return;
+                }
+                msg.textContent = `[COMPLETE] Replaced ${result.drivers} drivers · ${result.teams} teams · ${result.affinities} track-affinity edges · ${result.dnfRates} DNF rates. Model is now 100% data-driven.`;
+                paintPriorsStatus(result);
+                body.style.display = '';
+
+                // Repopulate downstream UI that depends on the now-replaced priors
+                if (typeof populateYtdInputs === 'function') {
+                    const grid = document.getElementById('pcc-ytd-grid');
+                    if (grid) { grid.dataset.populated = 'false'; grid.innerHTML = ''; populateYtdInputs(); }
+                }
+                if (typeof populatePaceOverride === 'function') {
+                    const grid = document.getElementById('pace-override-grid');
+                    if (grid) { grid.dataset.populated = 'false'; grid.innerHTML = ''; populatePaceOverride(); }
+                }
+                // Refresh the circuit dropdown so it shows real Jolpica circuit names
+                refreshCircuitDropdown();
+            } catch (e) {
+                msg.textContent = '[ERROR] ' + e.message;
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'RE-BOOTSTRAP';
+            }
+        }
+
+        function paintPriorsStatus(r) {
+            const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+            set('pps-drivers',    r.drivers || '—');
+            set('pps-teams',      r.teams || '—');
+            set('pps-circuits',   r.circuits || '—');
+            set('pps-affinities', r.affinities || '—');
+            set('pps-dnf',        r.dnfRates || '—');
+            const seasons = r.seasonsCovered || [];
+            const seasonsText = seasons.length ? `${seasons[0]}–${seasons[seasons.length - 1]} · ${r.sourceRaces}` : '—';
+            set('pps-source', seasonsText);
+        }
+
+        function refreshCircuitDropdown() {
+            const sel = document.getElementById('circuit-select');
+            if (!sel || !window.predictionModel) return;
+            const newCircuits = window.predictionModel.getCircuits();
+            const previousValue = sel.value;
+            // Re-populate keeping the existing first option (placeholder)
+            const placeholder = sel.querySelector('option[value=""]');
+            sel.innerHTML = '';
+            if (placeholder) sel.appendChild(placeholder);
+            newCircuits.forEach(c => {
+                const o = document.createElement('option');
+                o.value = c.name; o.textContent = c.name;
+                sel.appendChild(o);
+            });
+            // Try to restore previous selection
+            if (previousValue && [...sel.options].some(o => o.value === previousValue)) {
+                sel.value = previousValue;
+            }
+        }
+
+        // ── Team pace override ──────────────────────────────────────────
+        function populatePaceOverride() {
+            const grid = document.getElementById('pace-override-grid');
+            if (!grid || grid.dataset.populated === 'true') return;
+            if (!window.predictionModel?.getTeams) return;
+            const teams = window.predictionModel.getTeams();
+            grid.innerHTML = '';
+            teams.forEach(t => {
+                const row = document.createElement('div');
+                row.className = 'pace-row';
+                row.innerHTML = `
+                    <span class="pace-row__name">${t.name}</span>
+                    <input type="range" min="-10" max="10" step="1" value="${t.delta}" data-team="${t.name}" class="pace-row__slider">
+                    <span class="pace-row__val" data-team="${t.name}">${t.delta > 0 ? '+' : ''}${t.delta}</span>
+                `;
+                grid.appendChild(row);
+            });
+            // Live-update the displayed value as the user drags
+            grid.querySelectorAll('.pace-row__slider').forEach(slider => {
+                slider.addEventListener('input', (e) => {
+                    const v = e.target.value;
+                    const valEl = grid.querySelector(`.pace-row__val[data-team="${e.target.dataset.team}"]`);
+                    if (valEl) {
+                        valEl.textContent = (v > 0 ? '+' : '') + v;
+                        valEl.style.color = v > 0 ? 'var(--red)' : v < 0 ? 'rgba(255,255,255,0.4)' : '';
+                    }
+                });
+            });
+            grid.dataset.populated = 'true';
+        }
+
+        function readPaceOverrides() {
+            const out = {};
+            document.querySelectorAll('.pace-row__slider').forEach(s => {
+                const v = parseInt(s.value, 10) || 0;
+                out[s.dataset.team] = v;
+            });
+            return out;
+        }
+
+        async function applyPaceOverride() {
+            if (!window.predictionModel?.applyTeamPaceOverride) return;
+            const btn = document.getElementById('apply-pace-override');
+            btn.disabled = true; btn.textContent = 'APPLYING…';
+            try {
+                const overrides = readPaceOverrides();
+                window.predictionModel.applyTeamPaceOverride(overrides);
+                // If a circuit is selected, immediately re-run the prediction
+                const circuit = document.getElementById('circuit-select')?.value;
+                if (circuit && window.predictionModel.generatePredictions) {
+                    const fresh = window.predictionModel.generatePredictions(
+                        circuit,
+                        document.getElementById('weather-select')?.value || 'dry',
+                        3000
+                    );
+                    if (typeof renderResults === 'function') {
+                        renderResults(fresh, circuit, document.getElementById('weather-select')?.value || 'dry');
+                    }
+                }
+                // Also re-run constructor projection if visible
+                if (document.getElementById('pcc-results').style.display !== 'none') {
+                    await runConstructorProjection();
+                }
+            } finally {
+                btn.disabled = false; btn.textContent = 'APPLY & RE-RUN';
+            }
+        }
+
+        function resetPaceOverride() {
+            // Reset sliders to 0
+            document.querySelectorAll('.pace-row__slider').forEach(s => {
+                s.value = 0;
+                const valEl = document.querySelector(`.pace-row__val[data-team="${s.dataset.team}"]`);
+                if (valEl) { valEl.textContent = '0'; valEl.style.color = ''; }
+            });
+            // Reset the model's overrides (apply zeros restores df/eff to originals)
+            if (window.predictionModel?.applyTeamPaceOverride) {
+                const reset = {};
+                document.querySelectorAll('.pace-row__slider').forEach(s => { reset[s.dataset.team] = 0; });
+                window.predictionModel.applyTeamPaceOverride(reset);
+            }
+        }
+
+        // Boot-time event wiring for the heavier analytics buttons (these
+        // were inadvertently nested inside resetPaceOverride during a refactor).
+        document.addEventListener('DOMContentLoaded', () => {
+            const gbtBtn = document.getElementById('train-gbt');
+            if (gbtBtn) gbtBtn.addEventListener('click', trainGBT);
+            const of1Btn = document.getElementById('load-openf1');
+            if (of1Btn) of1Btn.addEventListener('click', loadOpenF1);
+            const bwBtn = document.getElementById('simulate-weekend');
+            if (bwBtn) bwBtn.addEventListener('click', simulateBayesianWeekend);
+        });
+
+        // ── GBT training ─────────────────────────────────────────────────
+        async function trainGBT() {
+            if (!window.GBT || !window.HistoricalDataset) {
+                alert('GBT or historical-data module not loaded.');
+                return;
+            }
+            const btn = document.getElementById('train-gbt');
+            const msg = document.getElementById('pgbt-msg');
+            const fill = document.getElementById('pgbt-fill');
+            const body = document.getElementById('pgbt-body');
+            btn.disabled = true; btn.textContent = 'TRAINING…';
+            body.style.display = 'none';
+            try {
+                msg.textContent = '[FETCH] loading historical races (cached if available)...';
+                const dataset = await window.HistoricalDataset.ensureLoaded();
+                const result = await window.GBT.trainOnHistory(dataset, {
+                    minSeason: 2016,
+                    nTrees: 80, maxDepth: 4, learningRate: 0.08,
+                    onProgress: (pct, m) => {
+                        fill.style.width = pct + '%';
+                        msg.textContent = `[GBT] ${pct}% · ${m}`;
+                    }
+                });
+                msg.textContent = `[COMPLETE] ${result.testRaces} test-set races · Brier ${result.metrics.brier.mean.toFixed(3)} · Top-1 ${result.metrics.top1HitPct.mean}%`;
+                paintGBTResults(result);
+                body.style.display = '';
+                window._F_ATICS_GBT = result.model;   // for downstream use
+            } catch (e) {
+                msg.textContent = '[ERROR] ' + e.message;
+                console.error(e);
+            } finally {
+                btn.disabled = false; btn.textContent = 'RE-TRAIN GBT';
+            }
+        }
+        function paintGBTResults(r) {
+            const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+            set('gbt-arch',  `${r.hyperparams.nTrees}t · d${r.hyperparams.maxDepth} · η${r.hyperparams.learningRate}`);
+            set('gbt-brier', r.metrics.brier.mean.toFixed(3));
+            set('gbt-top1',  `${r.metrics.top1HitPct.mean}%`);
+            set('gbt-top3',  `${r.metrics.top3HitPct.mean}%`);
+            // Feature importance bars
+            const wrap = document.getElementById('gbt-importance');
+            if (wrap) {
+                wrap.innerHTML = '';
+                r.featureImportance.forEach(({ feature, importance }) => {
+                    const row = document.createElement('div');
+                    row.className = 'gbt-importance__row';
+                    row.innerHTML = `
+                        <span class="gbt-importance__name">${feature}</span>
+                        <span class="gbt-importance__bar"><span style="width:${(importance * 100).toFixed(0)}%"></span></span>
+                        <span class="gbt-importance__val">${(importance * 100).toFixed(0)}%</span>
+                    `;
+                    wrap.appendChild(row);
+                });
+            }
+        }
+
+        // ── OpenF1 lap-data loader ────────────────────────────────────────
+        async function loadOpenF1() {
+            if (!window.OpenF1Features) {
+                alert('OpenF1 module not loaded.');
+                return;
+            }
+            const btn = document.getElementById('load-openf1');
+            const msg = document.getElementById('pof-msg');
+            const fill = document.getElementById('pof-fill');
+            const body = document.getElementById('pof-body');
+            btn.disabled = true; btn.textContent = 'LOADING…';
+            window.OpenF1Features.onProgress(({ pct, message }) => {
+                fill.style.width = pct + '%';
+                msg.textContent = `[OPENF1] ${pct}% · ${message}`;
+            });
+            try {
+                const { features } = await window.OpenF1Features.ensureLoaded({ years: [2023, 2024] });
+                const lookup = window.OpenF1Features.buildLookup(features);
+                window._F_ATICS_LAP_LOOKUP = lookup;
+                const sessions = new Set(features.map(f => f.session_key)).size;
+                const drivers  = new Set(features.map(f => f.driver_number)).size;
+                document.getElementById('of-sessions').textContent = sessions;
+                document.getElementById('of-drivers').textContent  = drivers;
+                document.getElementById('of-features').textContent = features.length;
+                msg.textContent = `[COMPLETE] ${features.length} lap-feature rows across ${sessions} race sessions.`;
+                body.style.display = '';
+            } catch (e) {
+                msg.textContent = '[ERROR] ' + e.message;
+                console.error(e);
+            } finally {
+                btn.disabled = false; btn.textContent = 'RE-LOAD';
+            }
+        }
+
+        // ── Bayesian weekend simulator ────────────────────────────────────
+        async function simulateBayesianWeekend() {
+            if (!window.BayesianWeekend || !window.predictionModel) {
+                alert('Bayesian or predictionModel not loaded.');
+                return;
+            }
+            const btn = document.getElementById('simulate-weekend');
+            const body = document.getElementById('pbw-body');
+            const timelineEl = document.getElementById('pbw-timeline');
+            const tbody = document.querySelector('#pbw-table tbody');
+            btn.disabled = true; btn.textContent = 'SIMULATING…';
+
+            try {
+                // Use the user's selected circuit, fall back to Bahrain
+                const selectedCircuit = document.getElementById('circuit-select')?.value || 'Bahrain International Circuit';
+                const baseline = window.predictionModel.generatePredictions(selectedCircuit, 'dry', 2000);
+                const bw = window.BayesianWeekend.fromPredictions(baseline);
+
+                // Synthesize plausible pace deltas for each session.
+                // Real F1 timing: P1→P10 quali gap ≈ 0.5s, race pace gap ≈ 0.4s.
+                // We map driver rank → linear delta in this range, with small
+                // per-session noise. In production, these come from OpenF1.
+                const drivers = baseline.slice(0, 8);
+                const sortedByPrior = drivers.slice().sort((a, b) => b.winPct - a.winPct);
+                const seed = (sessionIdx) => {
+                    const out = {};
+                    sortedByPrior.forEach((d, rank) => {
+                        // P1 = 0s, P8 = ~0.35s slower at most. Real-life scale.
+                        const skillDelta = rank * 0.045;
+                        // Small per-session noise — fades with session index (later = more representative)
+                        const noiseScale = 0.06 / (sessionIdx * 0.5 + 1);
+                        const noise = (Math.random() - 0.5) * 2 * noiseScale;
+                        out[d.name] = Math.max(0, +(skillDelta + noise).toFixed(3));
+                    });
+                    return out;
+                };
+
+                const sessions = ['FP1', 'FP2', 'FP3', 'Q1', 'Q2', 'Q3'];
+                const history = [];
+                const priors = drivers.map(d => ({ name: d.name, prior: d.winPct / 100 }));
+
+                let postFP = null, postQ = null;
+                sessions.forEach((type, idx) => {
+                    const pace = seed(idx);
+                    bw.ingestSession({ type, paceByDriver: pace });
+                    history.push({ type, posterior: bw.posterior() });
+                    if (type === 'FP3') postFP = bw.posterior();
+                    if (type === 'Q3')  postQ  = bw.posterior();
+                });
+
+                // Render timeline
+                timelineEl.innerHTML = '';
+                history.forEach(h => {
+                    const top = Object.entries(h.posterior).sort((a, b) => b[1] - a[1])[0];
+                    const div = document.createElement('div');
+                    div.className = 'pbw-session';
+                    div.innerHTML = `
+                        <div class="pbw-session__label">[${h.type}] ✓</div>
+                        <div class="pbw-session__lead">${top[0].split(' ').pop()} ${(top[1] * 100).toFixed(0)}%</div>
+                    `;
+                    timelineEl.appendChild(div);
+                });
+
+                // Render top-5 evolution table
+                tbody.innerHTML = '';
+                priors.slice(0, 5).forEach(({ name, prior }) => {
+                    const fpVal = postFP?.[name] || prior;
+                    const qVal  = postQ?.[name]  || prior;
+                    const delta = (qVal - prior) * 100;
+                    const colorD = delta > 0 ? 'var(--red)' : 'rgba(255,255,255,0.4)';
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${name}</td>
+                        <td>${(prior * 100).toFixed(1)}%</td>
+                        <td>${(fpVal * 100).toFixed(1)}%</td>
+                        <td style="font-weight:500">${(qVal * 100).toFixed(1)}%</td>
+                        <td style="color:${colorD}">${delta > 0 ? '+' : ''}${delta.toFixed(1)}pp</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                body.style.display = '';
+            } catch (e) {
+                console.error(e);
+                alert('Simulation error: ' + e.message);
+            } finally {
+                btn.disabled = false; btn.textContent = 'RE-SIMULATE';
+            }
+        }
+
+        function populateYtdInputs() {
+            const grid = document.getElementById('pcc-ytd-grid');
+            if (!grid || grid.dataset.populated === 'true') return;
+            // Distinct teams from the prediction model
+            if (!window.predictionModel) return;
+            const sample = window.predictionModel.generatePredictions('Bahrain International Circuit', 'dry', 20);
+            const teams = [...new Set(sample.map(p => p.team))];
+            grid.innerHTML = '';
+            teams.forEach(t => {
+                const row = document.createElement('div');
+                row.className = 'pcc-ytd-row';
+                row.innerHTML = `
+                    <label class="pcc-ytd-label">${t}</label>
+                    <input type="number" class="pcc-ytd-input" data-team="${t}" min="0" step="1" placeholder="0">
+                `;
+                grid.appendChild(row);
+            });
+            grid.dataset.populated = 'true';
+        }
+
+        function readYtdPoints() {
+            const out = {};
+            document.querySelectorAll('.pcc-ytd-input').forEach(input => {
+                const v = parseFloat(input.value);
+                if (Number.isFinite(v) && v >= 0) out[input.dataset.team] = v;
+            });
+            return out;
+        }
+
+        async function runConstructorProjection() {
+            if (!window.ConstructorPredictor) {
+                alert('Constructor module not loaded.');
+                return;
+            }
+            const btn = document.getElementById('run-constructor');
+            const msg = document.getElementById('pcc-msg');
+            const wrap = document.getElementById('pcc-results');
+            btn.disabled = true;
+            btn.textContent = 'PROJECTING…';
+            msg.textContent = 'Running 3,000 Monte-Carlo simulations over remaining 2026 races (with unknown-unknowns noise)...';
+            try {
+                await new Promise(r => setTimeout(r, 30));
+                const inputs = window.ConstructorPredictor.buildLiveProjectionInputs();
+                if (inputs.remainingRaces.length === 0) {
+                    msg.textContent = '[NO REMAINING RACES] Season complete.';
+                    return;
+                }
+                // Override with user-entered YTD points (anchor to reality)
+                const ytd = readYtdPoints();
+                if (Object.keys(ytd).length > 0) {
+                    inputs.constructorPoints = ytd;
+                }
+                const results = window.ConstructorPredictor.projectSeason({
+                    ...inputs,
+                    predictRace: (race) => window.ConstructorPredictor.driverProbFromModel(race),
+                    simulations: 3000,
+                    surpriseRate: 0.10,
+                });
+                paintConstructorResults(results, inputs.remainingRaces.length);
+                const ytdNote = Object.keys(ytd).length > 0
+                    ? `anchored to your ${Object.keys(ytd).length} YTD inputs`
+                    : 'no YTD anchor — enter today\'s actual points for better accuracy';
+                msg.textContent = `[COMPLETE] ${inputs.remainingRaces.length} remaining races · 3,000 sims · ${ytdNote}`;
+                wrap.style.display = '';
+            } catch (e) {
+                msg.textContent = '[ERROR] ' + e.message;
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'RE-PROJECT';
+            }
+        }
+
+        function paintConstructorResults(results, racesAhead) {
+            const tbody = document.querySelector('#pcc-table tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            results.forEach((r, i) => {
+                const tr = document.createElement('tr');
+                const champColor = r.pctChampion > 25 ? 'var(--red)' : 'inherit';
+                const champBar = `<div style="display:inline-block;width:${Math.min(r.pctChampion * 2, 100)}px;height:3px;background:var(--red);margin-left:8px;vertical-align:middle"></div>`;
+                tr.innerHTML = `
+                    <td>[${String(i + 1).padStart(2, '0')}]</td>
+                    <td><b>${r.constructorId}</b></td>
+                    <td>${r.currentPoints}</td>
+                    <td style="font-weight:500">${r.projectedMean}</td>
+                    <td style="color:var(--text-3)">${r.projectedP10}–${r.projectedP90}</td>
+                    <td style="color:${champColor};font-weight:500">${r.pctChampion}%${champBar}</td>
+                    <td style="color:var(--text-2)">${r.pctTop3}%</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function trainModel() {
+            if (!window.HistoricalDataset || !window.WalkForwardBacktest) {
+                alert('Backtest modules not loaded yet.');
+                return;
+            }
+            const btn = document.getElementById('train-weights');
+            const msg = document.getElementById('pwf-msg');
+            const fill = document.getElementById('pwf-fill');
+            btn.disabled = true;
+            btn.textContent = 'TRAINING…';
+            msg.textContent = '[FETCH] loading historical races (cached if available)...';
+            try {
+                const dataset = await window.HistoricalDataset.ensureLoaded();
+                msg.textContent = '[TRAIN] coordinate-descent on 60% TRAIN split...';
+                const result = await window.WalkForwardBacktest.learnWeights(dataset, {
+                    minSeason: 2016,
+                    onProgress: (pct, m) => {
+                        fill.style.width = pct + '%';
+                        msg.textContent = `[TRAIN] ${pct}% · ${m}`;
+                    },
+                });
+                msg.textContent = `[TRAINED] TEST Brier ${result.test.brierBaseline} → ${result.test.brierLearned} (${result.test.improvementPct >= 0 ? '+' : ''}${result.test.improvementPct}%)`;
+                paintLearnedWeights(result);
+            } catch (e) {
+                msg.textContent = '[ERROR] ' + e.message;
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'RE-TRAIN';
+            }
+        }
+
+        function paintLearnedWeights(r) {
+            const box = document.getElementById('pwf-learned');
+            const tbody = document.querySelector('#pwf-learned-table tbody');
+            if (!box || !tbody) return;
+            box.style.display = '';
+            tbody.innerHTML = '';
+
+            const rows = [
+                ['[TRAIN BRIER]', r.train.brierBaseline, r.train.brierLearned, r.train.improvementPct],
+                ['[TEST BRIER]',  r.test.brierBaseline,  r.test.brierLearned,  r.test.improvementPct],
+            ];
+            rows.forEach(([k, a, b, delta]) => {
+                const tr = document.createElement('tr');
+                const colour = delta > 0 ? 'var(--red)' : 'rgba(255,255,255,0.4)';
+                tr.innerHTML = `<td><b>${k}</b></td><td>${a}</td><td>${b}</td><td style="color:${colour}">${delta > 0 ? '+' : ''}${delta}%</td>`;
+                tbody.appendChild(tr);
+            });
+
+            // Show the actual learned weights as a separate sub-row
+            Object.keys(r.learnedWeights).forEach(name => {
+                const tr = document.createElement('tr');
+                const def = r.defaultWeights[name];
+                const cur = r.learnedWeights[name];
+                const dlt = +(cur - def).toFixed(2);
+                tr.innerHTML = `<td style="color:var(--text-2);font-size:10px">[w] ${name}</td><td style="color:var(--text-3)">${def.toFixed(2)}</td><td style="color:var(--text-3)">${cur.toFixed(2)}</td><td style="color:var(--text-3)">${dlt > 0 ? '+' : ''}${dlt}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ── Walking-forward backtest UI ──────────────────────────────────
+        async function runWalkForward() {
+            if (!window.HistoricalDataset || !window.WalkForwardBacktest) {
+                alert('Backtest modules not loaded yet.');
+                return;
+            }
+            const btn = document.getElementById('run-walkforward');
+            const fill = document.getElementById('pwf-fill');
+            const msg  = document.getElementById('pwf-msg');
+            const body = document.getElementById('pwf-body');
+
+            btn.disabled = true;
+            btn.textContent = 'RUNNING…';
+            body.style.display = 'none';
+
+            window.HistoricalDataset.onProgress(({ pct, message }) => {
+                if (fill) fill.style.width = pct + '%';
+                if (msg)  msg.textContent = `[FETCH] ${pct}% · ${message}`;
+            });
+
+            try {
+                msg.textContent = '[FETCH] 0% · loading historical races from Jolpica (one-time, ~30s)';
+                const dataset = await window.HistoricalDataset.ensureLoaded();
+                msg.textContent = `[FETCH] complete — ${dataset.races.length} races, ${dataset.results.length} results. Now running walk-forward...`;
+
+                // Yield to browser to let UI repaint
+                await new Promise(r => setTimeout(r, 50));
+
+                const result = await window.WalkForwardBacktest.runBacktest(dataset, {
+                    minSeason: 2016,
+                    onProgress: (pct, m) => {
+                        fill.style.width = pct + '%';
+                        msg.textContent = `[BACKTEST] ${pct}% · ${m}`;
+                    },
+                });
+
+                msg.textContent = `[COMPLETE] ${result.totalRaces} races scored. Brier ${result.metrics.brier.mean.toFixed(3)}. Top-1 ${result.metrics.top1HitPct.mean}%. ROI ${result.roi.sportsbookROIpct >= 0 ? '+' : ''}${result.roi.sportsbookROIpct}%.`;
+                paintWalkForward(result);
+                body.style.display = '';
+            } catch (e) {
+                msg.textContent = '[ERROR] ' + e.message;
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'RE-RUN';
+            }
+        }
+
+        function paintWalkForward(r) {
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+            const color = (id, good) => { const el = document.getElementById(id); if (el) el.style.color = good ? 'var(--red)' : 'rgba(255,255,255,0.5)'; };
+
+            set('wf-races',    r.totalRaces);
+            set('wf-top1',     `${r.metrics.top1HitPct.mean}%`);
+            set('wf-top3',     `${r.metrics.top3HitPct.mean}%`);
+            set('wf-brier',    r.metrics.brier.mean.toFixed(3));
+            set('wf-roi',      `${r.roi.sportsbookROIpct >= 0 ? '+' : ''}${r.roi.sportsbookROIpct}%`);
+            set('wf-roi-edge', `${r.roi.edgeOnlyROIpct >= 0 ? '+' : ''}${r.roi.edgeOnlyROIpct}%`);
+            set('wf-dd',       `${r.roi.maxDrawdownPct}%`);
+            set('wf-sharpe',   r.roi.sharpe.toFixed(2));
+
+            color('wf-roi',      r.roi.sportsbookROIpct > 0);
+            color('wf-roi-edge', r.roi.edgeOnlyROIpct > 0);
+            color('wf-sharpe',   r.roi.sharpe > 0.5);
+            color('wf-top1',     r.metrics.top1HitPct.mean > 25);
+            color('wf-top3',     r.metrics.top3HitPct.mean > 50);
+            color('wf-brier',    r.metrics.brier.mean < 0.05);
+
+            // Render equity chart
+            renderEquityChart(r.equity);
+
+            // Render per-season table
+            const tbody = document.querySelector('#wf-season-table tbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                r.perSeason.forEach(s => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${s.season}</td>
+                        <td>${s.races}</td>
+                        <td style="color:${s.top1HitPct > 25 ? 'var(--red)' : 'inherit'}">${s.top1HitPct}%</td>
+                        <td>${s.top3HitPct}%</td>
+                        <td>${s.brier}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        function renderEquityChart(equity) {
+            const cvs = document.getElementById('wf-equity-chart');
+            if (!cvs) return;
+            const dpr = window.devicePixelRatio || 1;
+            const W = cvs.clientWidth || 800;
+            const H = cvs.clientHeight || 180;
+            cvs.width  = W * dpr;
+            cvs.height = H * dpr;
+            const ctx = cvs.getContext('2d');
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, W, H);
+
+            // Find y-bounds across all curves
+            const all = [...equity.sportsbook, ...equity.edgeOnly];
+            const yMin = Math.min(...all);
+            const yMax = Math.max(...all);
+            const yPad = (yMax - yMin) * 0.08 || 1;
+            const lo = yMin - yPad;
+            const hi = yMax + yPad;
+            const yScale = (v) => H - 24 - ((v - lo) / (hi - lo)) * (H - 40);
+            const xScale = (i, len) => 6 + (i / Math.max(len - 1, 1)) * (W - 12);
+
+            // Break-even line at y=1
+            ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(6, yScale(1));
+            ctx.lineTo(W - 6, yScale(1));
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            const drawLine = (data, color, width = 2) => {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = width;
+                ctx.beginPath();
+                data.forEach((v, i) => {
+                    const x = xScale(i, data.length);
+                    const y = yScale(v);
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                });
+                ctx.stroke();
+            };
+
+            drawLine(equity.sportsbook, '#FF1F1F', 1.5);
+            drawLine(equity.edgeOnly,   '#FFC700', 1.5);
+
+            // Axis labels
+            ctx.fillStyle = 'rgba(255,255,255,0.45)';
+            ctx.font = '10px "JetBrains Mono", monospace';
+            ctx.fillText(`$${hi.toFixed(0)}`, 6, 14);
+            ctx.fillText(`$${lo.toFixed(0)}`, 6, H - 6);
+            ctx.fillText(`final $${equity.sportsbook[equity.sportsbook.length - 1].toFixed(2)}`, W - 110, 14);
         }
 
         if (document.readyState === 'loading') {
