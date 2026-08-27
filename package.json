@@ -1,9 +1,8 @@
 {
   "name": "f-atics",
   "version": "1.0.0",
-  "description": "A premium, interactive Formula 1 website featuring live standings, race calendar, team showcases, circuit information, and an engaging quiz.",
+  "description": "Formula 1 2026 fan site \u2014 a single room whose fixtures open into standings, calendar, teams, circuits, a race predictor, telemetry, car anatomy and trivia.",
   "type": "module",
-  "main": "3d-effects.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -21,11 +20,6 @@
     "url": "https://github.com/RRRG3/F-ATICS/issues"
   },
   "homepage": "https://github.com/RRRG3/F-ATICS#readme",
-  "dependencies": {
-    "@studio-freight/lenis": "^1.0.29",
-    "gsap": "^3.12.5",
-    "three": "^0.160.0"
-  },
   "devDependencies": {
     "vite": "^5.0.0"
   }

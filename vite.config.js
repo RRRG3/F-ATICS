@@ -33,15 +33,6 @@ export default defineConfig(({ mode }) => {
           drop_debugger: true,
         },
       },
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            three: ['three'],
-            gsap: ['gsap'],
-            vendor: ['@studio-freight/lenis'],
-          },
-        },
-      },
       chunkSizeWarningLimit: 1000,
     },
 
@@ -49,10 +40,6 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       open: true,
       cors: true,
-    },
-
-    optimizeDeps: {
-      include: ['three', 'gsap', '@studio-freight/lenis'],
     },
   };
 });

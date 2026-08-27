@@ -31,3 +31,12 @@ build/
 .playwright-mcp/
 final-shots/
 current-hero.png
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Trained model — regenerated on first backend start (~15-30s)
+ml_backend/data/model.pkl
