@@ -285,7 +285,9 @@ class LiveTelemetryDashboard {
         const speeds = recentData.map(d => d.speed);
         const throttles = recentData.map(d => d.throttle);
 
-        const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--pk-red').trim() || '#E10600';
+        const rootStyles = getComputedStyle(document.documentElement);
+        const themeColor = rootStyles.getPropertyValue('--accent').trim() || '#E8112D';
+        const textColor = rootStyles.getPropertyValue('--fg').trim() || '#F5F3F0';
 
         if (this.speedChart) {
             this.speedChart.data.labels = labels;
@@ -316,7 +318,7 @@ class LiveTelemetryDashboard {
                         {
                             label: 'Throttle (%)',
                             data: throttles,
-                            borderColor: '#3498db',
+                            borderColor: textColor,
                             borderWidth: 1,
                             borderDash: [5, 5],
                             fill: false,
@@ -336,7 +338,7 @@ class LiveTelemetryDashboard {
                     },
                     plugins: {
                         legend: {
-                            labels: { color: '#ffffff', font: { family: 'Inter' } }
+                            labels: { color: textColor, font: { family: 'Inter' } }
                         }
                     },
                     scales: {
@@ -345,9 +347,9 @@ class LiveTelemetryDashboard {
                             type: 'linear',
                             display: true,
                             position: 'left',
-                            title: { display: true, text: 'Speed (km/h)', color: '#fff' },
-                            grid: { color: 'rgba(255,255,255,0.05)' },
-                            ticks: { color: '#999' },
+                            title: { display: true, text: 'Speed (km/h)', color: textColor },
+                            grid: { color: textColor },
+                            ticks: { color: textColor },
                             min: 0,
                             max: 350
                         },
@@ -355,9 +357,9 @@ class LiveTelemetryDashboard {
                             type: 'linear',
                             display: true,
                             position: 'right',
-                            title: { display: true, text: 'Throttle %', color: '#fff' },
+                            title: { display: true, text: 'Throttle %', color: textColor },
                             grid: { drawOnChartArea: false },
-                            ticks: { color: '#999' },
+                            ticks: { color: textColor },
                             min: 0,
                             max: 105
                         }
@@ -402,7 +404,7 @@ class LiveTelemetryDashboard {
                 <td>${formatTime(lap.duration_sector_1)}</td>
                 <td>${formatTime(lap.duration_sector_2)}</td>
                 <td>${formatTime(lap.duration_sector_3)}</td>
-                <td style="color: var(--pk-red); font-weight: bold;">${formatTime(lap.lap_duration)}</td>
+                <td style="color: var(--accent); font-weight: bold;">${formatTime(lap.lap_duration)}</td>
             `;
             this.lapTbody.appendChild(tr);
         });

@@ -9,11 +9,8 @@
  */
 
 const SECTIONS = [
-    'basics',
     'tracker',
-    'rule-changes',
     'calendar',
-    'quiz',
     'showcase',
     'circuits',
     'predictor',
@@ -25,8 +22,10 @@ function scrollToHash() {
     if (!hash) return;
     const el = document.getElementById(hash);
     if (el) {
-        // Small delay so Lenis/GSAP have initialised
-        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        setTimeout(() => {
+            el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        }, 120);
     }
 }
 
@@ -42,7 +41,7 @@ function initScrollTracking() {
                     // replaceState keeps the back-button behaviour clean
                     history.replaceState(null, '', `#${id}`);
                     // Update active nav link
-                    document.querySelectorAll('.pk-nav-link, .nav-link, .mega-link').forEach(a => {
+                    document.querySelectorAll('.pw-nav__link').forEach(a => {
                         const href = a.getAttribute('href');
                         a.classList.toggle('router-active', href === `#${id}`);
                     });
@@ -63,7 +62,7 @@ function initScrollTracking() {
 const style = document.createElement('style');
 style.textContent = `
   .router-active {
-    color: var(--pk-red, #E10600) !important;
+    color: var(--accent) !important;
   }
 `;
 document.head.appendChild(style);

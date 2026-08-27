@@ -174,7 +174,7 @@
               <div class="ddm-block">
                 <div class="ddm-block__label">[ HEAD-TO-HEAD · ${escapeHtml(stats.teammateName)} ]</div>
                 <div class="ddm-h2h">
-                  <span class="ddm-h2h__count" style="color:var(--red)">${stats.teammateH2H.myAhead}</span>
+                  <span class="ddm-h2h__count" style="color:var(--accent)">${stats.teammateH2H.myAhead}</span>
                   <span class="ddm-h2h__bar">
                     <span class="ddm-h2h__bar-me" style="flex:${stats.teammateH2H.myAhead}"></span>
                     <span class="ddm-h2h__bar-them" style="flex:${stats.teammateH2H.teammateAhead}"></span>

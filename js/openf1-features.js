@@ -260,7 +260,7 @@
                     const feats = await fetchSessionLapFeatures(session);
                     if (feats.length) await putMany('lap_features', feats);
                 } catch (e) {
-                    console.warn(`[openf1] ${session.circuit_short_name} ${year} failed:`, e.message);
+                    emitProgress(pct, `${year} ${session.circuit_short_name} limited — continuing`);
                 }
                 await new Promise(r => setTimeout(r, 100));  // be polite
             }

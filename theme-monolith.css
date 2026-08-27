@@ -1,0 +1,829 @@
+/* ══════════════════════════════════════════════════════════════════
+   F-ATICS · AURUM — theme layer
+   Loads last. design-system.css owns structure and the token ladder;
+   this file owns colour, elevation, and motion character.
+
+   Three rules govern everything below:
+     1. Depth is TONE. A surface is lighter than what it sits on. It is
+        never announced with a bright outline.
+     2. Red is a punctuation mark, not a palette. Under six uses per
+        viewport. If a thing needs red to be found, the layout is wrong.
+        Small red type uses --accent-text: the brand red is 4.3:1 on the
+        page ground, which fails AA at label sizes.
+     3. No blur, no glow, no gradient on a surface. The only gradients on
+        the page are photo scrims, which are there for legibility.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. GROUND ──────────────────────────────────────────────────── */
+
+html,
+body {
+    background: var(--bg);
+}
+
+body {
+    color: var(--fg);
+}
+
+::selection {
+    background: var(--accent);
+    color: #FFF;
+}
+
+/* .band-light redefines --bg / --fg / --surface-* on itself, so a single
+   pair of declarations paints both polarities correctly. */
+.band-dark,
+.band-light,
+.pw-now.band-dark,
+.footer {
+    background: var(--bg);
+    color: var(--fg);
+}
+
+/* ── 2. NAVIGATION ──────────────────────────────────────────────── */
+
+.pw-nav {
+    padding-block: 22px;
+    color: var(--fg);
+    border-bottom: var(--rule-size) solid transparent;
+    transition: background 420ms var(--ease), padding 420ms var(--ease),
+                border-color 420ms var(--ease);
+}
+
+body.nav-scrolled .pw-nav {
+    padding-block: 13px;
+    background: #08090A;
+    border-bottom-color: var(--line);
+}
+
+.pw-nav__brand {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.pw-nav__brand b {
+    color: var(--accent-text);
+}
+
+.pw-nav__list {
+    gap: 26px;
+}
+
+/* The CTA is the brightest thing in the bar — ivory, not red. Red is
+   saved for the one button that actually computes something. */
+.pw-nav__cta {
+    min-height: 40px;
+    padding: 0 20px;
+    background: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+}
+
+.pw-nav__cta:hover {
+    background: transparent;
+    border-color: var(--fg);
+    color: var(--fg);
+}
+
+/* ── 3. BUTTONS — exactly two that earn accent ──────────────────── */
+
+.apex-btn--primary,
+.pred-run-btn {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #FFF;
+}
+
+.apex-btn--primary:hover,
+.pred-run-btn:hover {
+    background: #FF2038;
+    border-color: #FF2038;
+    color: #FFF;
+}
+
+.toggle-btn {
+    min-height: 40px;
+    padding: 0 18px;
+    border: var(--rule-size) solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--fg-dim);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 240ms var(--ease), color 240ms var(--ease),
+                border-color 240ms var(--ease);
+}
+
+.toggle-btn:hover {
+    color: var(--fg);
+    border-color: var(--line-strong);
+}
+
+.toggle-btn.active {
+    background: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+}
+
+/* ── 4. HERO — CAR ANATOMY ──────────────────────────────────────── */
+
+.apex-hero {
+    background: var(--bg);
+    color: var(--fg);
+}
+
+.anat__kicker {
+    color: var(--accent-text);
+}
+
+.anat__lede,
+.anat__copy {
+    color: var(--fg-dim);
+}
+
+.anat__hint,
+.anat__spec {
+    color: var(--fg-mute);
+}
+
+/* The diagram needs its own, much stronger line weight than the page
+   furniture. A 10%-opacity hairline is right for separating a card from
+   its background and completely wrong for drawing a car. */
+.anat {
+    --anat-body: #191D21;
+    --anat-ink: rgba(245, 243, 240, 0.46);
+    --anat-ink-hi: rgba(245, 243, 240, 0.62);
+}
+
+.anat__ground {
+    stroke: var(--line-strong);
+    stroke-width: 1;
+}
+
+/* Parts sit quiet by default. Selection is a value change, not a colour
+   change: the part goes to full ivory and everything else steps back.
+   No highlight ring, no glow, no second accent. */
+.anat__fill {
+    fill: var(--anat-body);
+    stroke: var(--anat-ink);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    transition: fill 320ms var(--ease), stroke 320ms var(--ease);
+}
+
+.anat__inlet {
+    fill: var(--bg);
+    stroke: var(--anat-ink);
+    stroke-width: 2;
+    transition: fill 320ms var(--ease), stroke 320ms var(--ease);
+}
+
+/* Lighter than the tyre around it, so a wheel reads as a wheel rather
+   than as a hole in the page. */
+.anat__rim {
+    fill: #23282D;
+    stroke: var(--anat-ink);
+    stroke-width: 2;
+    transition: fill 320ms var(--ease), stroke 320ms var(--ease);
+}
+
+.anat__line {
+    stroke: var(--anat-ink-hi);
+    stroke-width: 3;
+    transition: stroke 320ms var(--ease);
+}
+
+.anat__line--thick {
+    stroke-width: 8;
+}
+
+/* Element separators inside the front wing endplate — detail, not structure. */
+.anat__line--fine {
+    stroke: var(--anat-ink);
+    stroke-width: 1.5;
+}
+
+.anat__part {
+    transition: opacity 320ms var(--ease);
+}
+
+.anat.is-focused .anat__part {
+    opacity: 0.3;
+}
+
+.anat.is-focused .anat__part.is-active {
+    opacity: 1;
+}
+
+.anat__part.is-active .anat__fill {
+    fill: var(--fg);
+    stroke: var(--fg);
+}
+
+/* Stroke only — these are open paths (the halo arc, the wishbones). Giving
+   them a fill closes the curve and turns the halo into a solid blob. */
+.anat__part.is-active .anat__line {
+    fill: none;
+    stroke: var(--fg);
+}
+
+.anat__part.is-active .anat__rim,
+.anat__part.is-active .anat__inlet {
+    fill: var(--bg);
+    stroke: var(--fg);
+}
+
+.anat__panel {
+    background: var(--surface);
+    border: var(--rule-size) solid var(--line);
+    box-shadow: var(--lift);
+}
+
+.anat__index {
+    color: var(--accent-text);
+}
+
+.anat__spec {
+    border-top: var(--rule-size) solid var(--line);
+}
+
+.anat__chip {
+    background: transparent;
+    border: var(--rule-size) solid var(--line);
+    color: var(--fg-dim);
+    transition: background 240ms var(--ease), color 240ms var(--ease),
+                border-color 240ms var(--ease);
+}
+
+.anat__chip:hover {
+    border-color: var(--line-strong);
+    color: var(--fg);
+}
+
+.anat__chip.is-active {
+    background: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+}
+
+.anat__chip-num {
+    color: var(--fg-mute);
+}
+
+.anat__chip.is-active .anat__chip-num {
+    color: var(--bg);
+    opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .anat__fill,
+    .anat__line,
+    .anat__rim,
+    .anat__part {
+        transition: none;
+    }
+}
+
+/* ── 5. CHAPTER BREAKS ──────────────────────────────────────────── */
+
+.apex-break {
+    background: var(--bg);
+    color: var(--fg);
+}
+
+.apex-break__bg {
+    filter: saturate(0.35) contrast(1.1);
+    opacity: 0.55;
+}
+
+.apex-break__scrim {
+    background: linear-gradient(
+        180deg,
+        rgba(8, 9, 10, 0.5) 0%,
+        rgba(8, 9, 10, 0.2) 40%,
+        rgba(8, 9, 10, 0.95) 100%
+    );
+    opacity: 1;
+}
+
+.apex-break__kicker {
+    color: var(--accent-text);
+}
+
+.apex-break__title {
+    font-weight: 800;
+    letter-spacing: -0.05em;
+}
+
+/* Outlined type instead of a second accent colour — contrast for free. */
+.apex-break__title em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--fg);
+}
+
+.apex-break__sub {
+    color: var(--fg-dim);
+}
+
+/* ── 6. LIVE STRIP ──────────────────────────────────────────────── */
+
+.pw-now {
+    border-top: var(--rule-size) solid var(--line);
+    border-bottom: var(--rule-size) solid var(--line);
+}
+
+.pw-now__cell {
+    border-top-color: var(--line-strong);
+}
+
+.pw-now__label {
+    color: var(--fg-mute);
+}
+
+.pw-now__countdown,
+.pw-now__big {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+}
+
+.pw-now__race,
+.pw-now__small {
+    color: var(--fg-dim);
+}
+
+.pw-now__delta {
+    color: var(--accent-text);
+}
+
+/* ── 7. CARDS ───────────────────────────────────────────────────── */
+
+.calendar-card,
+.lab-team-card,
+.lab-circuit-card {
+    transition: transform 520ms var(--ease), box-shadow 520ms var(--ease),
+                border-color 520ms var(--ease), background 520ms var(--ease);
+}
+
+.calendar-card:hover,
+.lab-team-card:hover,
+.lab-circuit-card:hover {
+    transform: translateY(-5px);
+    background: var(--surface-2);
+    border-color: var(--line-strong);
+    box-shadow: var(--lift-hi);
+}
+
+.calendar-card-header,
+.lab-team-card__head,
+.lab-circuit-card__head,
+.pred-panel-header,
+.pred-walkforward__head,
+.pred-calibration__head,
+.pred-constructor__head,
+.pred-result-header {
+    padding-bottom: 16px;
+    border-bottom: var(--rule-size) solid var(--line);
+}
+
+.calendar-date,
+.calendar-circuit,
+.lab-team-card__car,
+.lab-circuit-card__loc,
+.pred-driver-team,
+.tele-weekend-label,
+.tele-weekend-circuit,
+.tele-weekend-hint,
+.section-subtitle,
+.footer-meta p {
+    color: var(--fg-dim);
+}
+
+.lab-team-card__index,
+.lab-circuit-card__index,
+.calendar-round,
+.lab-team-card__num,
+.lab-circuit-card__record-label,
+.lab-circuit-card__stats span,
+.pred-cal-stat__label,
+.pred-share-label {
+    color: var(--fg-mute);
+}
+
+/* Only three states in the whole calendar get colour. */
+.calendar-card.next-race,
+.cal-status--next,
+.cal-status--live {
+    border-color: var(--accent);
+    color: var(--accent-text);
+}
+
+.calendar-card.completed {
+    opacity: 0.5;
+}
+
+.lab-team-card__color-bar {
+    height: 3px;
+    border-radius: 999px 999px 0 0;
+    background: var(--team-color, var(--accent));
+}
+
+.lab-team-card__drivers,
+.lab-circuit-card__map {
+    border-top-color: var(--line);
+    border-bottom-color: var(--line);
+}
+
+.lab-team-card__roster {
+    padding-top: 14px;
+    border-top: var(--rule-size) solid var(--line);
+}
+
+.lab-team-card__new {
+    border-color: var(--accent);
+    color: var(--accent-text);
+    background: transparent;
+}
+
+/* Logos and circuit maps are line art — they invert per band. */
+.band-light .lab-team-card__logo {
+    max-height: 22px;
+    width: auto;
+    filter: grayscale(1) contrast(1.6) brightness(0.24);
+}
+
+.band-dark .lab-team-card__logo {
+    max-height: 22px;
+    width: auto;
+    filter: grayscale(1) brightness(2.6) contrast(1.15);
+}
+
+.lab-circuit-card__map {
+    background: transparent;
+}
+
+.band-dark .lab-circuit-card__map img {
+    filter: invert(1) contrast(1.1) brightness(1.05);
+    opacity: 0.85;
+}
+
+.band-light .lab-circuit-card__map img {
+    filter: contrast(1.1) brightness(0.22);
+}
+
+/* ── 9. PREDICTOR & TELEMETRY ───────────────────────────────────── */
+
+.pred-result-cols {
+    padding-block: 12px;
+    border-top: var(--rule-size) solid var(--line);
+    border-bottom: var(--rule-size) solid var(--line);
+    color: var(--fg-mute);
+}
+
+.pred-result-row {
+    border-top-color: var(--line);
+}
+
+.pred-driver-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.pred-stat-val {
+    font-variant-numeric: tabular-nums;
+}
+
+.pred-driver-bar {
+    background: var(--accent);
+    opacity: 0.14;
+}
+
+.pred-mini-bar > div,
+.pred-walkforward__fill,
+.progress-fill {
+    background: var(--fg);
+}
+
+/* The podium is the one ranked list where colour carries meaning. */
+.pred-medal {
+    font-variant-numeric: tabular-nums;
+}
+
+.pred-medal.gold {
+    background: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+}
+
+.pred-medal.silver,
+.pred-medal.bronze {
+    background: var(--surface-3);
+    border-color: var(--line-strong);
+    color: var(--fg-dim);
+}
+
+.pred-stat-ci,
+.pred-status-info {
+    color: var(--fg-mute);
+}
+
+.pred-status-success,
+.tele-status.success {
+    color: var(--accent-text);
+}
+
+.pred-status-error,
+.tele-status.error {
+    color: var(--accent-text);
+}
+
+.pred-track-path {
+    fill: none;
+    stroke: var(--line-strong);
+    stroke-width: 1.5;
+}
+
+.track-car-dot {
+    background: var(--accent);
+    border-radius: 999px;
+    box-shadow: 0 0 0 3px rgba(232, 17, 45, 0.22);
+}
+
+.track-car-label {
+    background: var(--surface-2);
+    border-color: var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+}
+
+.telemetry-controls,
+.tele-lap-table-wrap,
+.pred-chart-wrapper,
+.pred-track-container {
+    border-top-color: var(--line);
+    padding-top: 20px;
+}
+
+.tele-status {
+    background: transparent;
+    border-color: var(--line-strong);
+    color: var(--fg-dim);
+}
+
+.tele-weekend-banner {
+    padding: 22px;
+}
+
+/* ── 10. MODALS ─────────────────────────────────────────────────── */
+
+.modal-overlay,
+.driver-detail-modal__backdrop {
+    background: #05060700;
+    background: rgba(5, 6, 7, 0.72);
+    opacity: 1;
+}
+
+.modal-content,
+.pred-toast,
+.driver-detail-modal__panel {
+    padding: 28px;
+    background: var(--surface);
+    border: var(--rule-size) solid var(--line-strong);
+    border-radius: var(--radius);
+    box-shadow: var(--lift-hi);
+    color: var(--fg);
+}
+
+.close-btn,
+.driver-detail-modal__close {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0;
+    background: var(--surface-3);
+    border: var(--rule-size) solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--fg);
+}
+
+.close-btn:hover,
+.driver-detail-modal__close:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #FFF;
+}
+
+.modal-team-logo {
+    max-height: 40px;
+    filter: grayscale(1) brightness(2.4) contrast(1.15);
+}
+
+.team-modal-header,
+.circuit-modal-header,
+.driver-detail-modal__head {
+    padding-bottom: 18px;
+    border-bottom: var(--rule-size) solid var(--line);
+}
+
+.circuit-info-section h3,
+.modal-image-card h3,
+.principal-name,
+.modal-car-name,
+.driver-detail-modal__title,
+.lab-empty__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.94;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.driver-detail-modal__title {
+    font-size: clamp(var(--step-3), 8vw, var(--step-5));
+    font-weight: 800;
+    letter-spacing: -0.045em;
+}
+
+.driver-detail-modal__eyebrow,
+.driver-detail-modal__sub {
+    color: var(--fg-dim);
+}
+
+[data-driver] {
+    cursor: pointer;
+    transition: color 200ms var(--ease);
+}
+
+[data-driver]:hover {
+    color: var(--accent-text);
+}
+
+/* ── 11. FOOTER ─────────────────────────────────────────────────── */
+
+.footer {
+    padding-block: 88px 64px;
+    border-top: var(--rule-size) solid var(--line);
+}
+
+.footer-logo {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+}
+
+.footer-nav a {
+    color: var(--fg-dim);
+    transition: color 200ms var(--ease);
+}
+
+.footer-nav a:hover {
+    color: var(--fg);
+}
+
+.footer-tagline,
+.footer-legal,
+.footer-attribution {
+    color: var(--fg-mute);
+    font-size: var(--step--1);
+}
+
+/* ── 12. MOTION FURNITURE ───────────────────────────────────────── */
+
+/* Scroll position, as a hairline. The only always-on red on the page. */
+.apex-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    pointer-events: none;
+}
+
+/* A bespoke cursor is a tell that a site is trying to be impressive.
+   Retired along with the grain, orbs, speedlines and marquees. */
+.apex-cursor-dot,
+.apex-cursor-ring,
+.apex-grain,
+.apex-speedlines,
+.apex-grid-floor,
+.apex-orb,
+.apex-marquee,
+.lab-chrome,
+.lab-loader {
+    display: none !important;
+}
+
+.pred-toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 60;
+    padding: 14px 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 300ms var(--ease), transform 300ms var(--ease);
+}
+
+.pred-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.driver-detail-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+}
+
+.driver-detail-modal__panel {
+    position: relative;
+    z-index: 1;
+    width: min(960px, calc(100vw - 24px));
+    margin: 12px auto;
+    max-height: calc(100vh - 24px);
+    overflow: auto;
+}
+
+.driver-detail-modal__close {
+    position: sticky;
+    top: 0;
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.driver-detail-modal__head,
+.driver-detail-modal__stats,
+.driver-detail-modal__stat,
+.driver-detail-modal__split,
+.driver-detail-modal__split-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.driver-detail-modal__stats,
+.driver-detail-modal__split-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.driver-detail-modal__stat,
+.driver-detail-modal__split {
+    padding: 16px;
+}
+
+/* ── 13. RESPONSIVE ─────────────────────────────────────────────── */
+
+@media (max-width: 760px) {
+    .pw-nav {
+        background: #08090A;
+        border-bottom-color: var(--line);
+    }
+
+    .pw-nav__list {
+        gap: 10px 18px;
+    }
+
+    .apex-break__sub {
+        max-width: none;
+    }
+
+    .apex-break__title em {
+        -webkit-text-stroke-width: 1px;
+    }
+
+    .driver-detail-modal__stats,
+    .driver-detail-modal__split-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .calendar-card:hover,
+    .lab-team-card:hover,
+    .lab-circuit-card:hover {
+        transform: none;
+    }
+
+    .lab-team-card:hover .lab-team-card__portrait img {
+        transform: none;
+    }
+}

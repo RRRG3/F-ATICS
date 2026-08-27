@@ -2,21 +2,117 @@
 // Generates an inline SVG data URI with team color background and short label.
 // Drop-in replacement for via.placeholder.com that works fully offline.
 function makeSVG(text, bg, fg) {
-    bg = bg || '#1a1a2e';
-    fg = fg || '#ffffff';
-    // Shorten long text for the badge
-    const label = text.length > 18 ? text.slice(0, 16) + '…' : text;
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="260" viewBox="0 0 400 260">
-        <rect width="400" height="260" fill="${bg}"/>
-        <rect x="0" y="0" width="400" height="4" fill="${fg}" opacity="0.3"/>
-        <rect x="0" y="256" width="400" height="4" fill="${fg}" opacity="0.3"/>
-        <text x="200" y="120" font-family="'Instrument Serif','Georgia',serif" font-size="22" fill="${fg}" text-anchor="middle" dominant-baseline="middle" font-weight="400" opacity="0.9">${label}</text>
-        <text x="200" y="155" font-family="'Inter','Arial',sans-serif" font-size="11" fill="${fg}" text-anchor="middle" dominant-baseline="middle" opacity="0.45" letter-spacing="2">F1 F-ATICS</text>
+    // A flat saturated block with the name written across it read as a
+    // broken image. This is a portrait-shaped plate: the site's own dark
+    // ground, the driver's initials as a monogram in the team colour, and
+    // the name underneath — so a missing photo looks deliberate.
+    const accent = bg && /^#/.test(bg) ? bg : '#8894A8';
+    const label = String(text || '').trim();
+    const initials = label.split(/\s+/).filter(w => /[A-Za-zÀ-ÿ]/.test(w))
+        .slice(0, 2).map(w => w[0].toUpperCase()).join('') || 'F1';
+    const esc = (t) => String(t).replace(/[&<>"]/g, c => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+        <rect width="400" height="500" fill="#17253B"/>
+        <circle cx="200" cy="205" r="96" fill="none" stroke="${accent}" stroke-width="3" opacity="0.55"/>
+        <text x="200" y="205" font-family="Archivo,Helvetica,Arial,sans-serif" font-size="92"
+              font-weight="800" fill="${accent}" text-anchor="middle" dominant-baseline="central"
+              letter-spacing="-3">${esc(initials)}</text>
+        <text x="200" y="352" font-family="Inter,Helvetica,Arial,sans-serif" font-size="20"
+              fill="#EDE3CC" text-anchor="middle">${esc(label.slice(0, 24))}</text>
+        <text x="200" y="384" font-family="'JetBrains Mono',monospace" font-size="12"
+              fill="#8FA3BE" text-anchor="middle" letter-spacing="3">NO PORTRAIT ON FILE</text>
+        <rect x="140" y="410" width="120" height="2" fill="${accent}" opacity="0.6"/>
     </svg>`;
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
 
+
+
+// Lift a livery colour until it genuinely clears WCAG AA on the card
+// ground, keeping its hue so the team stays recognisable.
+//
+// A fixed HSL lightness floor does not work: lightness is not perceptual
+// luminance, so blue at L=0.62 lands near 2.9:1 while yellow at the same
+// L is over 7:1. This raises L in small steps and MEASURES contrast each
+// time, stopping at the first value that clears the target.
+
+// Constructor colours, keyed loosely so API and local spellings both resolve.
+const TEAM_HEX = {
+    mclaren: '#FF8700', ferrari: '#DC0000', 'red bull': '#0600EF', mercedes: '#00D2BE',
+    'aston martin': '#006F62', alpine: '#FF69B4', williams: '#005AFF', 'racing bulls': '#4E5D9F',
+    'rb f1 team': '#4E5D9F', haas: '#B6BABD', 'kick sauber': '#00E701', sauber: '#00E701',
+    audi: '#C0C0C0', cadillac: '#CC0033',
+};
+
+// "Bahrain Grand Prix in Malaysia" is a real 2026 race name. Stripping
+// /\s*Grand Prix\s*/ ate the spaces on BOTH sides and produced
+// "Bahrainin Malaysia", so the separator has to survive the cut.
+function shortRaceName(name) {
+    return String(name || '')
+        .replace(/\s*\b(?:Formula\s*1\s*)?Grand\s+Prix\b\s*/i, ' ')
+        .replace(/\s*\bGP\b\s*/i, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+}
+
+function teamColour(name) {
+    const k = String(name || '').toLowerCase();
+    const hit = Object.keys(TEAM_HEX).find((t) => k.includes(t));
+    return hit ? TEAM_HEX[hit] : '#8894A8';
+}
+
+function readableInk(hex, bgHex = '#17253B', target = 5) {
+    const hexToRgb = (h) => {
+        const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h || '');
+        return m ? [1, 2, 3].map(i => parseInt(m[i], 16)) : null;
+    };
+    const rel = ([r, g, b]) => {
+        const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+    };
+    const contrast = (x, y) => {
+        const A = rel(x), B = rel(y);
+        return (Math.max(A, B) + 0.05) / (Math.min(A, B) + 0.05);
+    };
+    const rgb = hexToRgb(hex), bg = hexToRgb(bgHex);
+    if (!rgb || !bg) return '#EDE3CC';
+
+    let [r, g, b] = rgb.map(v => v / 255);
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h = 0, s = 0;
+    const l0 = (max + min) / 2;
+    if (max !== min) {
+        const d = max - min;
+        s = l0 > 0.5 ? d / (2 - max - min) : d / (max + min);
+        if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+        else if (max === g) h = ((b - r) / d + 2) / 6;
+        else h = ((r - g) / d + 4) / 6;
+    }
+    const S = Math.min(s, 0.7);
+    const hue2 = (p, q, t) => {
+        if (t < 0) t += 1; if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+    };
+    const at = (L) => {
+        const q = L < 0.5 ? L * (1 + S) : L + S - L * S;
+        const pp = 2 * L - q;
+        return [h + 1 / 3, h, h - 1 / 3].map(t => Math.round(hue2(pp, q, t) * 255));
+    };
+
+    let best = at(Math.max(l0, 0.55));
+    for (let L = Math.max(l0, 0.55); L <= 0.95; L += 0.02) {
+        best = at(L);
+        if (contrast(best, bg) >= target) break;
+    }
+    return '#' + best.map(v => Math.min(255, Math.max(0, v)).toString(16).padStart(2, '0')).join('');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Smooth scroll for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -24,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
             }
         });
     });
@@ -33,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoBtn = document.getElementById('logo-btn');
     if (logoBtn) {
         logoBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
         });
     }
 
@@ -59,8 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "902384ddbec64d86b608881bf44e366f", // MCL39 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/mclaren.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/norris.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/piastri.jpg",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/norris.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/piastri.jpg",
             principalImg: makeSVG('Andrea Stella', '#FF8700', '#fff'),
             fallbackImg: makeSVG('McLaren MCL40', '#FF8700', '#fff')
         },
@@ -74,8 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "f5f6391749814819a60546f57b10b5f9", // SF-25 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/ferrari.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/leclerc.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/hamilton.jpg",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/leclerc.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/hamilton.jpg",
             principalImg: makeSVG('Frédéric Vasseur', '#DC0000', '#fff'),
             fallbackImg: makeSVG('Ferrari SF-26', '#DC0000', '#fff')
         },
@@ -89,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "621f884d9aee4efdaa54309e6b08bdd1", // RB21 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/red%20bull.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/verstappen.jpg",
-            driver2Img: makeSVG('Isack Hadjar', '#0600EF', '#fff'),
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/verstappen.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/hadjar.jpg",
             principalImg: makeSVG('Laurent Mekies', '#0600EF', '#fff'),
             fallbackImg: makeSVG('Red Bull RB22', '#0600EF', '#fff')
         },
@@ -104,8 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "0ffecbff3b814d308f30abba8b5fd8e7", // W16 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/mercedes.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/russell.jpg",
-            driver2Img: makeSVG('Kimi Antonelli #12', '#00D2BE', '#fff'),
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/russell.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/antonelli.jpg",
             principalImg: makeSVG('Toto Wolff', '#00D2BE', '#fff'),
             fallbackImg: makeSVG('Mercedes W17', '#00D2BE', '#fff')
         },
@@ -119,8 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "6eb43dd1b0f6404e90ff8f0a87162636", // AMR25 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/aston%20martin.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/alonso.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/stroll.jpg",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/alonso.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/stroll.jpg",
             principalImg: makeSVG('Andy Cowell', '#006F62', '#fff'),
             fallbackImg: makeSVG('Aston Martin AMR26', '#006F62', '#fff')
         },
@@ -134,8 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "33c7b240d04f480da57183ccb6fc5ea8", // A525 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/alpine.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/gasly.jpg",
-            driver2Img: makeSVG('Franco Colapinto', '#FF69B4', '#fff'),
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/gasly.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/colapinto.jpg",
             principalImg: makeSVG('Oliver Oakes', '#FF69B4', '#fff'),
             fallbackImg: makeSVG('Alpine A526', '#FF69B4', '#fff')
         },
@@ -149,8 +245,8 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "a7b48019a6ce43a7ab93cd01efda9739", // FW47 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/williams.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/sainz.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/albon.jpg",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/sainz.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/albon.jpg",
             principalImg: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/manual/people/JamesVowles.jpg",
             fallbackImg: makeSVG('Williams FW48', '#005AFF', '#fff')
         },
@@ -164,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "a5927538612642f697650a2dcf67fdde", // VCARB 02 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/rb.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/lawson.jpg",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/lawson.jpg",
             driver2Img: makeSVG('Arvid Lindblad', '#4E5D9F', '#fff'),
             principalImg: makeSVG('Laurent Mekies', '#4E5D9F', '#fff'),
             fallbackImg: makeSVG('Racing Bulls VCARB 03', '#4E5D9F', '#fff')
@@ -179,8 +275,8 @@ document.addEventListener('DOMContentLoaded', () => {
             isNew: false,
             sketchfabId: "b211ec88d4884ffbb7c4133054d1bd2d", // VF-25 (2025)
             logo: "https://www.formula1.com/content/dam/fom-website/2018-redesign-assets/team%20logos/haas.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/ocon.jpg",
-            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/bearman.jpg",
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/ocon.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/bearman.jpg",
             principalImg: makeSVG('Ayao Komatsu', '#B6BABD', '#111'),
             fallbackImg: makeSVG('Haas VF-26', '#B6BABD', '#111')
         },
@@ -195,8 +291,8 @@ document.addEventListener('DOMContentLoaded', () => {
             newLabel: "NEW TEAM 2026",
             sketchfabId: "39d08c4788e244de870dd4b9540d8bda", // Sauber C45 (closest — Audi inherits Sauber)
             logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Audi-Logo_2016.svg/2560px-Audi-Logo_2016.svg.png",
-            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2024Drivers/hulkenberg.jpg",
-            driver2Img: makeSVG('Gabriel Bortoleto', '#C0C0C0', '#111'),
+            driver1Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/hulkenberg.jpg",
+            driver2Img: "https://media.formula1.com/image/upload/f_auto,c_limit,w_400,q_auto/content/dam/fom-website/drivers/2025Drivers/bortoleto.jpg",
             principalImg: makeSVG('Jonathan Wheatley', '#C0C0C0', '#111'),
             fallbackImg: makeSVG('Audi R26', '#C0C0C0', '#111')
         },
@@ -223,10 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.createElement('div');
         card.classList.add('team-card', 'lab-team-card');
         card.style.animationDelay = `${index * 0.05}s`;
-        card.style.setProperty('--team-color', team.color);
 
         const drivers = team.drivers.split(',').map(d => d.trim());
-        const newBadge = team.isNew ? `<span class="lab-team-card__new">[NEW]</span>` : '';
+        const newBadge = team.isNew ? `<span class="lab-team-card__new">NEW</span>` : '';
 
         // Build a name → number lookup for the bracketed [##] prefix
         const numFor = (name) => {
@@ -242,9 +337,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return parts.length > 1 ? `${parts[0][0]}. ${parts.slice(1).join(' ')}` : full;
         };
 
+        // The livery colour drives the whole card. Some of them — Red Bull's
+        // #0600EF especially — are far too dark to read as text on a navy
+        // surface, so a second, lightness-floored variant is derived for
+        // type while the true colour stays for fills and rules.
+        card.style.setProperty('--team-color', team.color);
+        card.style.setProperty('--team-ink', readableInk(team.color));
+
         card.innerHTML = `
             <div class="lab-team-card__head">
-                <span class="lab-team-card__index">[${String(index + 1).padStart(2, '0')}]</span>
+                <span class="lab-team-card__index">${String(index + 1).padStart(2, '0')}</span>
                 ${newBadge}
                 <img src="${team.logo}" alt="${team.name} logo" class="lab-team-card__logo"
                      onerror="this.onerror=null;this.src=makeSVG('${team.name}','${team.color}','#fff')">
@@ -252,11 +354,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="lab-team-card__drivers" aria-hidden="true">
                 <div class="lab-team-card__portrait">
                     <img src="${team.driver1Img}" alt="${drivers[0]}" loading="lazy"
-                         onerror="this.onerror=null;this.src='${team.fallbackImg}'">
+                         onerror="this.onerror=null;this.src=makeSVG('${drivers[0]}','${team.color}','#fff')">
                 </div>
                 <div class="lab-team-card__portrait">
                     <img src="${team.driver2Img}" alt="${drivers[1]}" loading="lazy"
-                         onerror="this.onerror=null;this.src='${team.fallbackImg}'">
+                         onerror="this.onerror=null;this.src=makeSVG('${drivers[1]}','${team.color}','#fff')">
                 </div>
             </div>
             <div class="lab-team-card__color-bar"></div>
@@ -264,9 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3 class="lab-team-card__name">${team.name}</h3>
                 <div class="lab-team-card__car">${team.car}</div>
                 <ul class="lab-team-card__roster">
-                    <li><span class="lab-team-card__num">[${numFor(drivers[0])}]</span> ${shortName(drivers[0])}</li>
-                    <li><span class="lab-team-card__num">[${numFor(drivers[1])}]</span> ${shortName(drivers[1])}</li>
-                    ${team.engine ? `<li class="lab-team-card__pu"><span class="lab-team-card__num">[PU]</span> ${team.engine}</li>` : ''}
+                    <li><span class="lab-team-card__num">${numFor(drivers[0])}</span> ${shortName(drivers[0])}</li>
+                    <li><span class="lab-team-card__num">${numFor(drivers[1])}</span> ${shortName(drivers[1])}</li>
+                    ${team.engine ? `<li class="lab-team-card__pu"><span class="lab-team-card__pu-l">Power unit</span> ${team.engine}</li>` : ''}
                 </ul>
             </div>
         `;
@@ -309,24 +411,24 @@ document.addEventListener('DOMContentLoaded', () => {
             
             <div class="team-modal-grid">
                 <div class="modal-image-card" style="grid-column: 1 / -1; height: 350px;">
-                    <h3>🏎️ Interactive 3D Model</h3>
+                    <h3>Interactive 3D Model</h3>
                     <div class="modal-car-360" style="width: 100%; height: 300px;"></div>
                 </div>
                 
                 <div class="modal-image-card">
-                    <h3>👤 ${drivers[0]}</h3>
+                    <h3>${drivers[0]}</h3>
                     <img src="${team.driver1Img}" alt="${drivers[0]}" loading="lazy" 
                          onerror="this.onerror=null;this.src=makeSVG('${drivers[0]}','${team.color}','#fff')">
                 </div>
                 
                 <div class="modal-image-card">
-                    <h3>👤 ${drivers[1]}</h3>
+                    <h3>${drivers[1]}</h3>
                     <img src="${team.driver2Img}" alt="${drivers[1]}" loading="lazy" 
                          onerror="this.onerror=null;this.src=makeSVG('${drivers[1]}','${team.color}','#fff')">
                 </div>
                 
                 <div class="modal-image-card">
-                    <h3>👔 Team Principal</h3>
+                    <h3>Team Principal</h3>
                     <img src="${team.principalImg}" alt="${team.principal}" loading="lazy" 
                          onerror="this.onerror=null;this.src=makeSVG('${team.principal}','${team.color}','#fff')">
                     <p class="principal-name">${team.principal}</p>
@@ -385,22 +487,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Standings with fallback data
     const standingsBody = document.getElementById('standings-body');
 
-    // 2025 Driver Lineup with current season points
-    // 2026 team color map for standings display
-    const teamColors2026 = {
-        'McLaren': '#FF8700',
-        'Ferrari': '#DC0000',
-        'Red Bull Racing': '#0600EF',
-        'Mercedes': '#00D2BE',
-        'Aston Martin': '#006F62',
-        'Williams': '#005AFF',
-        'Racing Bulls': '#4E5D9F',
-        'Alpine': '#FF69B4',
-        'Haas': '#B6BABD',
-        'Audi': '#C0C0C0',
-        'Cadillac': '#CC0033'
-    };
-
     // Use 2026 driver standings from the data file
     const fallbackStandings = typeof driverStandings2026 !== 'undefined' ? driverStandings2026 : [];
 
@@ -410,26 +496,26 @@ document.addEventListener('DOMContentLoaded', () => {
         standings.forEach((driver, index) => {
             const row = document.createElement('tr');
             row.style.animationDelay = `${index * 0.03}s`;
-            const teamColor = teamColors2026[driver.team] || '#E10600';
-            const driverFlag = driver.flag || '';
-            const driverNum = driver.number ? `<span class="driver-num" style="color:${teamColor}">${String(driver.number).padStart(2,'0')}</span>` : '';
+            const driverNum = driver.number ? `<span class="driver-num">${String(driver.number).padStart(2,'0')}</span>` : '';
 
             // LAB position display — mono brackets, podium highlight in red
             const posPad = String(driver.position).padStart(2, '0');
             const isPodium = driver.position <= 3;
-            const positionDisplay = isPodium
-                ? `<span style="color:var(--red);font-weight:500">[${posPad}]</span>`
-                : `[${posPad}]`;
+            const positionDisplay = `<span class="standings-pos${isPodium ? ' standings-pos--top' : ''}">${posPad}</span>`;
 
             const ptsPct = Math.max((driver.points / maxPts) * 100, 0);
-            const ptsBar = `<div class="pts-bar-wrap"><div class="pts-bar" style="width:${ptsPct}%;background:${teamColor}"></div></div>`;
+            const ptsBar = `<div class="pts-bar-wrap"><div class="pts-bar" style="width:${ptsPct}%"></div></div>`;
 
+            // Give every row its constructor's colour. A championship table
+            // with no livery in it is just a spreadsheet.
+            const ink = readableInk(teamColour(driver.team));
+            row.style.setProperty('--row-team', ink);
             row.innerHTML = `
                 <td class="pos-col">${positionDisplay}</td>
-                <td class="driver-col">${driverFlag} ${driverNum} <span data-driver="${driver.driver}">${driver.driver}</span></td>
+                <td class="driver-col">${driverNum} <span data-driver="${driver.driver}">${driver.driver}</span></td>
                 <td class="nationality-col">${driver.nationality}</td>
-                <td class="team-col"><span class="team-dot" style="background:${teamColor}"></span>${driver.team}</td>
-                <td class="points-col">${driver.points} ${ptsBar}</td>
+                <td class="team-col"><span class="team-dot"></span>${driver.team}</td>
+                <td class="points-col">${ptsBar}<span class="pts-val">${driver.points}</span></td>
             `;
             standingsBody.appendChild(row);
         });
@@ -462,17 +548,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (_) {}
 
-        // Fetch from Jolpica API
+        // season-live.js owns this endpoint: it serialises its requests,
+        // caches them in localStorage for six hours and repaints through
+        // window.fatics.displayStandings. Fetching the same URL here doubled
+        // the load on an API that answers 429 without a CORS header, which
+        // surfaces as an unexplained CORS failure. Stand down if it is present.
+        if (document.querySelector('script[src*="season-live"]')) return;
+
+        // Fetch from Jolpica API (fallback only — season-live.js absent)
         try {
             const res = await fetch('https://api.jolpi.ca/ergast/f1/2026/driverStandings.json');
             if (!res.ok) return;
             const json = await res.json();
             const list = json?.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings;
             if (!list?.length) return;
-
-            // Preserve flag emojis from fallback data (Jolpica doesn't include them)
-            const flagByNumber = {};
-            fallbackStandings.forEach(d => { flagByNumber[d.number] = d.flag; });
 
             const live = list.map(entry => ({
                 position:    +entry.position,
@@ -481,7 +570,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 team:        entry.Constructors[0]?.name || '',
                 points:      +entry.points,
                 number:      +entry.Driver.permanentNumber,
-                flag:        flagByNumber[+entry.Driver.permanentNumber] || '',
             }));
 
             localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: live }));
@@ -490,199 +578,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Silently stay on fallback data already shown
         }
     })();
-
-
-    // Quiz - using external quiz data
-    // Shuffle and select random questions
-    const shuffledQuiz = quizData.sort(() => 0.5 - Math.random()).slice(0, 20);
-    
-    const questionEl = document.getElementById('question');
-    const optionsEl = document.getElementById('options');
-    const nextBtn = document.getElementById('next-btn');
-    const resultEl = document.getElementById('result');
-    const progressFill = document.getElementById('progress-fill');
-    const quizCounter = document.getElementById('quiz-counter');
-
-    let currentQuiz = 0;
-    let score = 0;
-    let answered = false;
-
-    function updateProgress() {
-        const progress = ((currentQuiz + 1) / shuffledQuiz.length) * 100;
-        progressFill.style.width = `${progress}%`;
-        quizCounter.textContent = `Question ${currentQuiz + 1} of ${shuffledQuiz.length}`;
-    }
-
-    function loadQuiz() {
-        answered = false;
-        const currentQuizData = shuffledQuiz[currentQuiz];
-        questionEl.innerText = currentQuizData.question;
-        optionsEl.innerHTML = '';
-        resultEl.innerText = '';
-        nextBtn.disabled = true;
-        nextBtn.style.opacity = '0.5';
-        
-        updateProgress();
-        
-        currentQuizData.options.forEach(optionText => {
-            const button = document.createElement('button');
-            button.innerText = optionText;
-            button.classList.add('option');
-            button.addEventListener('click', () => {
-                if (!answered) {
-                    checkAnswer(optionText, button);
-                }
-            });
-            optionsEl.appendChild(button);
-        });
-    }
-
-    function checkAnswer(answer, selectedButton) {
-        answered = true;
-        const correctAnswer = shuffledQuiz[currentQuiz].answer;
-        
-        Array.from(optionsEl.children).forEach(button => {
-            button.disabled = true;
-            if (button.innerText === correctAnswer) {
-                button.classList.add('correct');
-            }
-        });
-        
-        if (answer === correctAnswer) {
-            score++;
-            resultEl.innerText = "✓ Correct!";
-            resultEl.style.color = 'var(--success-green)';
-        } else {
-            selectedButton.classList.add('incorrect');
-            resultEl.innerText = `✗ Wrong! The correct answer was ${correctAnswer}`;
-            resultEl.style.color = 'var(--error-red)';
-        }
-        
-        nextBtn.disabled = false;
-        nextBtn.style.opacity = '1';
-    }
-
-    nextBtn.addEventListener('click', () => {
-        currentQuiz++;
-        if (currentQuiz < shuffledQuiz.length) {
-            loadQuiz();
-        } else {
-            showResults();
-        }
-    });
-
-    function showResults() {
-        const percentage = (score / shuffledQuiz.length) * 100;
-        let message = '';
-        let emoji = '';
-        
-        if (percentage === 100) {
-            message = 'Perfect score! You\'re an F1 expert! 🏆';
-            emoji = '🏆';
-        } else if (percentage >= 66) {
-            message = 'Great job! You know your F1! 🏁';
-            emoji = '🏁';
-        } else if (percentage >= 33) {
-            message = 'Not bad! Keep learning! 🏎️';
-            emoji = '🏎️';
-        } else {
-            message = 'Keep practicing! 📚';
-            emoji = '📚';
-        }
-        
-        questionEl.innerHTML = `
-            <div style="text-align: center;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">${emoji}</div>
-                <div style="font-size: 2rem; margin-bottom: 1rem;">Quiz Complete!</div>
-                <div style="font-size: 1.5rem; color: var(--primary-red);">Score: ${score}/${shuffledQuiz.length}</div>
-                <div style="margin-top: 1rem; color: var(--text-secondary);">${message}</div>
-            </div>
-        `;
-        optionsEl.innerHTML = '';
-        nextBtn.style.display = 'none';
-        resultEl.innerText = '';
-        progressFill.style.width = '100%';
-    }
-
-    loadQuiz();
-
-    // Personal Best tracker — no prompt(), no fake global leaderboard.
-    // Stores up to 5 recent attempts chronologically so users can see progress.
-    function updateLeaderboard() {
-        const history = JSON.parse(localStorage.getItem('f1QuizHistory') || '[]');
-        const leaderboardList = document.getElementById('leaderboard-list');
-        if (!leaderboardList) return;
-
-        if (history.length === 0) {
-            leaderboardList.innerHTML = '<p style="text-align:center;color:var(--pk-muted,#8A8A9A);font-size:0.85rem;">Complete a quiz to see your scores here.</p>';
-            return;
-        }
-
-        // Sort by score descending for display, keep chronological for storage
-        const sorted = [...history].sort((a, b) => (b.score / b.total) - (a.score / a.total));
-        const best = sorted[0];
-
-        leaderboardList.innerHTML = sorted.slice(0, 5).map((entry, i) => {
-            const pct  = Math.round((entry.score / entry.total) * 100);
-            const date = new Date(entry.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-            const isBest = entry === best && i === 0;
-            return `
-            <div class="leaderboard-item" style="${isBest ? 'border-left:3px solid var(--pk-red,#E10600)' : ''}">
-                <span class="leaderboard-rank">${isBest ? '🏆' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`}</span>
-                <span class="leaderboard-name">${entry.score}/${entry.total} <span style="color:var(--pk-red,#E10600);font-weight:700">${pct}%</span></span>
-                <span class="leaderboard-score" style="font-size:0.75rem;color:var(--pk-muted,#8A8A9A)">${date}</span>
-            </div>`;
-        }).join('');
-    }
-
-    function saveScore(score, total) {
-        const history = JSON.parse(localStorage.getItem('f1QuizHistory') || '[]');
-        history.unshift({ score, total, date: new Date().toISOString() });
-        // Keep last 10 attempts
-        localStorage.setItem('f1QuizHistory', JSON.stringify(history.slice(0, 10)));
-        updateLeaderboard();
-    }
-
-    updateLeaderboard();
-
-    // Restart Quiz
-    const restartBtn = document.getElementById('restart-quiz');
-    restartBtn.addEventListener('click', () => {
-        currentQuiz = 0;
-        score = 0;
-        shuffledQuiz.sort(() => 0.5 - Math.random());
-        loadQuiz();
-        nextBtn.style.display = 'block';
-        restartBtn.style.display = 'none';
-        document.getElementById('quiz-share').style.display = 'none';
-    });
-
-    // Social Share Functions
-    window.shareToTwitter = function() {
-        const text = `I scored ${score}/${shuffledQuiz.length} on the F1 Fan Zone Quiz! Can you beat my score? 🏎️🏁`;
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
-    };
-
-    window.shareToFacebook = function() {
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
-    };
-
-    window.copyScore = function() {
-        const text = `I scored ${score}/${shuffledQuiz.length} on the F1 Fan Zone Quiz! 🏎️🏁`;
-        navigator.clipboard.writeText(text).then(() => {
-            alert('Score copied to clipboard!');
-        });
-    };
-
-    // Update showResults to include save and share
-    const originalShowResults = showResults;
-    showResults = function() {
-        originalShowResults();
-        restartBtn.style.display = 'block';
-        document.getElementById('quiz-share').style.display = 'block';
-        saveScore(score, shuffledQuiz.length);
-    };
-
     // Standings Toggle — handles both "drivers"→driver-standings and "driver"→driver-standings
     const standingsToggleBtns = document.querySelectorAll('.toggle-btn');
     standingsToggleBtns.forEach(btn => {
@@ -707,30 +602,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Constructor Standings
     const constructorBody = document.getElementById('constructor-body');
-    const maxConstructorPts = Math.max(...constructorStandings.map(t => t.points || 0), 1);
-    constructorStandings.forEach((team, index) => {
+    function renderConstructors(list = constructorStandings) {
+    constructorBody.innerHTML = '';
+    const maxConstructorPts = Math.max(...list.map(t => t.points || 0), 1);
+    list.forEach((team, index) => {
         const row = document.createElement('tr');
         row.style.animationDelay = `${index * 0.03}s`;
 
         const posPad = String(team.position).padStart(2, '0');
         const isPodium = team.position <= 3;
-        const positionDisplay = isPodium
-            ? `<span style="color:var(--red);font-weight:500">[${posPad}]</span>`
-            : `[${posPad}]`;
+        const positionDisplay = `<span class="standings-pos${isPodium ? ' standings-pos--top' : ''}">[${posPad}]</span>`;
 
         const ptsPct = Math.max((team.points / maxConstructorPts) * 100, 0);
-        const ptsBar = `<div class="pts-bar-wrap"><div class="pts-bar" style="width:${ptsPct}%;background:${team.color || '#E10600'}"></div></div>`;
+        const ptsBar = `<div class="pts-bar-wrap"><div class="pts-bar" style="width:${ptsPct}%"></div></div>`;
 
         row.innerHTML = `
             <td class="pos-col">${positionDisplay}</td>
             <td class="team-col">
-                <span class="team-dot" style="background: ${team.color}"></span>
+                <span class="team-dot"></span>
                 ${team.team}
             </td>
             <td class="points-col">${team.points} ${ptsBar}</td>
         `;
         constructorBody.appendChild(row);
     });
+    }
+    renderConstructors();
+
+    // Everything below is driven by the hardcoded season files as a fallback.
+    // season-live.js swaps in real Jolpica data and calls these to repaint.
+    window.fatics = window.fatics || {};
+    window.fatics.displayStandings   = displayStandings;
+    window.fatics.renderConstructors = renderConstructors;
+    window.fatics.renderCalendar     = renderCalendar;
+    window.fatics.refreshCountdown   = initNextRaceCountdown;
 
     // Race Calendar
     const calendarGrid = document.getElementById('calendar-grid');
@@ -775,7 +680,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let statusBadge = '';
             if (isToday)         statusBadge = '<span class="cal-status cal-status--live">LIVE</span>';
             else if (isNext)     statusBadge = '<span class="cal-status cal-status--next">NEXT</span>';
-            else if (isCompleted) statusBadge = '<span class="cal-status cal-status--done">DONE</span>';
+            // A completed race is shown as completed by its styling and by
+            // naming its winner; a "DONE" pill on twelve cards is just noise.
+            else if (isCompleted) statusBadge = '';
 
             let countdownHTML = '';
             if (isUpcoming) {
@@ -791,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 countdownHTML = `
                     <div class="calendar-countdown">
                         <div class="countdown-label">STATUS</div>
-                        <div class="countdown-time" style="color:var(--text-3);font-size:11px">ARCHIVED</div>
+                        <div class="countdown-time">ARCHIVED</div>
                     </div>
                 `;
             }
@@ -800,12 +707,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const debutBadge = race.isDebut ? `<span class="cal-badge cal-badge-debut">DEBUT</span>` : '';
 
             card.innerHTML = `
-                ${statusBadge}
                 <div class="calendar-card-header">
                     <span class="calendar-round">${String(race.round).padStart(2, '0')}</span>
-                    <span class="calendar-flag">${race.flag}</span>
+                    <span class="calendar-flagemoji">${race.flag || ''}</span>
+                    <span class="calendar-flag">${race.country.slice(0, 3).toUpperCase()}</span>
+                    ${statusBadge}
                 </div>
-                <h3>${race.name.replace(/\s*Grand Prix\s*/i, '').replace(/\s*GP\s*/i, '')}</h3>
+                <h3>${shortRaceName(race.name)}</h3>
                 <div class="calendar-badges">${sprintBadge}${debutBadge}</div>
                 <div class="calendar-circuit">${race.circuit}</div>
                 <div class="calendar-date">
@@ -850,12 +758,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        // Race day — show a "LIGHTS OUT" state instead of zeros
+        // Race day — show a clear race-day state instead of novelty glyphs
         const raceToday = raceCalendar.find(r => new Date(r.date).toDateString() === todayStr);
         if (raceToday) {
             setName(`${raceToday.name} — Race Day!`);
-            setLabel('LIGHTS OUT');
-            setBoxes('🏎', '🏁', '00', '00');
+            setLabel('RACE TODAY');
+            setBoxes('00', '00', '00', '00');
             return;
         }
 
@@ -881,7 +789,9 @@ document.addEventListener('DOMContentLoaded', () => {
             setBoxes(d, fmt(h), fmt(m), fmt(s));
         }
         updateCountdown();
-        setInterval(updateCountdown, 1000);
+        // Re-invoked once live calendar dates arrive; keep exactly one timer.
+        if (window._faticsCountdownTimer) clearInterval(window._faticsCountdownTimer);
+        window._faticsCountdownTimer = setInterval(updateCountdown, 1000);
     }
     initNextRaceCountdown();
 
@@ -891,6 +801,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function initNowBlock() {
         const nowEl = document.getElementById('now-block');
         if (!nowEl) return;
+
+        // season-live.js paints this strip from the API, including the race
+        // winner and a live countdown. Once it has, stop competing with it —
+        // this function reruns on a timer and would otherwise overwrite.
+        if (nowEl.dataset.live === '1') return;
 
         // Leader — pulled from current standings (live or fallback)
         const standings = (typeof driverStandings2026 !== 'undefined') ? driverStandings2026 : [];
@@ -913,7 +828,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const lastEl = document.getElementById('now-last-race');
                 const resultEl = document.getElementById('now-last-result');
                 if (lastEl) lastEl.textContent = last.country || last.name;
-                if (resultEl) resultEl.textContent = `Round ${last.round} · ${last.flag || ''} ${last.name}`;
+                if (resultEl) resultEl.textContent = `Round ${last.round} · ${last.name}`;
             } else {
                 const lastEl = document.getElementById('now-last-race');
                 const resultEl = document.getElementById('now-last-result');
@@ -1012,8 +927,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Shared prediction share bar — injected after results render
     function buildShareBar(top3, circuit, weather) {
-        const emoji = ['🥇', '🥈', '🥉'];
-        const shareText = `🏎️ F-ATICS AI Prediction — ${circuit || 'F1 2026'} ${weather === 'wet' ? '🌧️' : '☀️'}\n${top3.map((p, i) => `${emoji[i]} ${p.driver || p.driver} — ${p.winProbability || p.probability}% win probability`).join('\n')}\n\nTry your prediction: https://f-atics.vercel.app/#predictor`;
+        const weatherLabel = { dry: 'DRY', wet: 'WET', mixed: 'MIXED' }[weather] || String(weather || 'DRY').toUpperCase();
+        const shareText = `F-ATICS AI PREDICTION\n${circuit || 'F1 2026'} / ${weatherLabel}\n${top3.map((p, i) => `P${i + 1} ${p.driver || p.driver} — ${p.winProbability || p.probability}% win probability`).join('\n')}\n\nTry your prediction: https://f-atics.vercel.app/#predictor`;
         const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
         return `
             <div class="pred-share-bar">
@@ -1050,7 +965,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!btn) return;
         const text = decodeURIComponent(btn.dataset.share);
         navigator.clipboard.writeText(text)
-            .then(() => showPredToast('✓ Prediction copied to clipboard'))
+            .then(() => showPredToast('Prediction copied to clipboard'))
             .catch(() => showPredToast('Copy failed — try long-pressing the text'));
     });
 
@@ -1064,7 +979,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="prediction-podium">
                 ${top3.map((p, i) => `
                     <div class="podium-card ${i === 0 ? 'first' : i === 1 ? 'second' : 'third'}">
-                        <div class="podium-rank">${i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'}</div>
+                        <div class="podium-rank">P${i + 1}</div>
                         <div class="podium-driver-name">${p.driver}</div>
                         <div class="podium-probability">${p.winProbability}%</div>
                         <div class="podium-label">Win Probability</div>
@@ -1087,12 +1002,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ${buildShareBar(top3, circuit, weather)}
         `;
 
-        // Animate bars
-        setTimeout(() => {
-            document.querySelectorAll('.prediction-bar').forEach(bar => {
-                bar.style.width = bar.style.width;
-            });
-        }, 100);
+        if (!reduceMotion) {
+            setTimeout(() => {
+                document.querySelectorAll('.prediction-bar').forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 100);
+        }
     }
 
     function displaySimulationResults(results) {
@@ -1102,7 +1018,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         predictionResults.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h3 style="color: var(--primary-red); font-size: 1.5rem; margin-bottom: 0.5rem;">
+                <h3 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 0.5rem;">
                     Monte Carlo Simulation Results
                 </h3>
                 <p style="color: var(--text-muted);">Based on 1,000 simulated seasons</p>
@@ -1110,7 +1026,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="prediction-podium">
                 ${top3.map((p, i) => `
                     <div class="podium-card ${i === 0 ? 'first' : i === 1 ? 'second' : 'third'}">
-                        <div class="podium-rank">${i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'}</div>
+                        <div class="podium-rank">P${i + 1}</div>
                         <div class="podium-driver-name">${p.driver}</div>
                         <div class="podium-probability">${p.probability}%</div>
                         <div class="podium-label">Championship Wins: ${p.simWins}/1000</div>
@@ -1213,7 +1129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Build a circuit-name → calendar-entry lookup for round / flag
+        // Build a circuit-name → calendar-entry lookup for round
         const calLookup = (typeof raceCalendar !== 'undefined')
             ? Object.fromEntries(raceCalendar.map(r => [r.circuit, r]))
             : {};
@@ -1231,8 +1147,10 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.animationDelay = `${index * 0.02}s`;
 
             const cal = calLookup[circuit.name];
-            const round = cal ? `R${String(cal.round).padStart(2, '0')}` : `[${String(index + 1).padStart(2, '0')}]`;
-            const flag = cal ? cal.flag : '';
+            // Fall back to an em-dash rather than a bracketed index: an
+            // unmatched circuit is not "round 04", and printing a fake round
+            // number next to real ones is worse than printing none.
+            const round = cal ? `R${String(cal.round).padStart(2, '0')}` : '—';
             const type = (circuit.circuitType || 'Permanent').toUpperCase();
             const drs = circuit.drsZones != null ? circuit.drsZones : '—';
             const top = circuit.topSpeed || '—';
@@ -1241,25 +1159,25 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <div class="lab-circuit-card__head">
                     <span class="lab-circuit-card__index">${round}</span>
-                    <span class="lab-circuit-card__type" data-type="${type}">[${type}]</span>
+                    <span class="lab-circuit-card__type" data-type="${type}">${type}</span>
                 </div>
                 <div class="lab-circuit-card__map">
                     <img src="${circuit.layoutImage}" alt="${circuit.name} track layout" loading="lazy"
                          onerror="this.onerror=null;this.src=makeSVG('${circuit.name}','#000','#FF1F1F')">
                 </div>
                 <div class="lab-circuit-card__body">
-                    <h3 class="lab-circuit-card__name">${flag ? flag + ' ' : ''}${circuit.name}</h3>
+                    <h3 class="lab-circuit-card__name">${circuit.name}</h3>
                     <div class="lab-circuit-card__loc">${circuit.location}</div>
                     <ul class="lab-circuit-card__stats">
-                        <li><span>[LEN]</span> ${circuit.length}</li>
-                        <li><span>[LAP]</span> ${circuit.laps}</li>
-                        <li><span>[COR]</span> ${circuit.corners}</li>
-                        <li><span>[DRS]</span> ${drs}</li>
-                        <li><span>[TOP]</span> ${top}</li>
-                        <li><span>[GP1]</span> ${circuit.firstGP}</li>
+                        <li><span>Length</span> ${circuit.length}</li>
+                        <li><span>Laps</span> ${circuit.laps}</li>
+                        <li><span>Corners</span> ${circuit.corners}</li>
+                        <li><span>DRS zones</span> ${drs}</li>
+                        <li><span>Top speed</span> ${top}</li>
+                        <li><span>First GP</span> ${circuit.firstGP}</li>
                     </ul>
                     <div class="lab-circuit-card__record">
-                        <span class="lab-circuit-card__record-label">[REC]</span>
+                        <span class="lab-circuit-card__record-label">Lap record</span>
                         <span class="lab-circuit-card__record-time">${rec.time}</span>
                         <span class="lab-circuit-card__record-who">${rec.who}</span>
                     </div>
@@ -1316,7 +1234,7 @@ document.addEventListener('DOMContentLoaded', () => {
         circuitModalBody.innerHTML = `
             <div class="circuit-modal-header">
                 <h2>${circuit.name}</h2>
-                <div class="circuit-modal-location">📍 ${circuit.location}</div>
+                <div class="circuit-modal-location">${circuit.location}</div>
                 <div class="circuit-meta-badges">
                     ${circuit.circuitType ? `<span class="circuit-badge ${typeBadgeClass}">${circuit.circuitType}</span>` : ''}
                     ${circuit.drsZones   ? `<span class="circuit-badge badge-drs">${circuit.drsZones} DRS Zone${circuit.drsZones !== 1 ? 's' : ''}</span>` : ''}
@@ -1355,15 +1273,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             <div class="circuit-modal-info">
                 <div class="circuit-info-section">
-                    <h3>🏁 Significance</h3>
+                    <h3>Significance</h3>
                     <p>${circuit.significance}</p>
                 </div>
                 <div class="circuit-info-section">
-                    <h3>🏎️ Characteristics</h3>
+                    <h3>Characteristics</h3>
                     <p>${circuit.characteristics}</p>
                 </div>
                 <div class="circuit-info-section">
-                    <h3>⭐ Famous Corner</h3>
+                    <h3>Famous Corner</h3>
                     <p>${circuit.famousCorner}</p>
                 </div>
             </div>

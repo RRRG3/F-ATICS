@@ -176,8 +176,9 @@
         }
     })();
 
-    // ── [DRIVE] — Real 3D F1 car (Sketchfab embed + team swap chips) ──
-    initDrive();
+    // ── [DRIVE] — superseded by js/apex-showroom.js (WebGL showroom).
+    // The Sketchfab embed below is kept as a manual fallback only.
+    // initDrive();
     function initDrive() {
         const stage = document.getElementById('drive-stage');
         if (!stage) return;

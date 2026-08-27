@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="80" fill="#E10600"/>
-  <text x="256" y="360" font-family="Arial Black,Arial,sans-serif" font-size="300" font-weight="900" fill="#ffffff" text-anchor="middle">F</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="F-ATICS">
+  <title>F-ATICS</title>
+  <!-- Drawn as a path, not text: a <text> favicon depends on a font being
+       installed and renders differently on every platform. -->
+  <rect width="512" height="512" rx="120" fill="#E2503C"/>
+  <path d="M160 128 H384 L345.6 201.6 H232 V246.4 H342.4 L304 320 H232 V384 H160 Z" fill="#F7F3EC"/>
 </svg>
