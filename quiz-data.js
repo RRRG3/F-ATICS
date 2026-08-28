@@ -241,14 +241,14 @@ const quizData = [
     { question: "What is the 107% rule?", options: ["Qualifying time limit", "Race distance", "Pit stop time", "Fuel limit"], answer: "Qualifying time limit" },
     
     // 2024 Season Specific
-    { question: "How many races are in the 2024 F1 calendar?", options: ["24", "23", "22", "25"], answer: "24" },
+    { question: "How many races were in the 2024 F1 calendar?", options: ["24", "23", "22", "25"], answer: "24" },
     { question: "Which team did Lewis Hamilton announce he's joining for 2025?", options: ["Ferrari", "Red Bull", "McLaren", "Aston Martin"], answer: "Ferrari" },
     { question: "Who replaced Nyck de Vries at AlphaTauri mid-2023?", options: ["Daniel Ricciardo", "Liam Lawson", "Yuki Tsunoda", "Nick Cassidy"], answer: "Daniel Ricciardo" },
     { question: "Which circuit returned to the calendar in 2023?", options: ["Qatar", "Turkey", "Malaysia", "India"], answer: "Qatar" },
     { question: "Which circuit was added to the 2023 calendar?", options: ["Las Vegas", "Kyalami", "Indianapolis", "Portimão"], answer: "Las Vegas" },
-    { question: "What is the name of Red Bull's 2024 car?", options: ["RB20", "RB19", "RB21", "RB18"], answer: "RB20" },
-    { question: "What is the name of Ferrari's 2024 car?", options: ["SF-24", "SF-23", "F1-75", "SF-21"], answer: "SF-24" },
-    { question: "What is the name of Mercedes' 2024 car?", options: ["W15", "W14", "W16", "W13"], answer: "W15" },
+    { question: "What was the name of Red Bull's 2024 car?", options: ["RB20", "RB19", "RB21", "RB18"], answer: "RB20" },
+    { question: "What was the name of Ferrari's 2024 car?", options: ["SF-24", "SF-23", "F1-75", "SF-21"], answer: "SF-24" },
+    { question: "What was the name of Mercedes' 2024 car?", options: ["W15", "W14", "W16", "W13"], answer: "W15" },
     { question: "Which team changed their name from AlphaTauri?", options: ["RB (Racing Bulls)", "Toro Rosso", "Red Bull Junior", "Alpha Racing"], answer: "RB (Racing Bulls)" },
-    { question: "Who is Sauber's title sponsor for 2024?", options: ["Stake", "Alfa Romeo", "BMW", "Petronas"], answer: "Stake" },
+    { question: "Who was Sauber's title sponsor in 2024?", options: ["Stake", "Alfa Romeo", "BMW", "Petronas"], answer: "Stake" },
 ];

@@ -1161,9 +1161,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="lab-circuit-card__index">${round}</span>
                     <span class="lab-circuit-card__type" data-type="${type}">${type}</span>
                 </div>
-                <div class="lab-circuit-card__map">
-                    <img src="${circuit.layoutImage}" alt="${circuit.name} track layout" loading="lazy"
-                         onerror="this.onerror=null;this.src=makeSVG('${circuit.name}','#000','#FF1F1F')">
+                <div class="lab-circuit-card__map" data-cmap="${window.__tracedTrack && window.__tracedTrack(circuit.name) ? '1' : '0'}">
+                    ${window.__tracedTrackSVG && window.__tracedTrackSVG(circuit.name)
+                        ? window.__tracedTrackSVG(circuit.name)
+                        : `<img src="${circuit.layoutImage}" alt="${circuit.name} track layout" loading="lazy"
+                         onerror="this.onerror=null;this.src=makeSVG('${circuit.name}','#000','#FF1F1F')">`}
                 </div>
                 <div class="lab-circuit-card__body">
                     <h3 class="lab-circuit-card__name">${circuit.name}</h3>

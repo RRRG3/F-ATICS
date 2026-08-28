@@ -231,8 +231,15 @@
                       : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
             if (!dir) return;
             e.preventDefault();
-            const cur = parts.findIndex((p) => p.id === activeId);
-            const next = parts[(cur + dir + parts.length) % parts.length];
+            // Position comes from the button that actually has focus, not from
+            // whatever the readout happens to be showing. activeId can be null
+            // — nothing hovered, or the stage was just left — and findIndex
+            // then returns -1, which made ArrowRight land on index 0 and
+            // ArrowLeft on the second-to-last part instead of moving by one.
+            const focused = parts.findIndex((p) => buttons.get(p.id) === document.activeElement);
+            const cur = focused >= 0 ? focused : parts.findIndex((p) => p.id === activeId);
+            const from = cur >= 0 ? cur : (dir > 0 ? -1 : 0);
+            const next = parts[(from + dir + parts.length) % parts.length];
             buttons.get(next.id).focus();
         });
 
